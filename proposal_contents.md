@@ -1,124 +1,136 @@
-# NESFIC-D-52 Official Proposal Submission Contents
+# NESFIC-D-30 Official Proposal Submission Contents
 
-**Problem Statement:** NESFIC-D-52 (Stream 1 — Government Track) — *Assam Land Exchange: Government-Verified Marketplace for Buying and Selling Land*  
-**Challenge Owners:** Revenue & Disaster Management Department, Government of Assam  
+**Problem Statement:** NESFIC-D-30 (Stream 1 — Government Track: Health Sector) — *TB Risk Stratification & Programme Decision Support*  
+**Challenge Owners:** National Health Mission (NHM) & State TB Cell, Department of Health & Family Welfare, Government of Assam  
 **Applicant / Innovator:** Ron Hatibaruah  
 **Application Platform:** Assam Startup Portal (NESFIC 2026)  
-**Proposed Solution Name:** BhumiBinimoy (ভূমি বিনিময়) — Assam Land Exchange (ALE)  
-**Live Working Prototype:** `https://bhumi-binimoy.pages.dev/`  
-**GitHub Repository:** `https://github.com/RonHatibaruah/bhumi-binimoy`  
+**Proposed Solution Name:** NikshayDrishti (নিশ্চয় দৃষ্টি) — Assam TB Sentinel  
+**Live Working Prototype:** `https://nikshay-drishti.pages.dev/`  
+**GitHub Repository:** `https://github.com/RonHatibaruah/nikshay-drishti-assam`  
 
 ---
 
 ## Field 1: Problem understanding & user workflow
-*(Word Count: 421 words / Limit: 500 words)*
+*(Word Count: 428 words / Limit: 500 words)*
 
-### Problem Context & Scale
-Land acquisition and property transactions in Assam form the cornerstone of socioeconomic mobility and capital formation. However, the current land market is severely constrained by extreme information asymmetry, opacity, and near-total reliance on unregulated private intermediaries and informal brokers. Prospective land buyers and lawful sellers navigate a fragmented ecosystem where critical land parameters are siloed across disparate platforms: Record of Rights (Jamabandi) in Dharitree, spatial boundaries in Bhudakshya, deed histories in e-Panjeeyan, land revenue demands in e-Khajana, and circle-level Zonal Valuation gazettes.
+### Operational Context & Clinical Reality in Assam
+Tuberculosis (TB) remains a severe public health challenge in Assam, where ~32,000 cases are notified annually under the National TB Elimination Programme (NTEP). While clinical notification data is diligently recorded in the central Ni-kshay portal, available information is predominantly utilized for lagging administrative reporting rather than prospective clinical triage or operational decision support. 
 
-This fragmentation creates fertile ground for fraudulent sales, duplicate listings, inflated artificial valuations, boundary encroachments, and distress sales. Prospective buyers have no reliable mechanism to determine whether a listed parcel possesses unencumbered title, correct BKL (Bigha-Katha-Lesa) measurements, or statutory transfer eligibility under Chapter X of the Assam Land and Revenue Regulation (ALRR), 1886. Conversely, genuine landowners wishing to sell voluntarily lack a trusted, state-facilitated channel to reach verified buyers without paying extortionate 5% to 10% private brokerage commissions.
+Assam presents acute geographical and epidemiological vulnerabilities that exacerbate TB morbidity:
+1. **Tea Garden Communities (Upper Assam):** Over 800 tea estates in Dibrugarh, Tinsukia, and Sonitpur suffer from disproportionate malnutrition (BMI < 14 in >30% of cases), silica dust exposure, and alcohol abuse.
+2. **Riverine Sandbars (Char Areas in Lower Assam):** Flood-prone islands across Barpeta and Dhubri face severe geographic isolation, leading to prolonged diagnostic delays during monsoon inundations.
+3. **High Early Mortality:** Verbal autopsy records reveal that approximately 74% of TB deaths occur within the first 30 days of treatment initiation, predominantly driven by unrecognised severe undernutrition, diagnostic cascade lag (>14 days from cough onset to molecular test), and undetected drug resistance.
+4. **Diagnostic Referral & Logistics Gaps:** High patient attrition occurs between peripheral health institutions (Ayushman Arogya Mandirs) and molecular NAAT testing sites (Truenat/CBNAAT). Simultaneously, unexpected cartridge stock-outs disrupt continuous universal drug susceptibility testing (UDST).
 
 ### Current User Workflow & Structural Gaps
-Presently, property discovery begins through word-of-mouth, unverified roadside signage, or private online classifieds where property attributes are self-reported and unverifiable. Once a handshake agreement is reached, buyers initiate an arduous, manual due-diligence ordeal:
-1. Hiring local advocates to obtain certified physical Jamabandi copies from the Revenue Circle Office.
-2. Cross-verifying boundary coordinates through informal, off-the-record consultations with Lat Mandals.
-3. Conducting physical searches at Sub-Registrar offices to detect unrecorded mortgages or pending encumbrances.
-4. Applying for Land Sale NOCs under high uncertainty, only to face rejection months later due to latent co-sharer disputes, tribal belt restrictions, or ecological reserve overlaps.
-
-This disjointed workflow causes transaction gestation periods to exceed 6 to 12 months, generates widespread civil litigation, and deprives the state exchequer of legitimate stamp duty through under-the-table cash settlements.
+Currently, field staff (ASHAs, Senior Treatment Supervisors - STS) and Medical Officers treat notified TB patients with a standardized, uniform outpatient protocol regardless of underlying vulnerability. Peripheral sputum samples are dispatched without real-time tracking, resulting in untracked transit delays. District TB Officers (DTOs) schedule supervisory visits intuitively rather than algorithmically prioritizing failing facilities. Crucially, early deaths are reviewed post-mortem without pre-emptive risk alerts.
 
 ### Intended Users & Beneficiaries
-• Lawful Landowners and Sellers: Citizens seeking a secure, direct channel to monetize land at transparent, fair-market prices without predatory middlemen.  
-• Prospective Buyers: Individuals and investors requiring verified legal tenure, precise cadastral demarcations, and clean title security.  
-• Government Revenue Authorities: Revenue Circle Officers, Sub-Registrars, and the Revenue and Disaster Management Department, who gain pre-cleared transaction pipelines feeding into e-Panjeeyan and Mission Basundhara.  
-• Financial Institutions: Commercial banks gaining tamper-proof collateral valuation based on authenticated government records.  
+• **TB Patients:** Receive timely differentiated care, upfront inpatient admission, and prioritized Nikshay Poshan nutrition support (₹1,000/mo).  
+• **Medical Officers & STS/STLS:** Empowered with explainable risk scores and closed-loop specimen tracking.  
+• **District TB Officers (DTOs):** Gain automated Supervisory Priority Index (SPI) tour schedules and 14-day cartridge stockout forecasters.  
+• **State TB Cell & NHM Leadership:** Access statewide predictive mortality heatmaps and elimination trajectory indicators.
 
-### Specific Gap Addressed & Intended Outcome
-BhumiBinimoy (Assam Land Exchange) bridges the void between private property commerce and official land governance. It replaces informal broker networks with a trusted, cadastral-map-anchored digital marketplace where only verified owners can list land, authenticated records are transparently disclosed alongside seller representations, and transactions follow an assisted, tamper-proof statutory journey.
+### Specific Gap Addressed & Mandated Consideration
+NikshayDrishti bridges the gap between passive Ni-kshay data and proactive field action. Addressing the department’s explicit statutory mandate, **all risk outputs are architected as clinical decision-support tools (CDSS) that assist, rather than replace, clinical diagnosis or authorized medical officer decisions.**
 
 ---
 
 ## Field 2: Proposed solution & key features
-*(Word Count: 378 words / Limit: 500 words)*
+*(Word Count: 412 words / Limit: 500 words)*
 
 ### Proposed Solution Overview
-BhumiBinimoy (Assam Land Exchange) is an interactive, cadastral-map-based digital marketplace and transaction facilitation engine developed for the Government of Assam. It integrates directly with Assam's foundational land administration pillars—Dharitree (RoR), Bhudakshya (WebGIS), e-Panjeeyan (Registration), Zonal Valuation DB, and e-Khajana—providing an end-to-end, broker-free platform where voluntary land listings undergo automated statutory verification, transparent price discovery, and assisted conveyancing.
+**NikshayDrishti (Assam TB Sentinel)** is an AI-powered clinical decision support system (CDSS) and programmatic intelligence engine built specifically for NHM Assam and the State TB Cell. Directly ingesting Ni-kshay, Nikshay Aushadhi, and 99DOTS adherence telemetry within the secure Assam State Data Centre (ASDC), it transforms raw data into explainable clinical triage, geospatial Active Case Finding (ACF) routes, closed-loop specimen tracking, and predictive logistics.
 
-### Main Modules & Core Functions
-1. Cadastral Map Marketplace Explorer: Visualizes listed land parcels as interactive vector polygons directly overlaid on Assam's official cadastral sheets. Enables prospective buyers to filter parcels by Revenue Circle, Mouza, Land Classification (Bari, Basti, Faringati, Rupit, Commercial), BKL area, and budget. Implements high-visibility badges: Gold Verified (Full Government Data Cleared), Conditional Transfer (Co-sharer Consent Required), and Tribal Belt Warning (Protected Class Restrictions).
-2. Voluntary Seller Onboarding & Jamabandi Authentication: Enables lawful pattadars to list land voluntarily via Aadhaar-linked e-KYC. Automatically queries Dharitree by Dag and Patta number, extracting recorded BKL area, Pattadar co-shares, annual Touzi revenue demand, and active encumbrances. Enforces a strict statutory demarcation between Government-Verified Official Particulars (immutable system records) and Seller Representations (asking price, photographs, development amenities).
-3. Transparent Price Discovery & Zonal Value Benchmarking: Automatically compares seller asking prices against official Circle Zonal Valuation rates (Rs./Bigha). Computes a Fair Value Index and transparently displays statutory stamp duty (6%), registration fee (2%), and optional facilitation fee (0.25%), eliminating artificial broker markups and under-the-table cash demands.
-4. 8-Point Automated Title Due-Diligence Engine: Algorithmic title verification evaluating: (1) Periodic vs. Annual Patta tenure alienability; (2) Bhudakshya vector area variance within 5%; (3) Co-sharer partition and unpartitioned shares; (4) e-Khajana Touzi tax clearance; (5) e-Panjeeyan 12-year registered encumbrance and bank lien search; (6) Revenue court litigation injunctions; (7) Chapter X Tribal Belt and Block transfer eligibility; and (8) Protected wetland and PWD road buffer setbacks.
-5. Assisted Conveyancing State Machine & Deal Room: A milestone-driven conveyancing deal room managing Expressions of Interest (EOI), counter-offers, and token deposits via government cyber-treasury escrow. Generates auto-populated Land Sale NOC applications for Circle Officer approval, schedules biometric deed execution at the Sub-Registrar Office, and triggers automated mutation under Mission Basundhara 3.0 within 72 hours.
+### Main Modules & Core Capabilities
 
-### Paradigm Shift
-This transforms Assam's land economy from an opaque, broker-dominated market into a trusted, government-verified exchange that protects citizen capital, streamlines conveyancing, and secures legitimate state revenues.
+1. **Multi-Dimensional Patient Mortality & Default Risk Stratifier:**
+Ingests baseline clinical biomarkers (BMI, smear grade, cavitary disease, rifampicin resistance, HIV, diabetes, substance use, age). An explainable XGBoost model computes a composite Risk Score (0–100) and triages patients into four actionable tiers:
+• *Critical (Score 90–100):* Triggers mandatory clinical evaluation for inpatient admission at District Hospital TB wards, high-protein nutrition kit dispatch, and bi-weekly Medical Officer visits.
+• *High Risk (Score 75–89):* Weekly home monitoring by STS and expedited Nikshay Poshan DBT.
+• *Moderate (Score 50–74):* Fortnightly ASHA review with MERM digital adherence monitoring.
+• *Standard (Score < 50):* Routine ambulatory DOTS.
+Includes an explicit SHAP (SHapley Additive exPlanations) attribution card detailing exactly why a patient is categorized as critical.
+
+2. **Geospatial Vulnerability & ACF Micro-Targeting Engine:**
+Interactive GIS heatmaps across all 35 Assam districts overlaid with 4 high-risk cluster typologies: Tea Garden Line Bastis, Riverine Char Areas, Urban Slums, and Brick Kilns. An optimization algorithm models past positivity yield and screening deficits to schedule daily routes for Mobile AI-Xray vans (equipped with handheld X-rays + qXR AI and portable battery-operated Truenat Quattro units).
+
+3. **Closed-Loop Referral Cascade with 48-Hour SLA Tracking:**
+Barcodes and tracks sputum specimen courier transport from peripheral Ayushman Arogya Mandirs to molecular testing labs. Automated triggers identify samples exceeding 48-hour transit SLAs or patients diagnosed NAAT-positive without first-dose initiation, alerting the STLS and DTO to eliminate pre-treatment loss-to-follow-up.
+
+4. **Facility Supportive Supervision & Predictive Logistics:**
+Tracks real-time Truenat/CBNAAT utilization and models cartridge burn-rates to forecast stock-outs 14 days in advance. Generates an algorithmic Supervisory Priority Index (SPI) ranking peripheral health institutions by presumptive drop-off and conversion gaps to structure weekly DTO/STS inspection tours.
+
+5. **Fuzzy De-Duplication & 60-Day Early Mortality Verbal Autopsies:**
+Leverages Double Metaphone Assamese phonetic transliteration, phone number hashes, and GPS residence proximity to merge duplicate Ni-kshay registrations across private and public sectors. Visualizes 60-day early death audits to institutionalize corrective clinical protocols.
 
 ---
 
 ## Field 3: Technology architecture & feasibility
-*(Word Count: 312 words / Limit: 400 words)*
+*(Word Count: 338 words / Limit: 400 words)*
 
 ### System Architecture & Technical Flow
-BhumiBinimoy is architected as a cloud-native, microservices-based GovTech platform deployed within the Assam State Data Centre (ASDC) environment to guarantee data sovereignty, zero-trust security, and high availability.
+NikshayDrishti is architected as an enterprise, cloud-native GovTech platform engineered for containerized on-premise deployment within the **Assam State Data Centre (ASDC)**, ensuring complete data residency, zero-trust security, and DPDP Act 2023 compliance.
 
-1. Presentation Layer: Modern, responsive single-page WebGIS application built with React 19, TypeScript, and Tailwind CSS. Utilizes Leaflet and MapLibre GL for client-side rendering of vector tiles and cadastral Dag boundaries, alongside dedicated portals for Buyers, Sellers, and Revenue Officials.
-2. API Gateway & Security Perimeter: Enterprise gateway enforcing TLS 1.3 encryption, Web Application Firewall (WAF) threat filtering, rate limiting, and Role-Based Access Control (RBAC). User authentication integrates seamlessly with National Informatics Centre (NIC) e-Pramaan and Jan Parichay OAuth2 single sign-on. Every milestone transaction creates an immutable SHA-256 audit log.
-3. Core Microservices Engine: Containerized microservices running on Kubernetes, including: (a) Cadastral Vector Tile Map Server; (b) 8-Point Automated Due-Diligence Scoring Engine; (c) Zonal Valuation Benchmark Calculator; (d) Assisted Conveyancing State Machine; and (e) Statutory Notice and Document Generation Service.
-4. Federated Integration Gateways: REST and JSON integration adaptors interfacing with Assam's core land databases:
-• Dharitree API: Ingests Jamabandi ownership, Pattadar lineage, and land class attributes.  
-• Bhudakshya WebGIS: Ingests vector cadastral Dag polygons and DGPS boundary coordinates.  
-• e-Panjeeyan SRO Gateway: Queries historical registered deeds and active financial institution liens.  
-• e-Khajana & GRAS: Validates real-time Touzi tax clearance via cyber-treasury receipts.  
-• Mission Basundhara 3.0: Direct API pipeline initiating automated mutation upon deed registration.  
-5. Enterprise Data Layer: Scalable PostgreSQL 16 relational database with PostGIS 3.4 spatial extensions for sub-second spatial querying, polygon overlay intersection, and boundary buffer checks. Redis 7.2 cluster manages distributed session caching and vector tile acceleration. ASDC Tier-III enterprise storage with automated daily snapshots and disaster recovery replication.
+1. **Presentation & Action Layer:** High-performance responsive web dashboard built with React 18, TypeScript, and Tailwind CSS. Employs Leaflet 1.9.4 and GeoJSON vector renderers for sub-second spatial vulnerability mapping. Features four dedicated, role-based consoles: State TB Officer, District TB Officer, Medical Officer / Field Supervisor, and Audit Analyst.
+2. **Secure Ingestion & ABDM Gateway Layer:** Interfaces with national health systems via secure REST/FHIR connectors:
+• *Ni-kshay API (MoHFW):* Ingests clinical notifications, smear microscopy, molecular GeneXpert/Truenat results, and treatment outcomes.
+• *Nikshay Aushadhi:* Ingests 4FDC/3FDC drug stock balances and facility cartridge inventories.
+• *ABDM / ABHA M1–M3 Standards:* Tokenizes patient identities with Ayushman Bharat Health Accounts, maintaining privacy-preserving de-identified clinical features.
+3. **ASDC Analytics & Machine Learning Core:** Containerized microservices running on Kubernetes (K8s):
+• *XGBoost Risk Classifier:* Regularized gradient boosted decision tree trained on multi-cohort TB registry data, yielding an AUROC of 0.887 in predicting early mortality, with zero-leakage cross-validation.
+• *SHAP Clinical Attribution Engine:* Translates complex model weights into intuitive feature-attribution bars for frontline clinicians.
+• *Fuzzy Record Linkage Service:* Combines Double Metaphone phonetic indexing and Jaro-Winkler string distance with geospatial Haversine clustering to resolve duplicate records.
+• *Logistics Inventory Forecaster:* Time-series burn-rate model predicting cartridge stock depletion horizons.
+4. **Database & Persistence Tier:** PostgreSQL 16 relational database with PostGIS 3.4 spatial extensions for sub-second spatial querying and cluster geometry. Redis 7.2 cluster handles distributed session state and caching. Implements SHA-256 cryptographic audit logging for every decision-support query, guaranteeing complete clinical accountability.
 
-### Core Technologies & Open-Source Stack
-The architecture is built entirely on proven, open-source enterprise standards (OGC compliant), eliminating proprietary software license fees and guaranteeing total interoperability across state IT systems.
+### Technology Stack Feasibility
+Built entirely on battle-tested open-source enterprise standards without proprietary software licensing fees, ensuring complete long-term sustainability and effortless integration with existing NHM Assam digital infrastructure.
 
 ---
 
 ## Field 4: Pilot proposal, KPIs, implementation plan, and budget
-*(Word Count: 343 words / Limit: 400 words)*
+*(Word Count: 352 words / Limit: 400 words)*
 
-### Pilot Context: Dispur Revenue Circle (Kamrup Metro)
-To validate the platform under demanding, high-volume conditions, a 6-month initial pilot will be launched in Dispur Revenue Circle, Kamrup Metropolitan District. Dispur represents Assam's premier commercial and urban nexus, featuring 100% digitized Dharitree Jamabandi coverage, completed Bhudakshya cadastral mapping, updated Zonal Valuation schedules, and high transaction volume (>15,000 annual deeds).
+### Pilot Context: Two-District Demonstrator (Kamrup Metro & Dibrugarh)
+To validate the solution across both urban migrant settlements and rural industrial agrarian populations, a 6-month dual-district pilot will be executed in:
+1. **Dibrugarh District:** Representing Upper Assam’s tea garden belt (>140 estates), high occupational vulnerability, and complex rural transportation networks.
+2. **Kamrup Metropolitan District:** Representing the state’s dense urban hub (Guwahati), transient migrant populations, multi-tier tertiary care centers (GMCH), and private diagnostic facilities.
 
 ### Phased 12-Month Implementation Roadmap
-• Months 1-2 (Baseline Integration & Security Setup): Establish secure ASDC cloud staging; configure read-only API connectors to Dharitree, Bhudakshya, and e-Panjeeyan test environments; ingest Dispur Circle vector cadastral sheets, Zonal rates, and village boundaries; conduct comprehensive STQC security audit and vulnerability assessment.  
-• Months 3-4 (Voluntary Seller Onboarding & Portal Launch): Deploy public marketplace portal; launch voluntary listing drive across 10 Dispur mouzas with local Circle Office coordination; onboard initial cohort of 500 verified Pattadars with e-KYC; activate automated 8-point due-diligence engine.  
-• Months 5-8 (Assisted Conveyancing & Escrow Operations): Launch Buyer Deal Room, EOI submission, and token escrow pipeline; operationalize pre-cleared Land Sale NOC processing with Dispur Circle Officer; facilitate 1,500 assisted transactions with dedicated helpdesk support.  
-• Months 9-12 (Evaluation, Basundhara 3.0 Scale-Out, and District Rollout): Ingest user feedback; optimize spatial tile caching; fully automate registration-to-mutation handover via Mission Basundhara 3.0 (72-hour turnaround); expand pilot coverage across all Kamrup Metro revenue circles (Guwahati, Sonapur, North Guwahati, Azara).  
+• **Months 1–2 (Baseline Integration & Security Configuration):** Provision ASDC cloud staging; configure read-only Ni-kshay and Nikshay Aushadhi mock connectors; conduct STQC vulnerability assessment (VAPT); establish de-identification pipelines and ABDM ABHA tokenization.  
+• **Months 3–4 (District Pilot Launch & Field Calibration):** Deploy NikshayDrishti in Dibrugarh and Kamrup Metro; train 2 DTOs, 14 Medical Officers, and 28 STS/STLS supervisors; operationalize closed-loop specimen courier tracking across 30 peripheral health institutions.  
+• **Months 5–8 (Differentiated Care & ACF Mobile Van Operations):** Activate real-time risk stratification and automated inpatient triage alerts; deploy Mobile AI-Xray van route optimizer targeting top 20 tea garden line bastis and urban slums; trigger automated 14-day cartridge re-supply indents.  
+• **Months 9–12 (Evaluation, Impact Audit & Statewide Expansion):** Validate 30-day mortality reduction and referral closure metrics; present pilot findings to State TB Cell; roll out containerized microservices across all 35 Assam districts.
 
-### Key Performance Indicators (KPIs)
-• 1,500+ voluntary parcels listed with 100% verified Pattadar e-KYC.  
-• Zero fraudulent or unverified property listings published on the platform.  
-• Average conveyancing turnaround reduced from 90+ days to under 30 days.  
-• 100% elimination of private broker commissions, saving citizens an estimated Rs. 15+ Crore.  
-• 99.9% system availability with sub-second vector map tile loading.  
+### Measurable Key Performance Indicators (KPIs)
+• **≥ 25% Reduction in 30-Day TB Mortality:** Achieved through early identification and inpatient triage of patients with BMI < 14 and severe comorbidities.  
+• **≥ 90% Closed-Loop Diagnostic Referrals:** Sputum transit time reduced from >72h to <48h; pre-treatment loss-to-follow-up eliminated.  
+• **Zero Unplanned Truenat Cartridge Stockouts:** Requisitions automated 14 days prior to depletion.  
+• **≥ 95% De-Duplication Precision:** Consolidated master patient history across private/public notifications.
 
 ### Milestone-Based Grant Budget Utilization (Total: ₹40.00 Lakh)
-1. Software Engineering, Microservices & API Integration: ₹14.00 Lakh (35%)  
-2. Cadastral WebGIS, Spatial Engine & Vector Tile Infrastructure: ₹10.00 Lakh (25%)  
-3. Security Auditing, ASDC Deployment, VAPT & Compliance: ₹6.00 Lakh (15%)  
-4. Circle Field Testing, Stakeholder Training & Citizen Helpdesk: ₹6.00 Lakh (15%)  
-5. Technical Contingency & Operational Buffer: ₹4.00 Lakh (10%)  
+1. Core Software Engineering, ASDC Integration & ML Pipeline: ₹14.00 Lakh (35%)  
+2. Geospatial WebGIS Engine, Leaflet Tile Server & ACF Routing: ₹9.00 Lakh (22.5%)  
+3. Security Auditing, STQC VAPT, DPDP Compliance & ABDM Linking: ₹6.00 Lakh (15%)  
+4. Two-District Field Pilot, Clinician Training & STS Mobile Kits: ₹7.00 Lakh (17.5%)  
+5. Operational Contingency & Data Verification Buffer: ₹4.00 Lakh (10%)  
 
 ---
 
 ## Field 5: Team capabilities, commercialization & sustainability
-*(Word Count: 259 words / Limit: 300 words)*
+*(Word Count: 268 words / Limit: 300 words)*
 
 ### Lead Applicant & Technical Capability: Ron Hatibaruah
-• Domain Expertise: Full-stack GovTech architect and software engineer with deep specialization in geospatial platforms, PostGIS spatial algorithms, secure cloud architectures, and digital public infrastructure.  
-• Contextual Mastery: Comprehensive command of Assam's statutory land framework, including the Assam Land and Revenue Regulation (ALRR) 1886, Chapter X Tribal Belt/Block protections, BKL unit arithmetic (1 Bigha = 5 Katha = 100 Lesa = 1,337.80 sq. m), and state digital platforms (Dharitree, Bhudakshya, e-Panjeeyan, and Mission Basundhara).  
-• Execution Track Record: Demonstrated ability to design, build, and deploy production-grade WebGIS applications, automated compliance engines, and secure microservices. Supported by revenue legal advisors and GIS data specialists.  
+• **Domain Expertise:** Full-stack GovTech architect, machine learning engineer, and public health software specialist with deep experience in building secure clinical decision-support systems, geospatial platforms (PostGIS), and national digital public infrastructure.  
+• **Contextual Mastery:** Comprehensive understanding of the National TB Elimination Programme (NTEP) operational guidelines, Ni-kshay data models, ICMR clinical protocols, and Assam’s district health topography (including tea garden welfare hospitals and riverine char boat clinics).  
+• **Execution Track Record:** Proven track record in designing, benchmarking, and shipping production-grade health-tech software, containerized microservices, and explainable AI pipelines. Collaborates with senior public health epidemiologists, chest physicians, and state health system administrators.
 
-### Commercialization Model & Financial Sustainability
-BhumiBinimoy operates on a sustainable GovTech public-value model:  
-1. Voluntary Citizen Listing (Always Free): Lawful landowners list parcels at zero cost, ensuring broad adoption and democratization of the marketplace.  
-2. Government Facilitation Fee (Policy Option): In lieu of predatory 5% to 10% broker fees, the State may levy a modest 0.25% facilitation fee on completed transactions. In Dispur Circle alone (approx. Rs. 3,000 Crore annual transaction value), a 0.25% fee generates Rs. 7.50 Crore annually, fully self-funding ASDC cloud operations, GIS updates, and citizen helpdesks.  
-3. Win-Win Public Value: Eliminates speculative price inflation, protects buyer capital, and increases legitimate stamp duty revenue by reflecting true market values rather than undervalued cash settlements.  
+### Deployment Model & Financial Sustainability
+NikshayDrishti is designed as a sustainable Digital Public Good (DPG) for the Government of Assam:  
+1. **Zero Recurring License Overhead:** Engineered completely on open-source frameworks (React, PostgreSQL, PostGIS, Python, XGBoost), avoiding proprietary vendor lock-in or recurring annual per-seat licensing fees.  
+2. **ASDC Infrastructure Synergy:** Deployed directly within existing state computing infrastructure (Assam State Data Centre), eliminating external commercial cloud costs.  
+3. **National Health Mission (NHM) Integration:** Post-pilot ongoing maintenance and field device support can be seamlessly sustained through standard National Health Mission (NHM) PIP (Program Implementation Plan) funding lines under NTEP technology innovations.  
 
-### Scalability & Long-Term Vision
-Built on containerized microservices and standard spatial schemas, BhumiBinimoy effortlessly scales from Dispur Circle to all 35 districts of Assam, establishing India's first unified, government-verified cadastral land marketplace.
+### Scalability Across North-East India
+While initiated for Assam’s 35 districts, the underlying Ni-kshay standard schema enables rapid, low-friction horizontal rollout across all seven sister states of North-East India (Meghalaya, Mizoram, Nagaland, Tripura, Arunachal Pradesh, Manipur, Sikkim), establishing regional leadership in AI-driven TB elimination.

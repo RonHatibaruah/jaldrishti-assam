@@ -23,3 +23,9 @@ Thumbs.db
 .parcel-cache/
 .eslintcache
 /tmp/
+__pycache__/
+*.pyc
+
+# Legacy Challenge Archives
+legacy_d50/
+legacy_d52/

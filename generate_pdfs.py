@@ -36,8 +36,8 @@ class NumberedCanvas(canvas.Canvas):
         
         # Header (pages after page 1)
         if self._pageNumber > 1:
-            self.drawString(54, letter[1] - 36, "Government of Assam • Revenue & Disaster Management Department • NESFIC-D-52")
-            self.drawRightString(letter[0] - 54, letter[1] - 36, "BhumiBinimoy (Assam Land Exchange) — Ron Hatibaruah")
+            self.drawString(54, letter[1] - 36, "Government of Assam • National Health Mission & State TB Cell • NESFIC-D-30")
+            self.drawRightString(letter[0] - 54, letter[1] - 36, "NikshayDrishti (Assam TB Sentinel) — Ron Hatibaruah")
             self.setStrokeColor(colors.HexColor("#cbd5e1"))
             self.setLineWidth(0.5)
             self.line(54, letter[1] - 42, letter[0] - 54, letter[1] - 42)
@@ -46,7 +46,7 @@ class NumberedCanvas(canvas.Canvas):
         self.setStrokeColor(colors.HexColor("#cbd5e1"))
         self.setLineWidth(0.5)
         self.line(54, 45, letter[0] - 54, 45)
-        self.drawString(54, 32, "NESFIC 2026 Proposal • Problem NESFIC-D-52 • Applicant: Ron Hatibaruah")
+        self.drawString(54, 32, "NESFIC 2026 Proposal • Problem NESFIC-D-30 • Applicant: Ron Hatibaruah")
         self.drawRightString(letter[0] - 54, 32, f"Page {self._pageNumber} of {page_count}")
         self.restoreState()
 
@@ -55,20 +55,17 @@ def clean_inline_markdown(text):
         return ""
     t = text.strip()
     
-    # Protect backtick inline code
     code_matches = []
     def save_code(m):
         code_matches.append(m.group(1))
         return f"__CODE_PH_{len(code_matches)-1}__"
     t = re.sub(r'`([^`]+)`', save_code, t)
 
-    # Protect masked triple asterisks
     t = re.sub(r'\*{3,}', '***', t)
 
     # Unicode cleanup for Helvetica
     t = t.replace('₹', 'Rs. ')
-    t = t.replace('ভূমি বিনিময়', 'BhumiBinimoy')
-    t = t.replace('ভূমি স্বাস্থ্য', 'BhumiSwasthya')
+    t = t.replace('নিশ্চয় দৃষ্টি', 'NikshayDrishti')
     t = t.replace('–', '-').replace('—', ' - ')
     t = t.replace('’', "'").replace('‘', "'").replace('“', '"').replace('”', '"')
     t = t.replace('➔', '->').replace('•', '*').replace('✓', '[X]')
@@ -108,7 +105,7 @@ def create_styled_table(data_rows, col_widths=None, available_width=490):
         fontName='Helvetica-Bold',
         fontSize=8,
         leading=11,
-        textColor=colors.HexColor('#064e3b')
+        textColor=colors.HexColor('#0f766e')
     )
     cell_style = ParagraphStyle(
         'TDStyle',
@@ -134,7 +131,7 @@ def create_styled_table(data_rows, col_widths=None, available_width=490):
 
     t = Table(table_data, colWidths=col_widths)
     t.setStyle(TableStyle([
-        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#e2e8f0')),
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#f1f5f9')),
         ('BOTTOMPADDING', (0,0), (-1,0), 4),
         ('TOPPADDING', (0,0), (-1,0), 4),
         ('GRID', (0,0), (-1,-1), 0.5, colors.HexColor('#cbd5e1')),
@@ -149,7 +146,7 @@ def parse_markdown_content(raw_lines, available_width=490):
     styles = getSampleStyleSheet()
     h3_style = ParagraphStyle(
         'H3Style', parent=styles['Heading3'], fontName='Helvetica-Bold',
-        fontSize=10, leading=13, textColor=colors.HexColor('#064e3b'), spaceBefore=6, spaceAfter=2
+        fontSize=10, leading=13, textColor=colors.HexColor('#0f766e'), spaceBefore=6, spaceAfter=2
     )
     h4_style = ParagraphStyle(
         'H4Style', parent=styles['Heading4'], fontName='Helvetica-Bold',
@@ -161,118 +158,94 @@ def parse_markdown_content(raw_lines, available_width=490):
     )
     bullet_style = ParagraphStyle(
         'BulletStyle', parent=styles['Normal'], fontName='Helvetica',
-        fontSize=8, leading=11, textColor=colors.HexColor('#1e293b'), leftIndent=12, spaceAfter=2
-    )
-    code_style = ParagraphStyle(
-        'CodeStyle', parent=styles['Normal'], fontName='Courier',
-        fontSize=6.5, leading=8.5, textColor=colors.HexColor('#0f172a')
+        fontSize=8, leading=11.5, textColor=colors.HexColor('#1e293b'), leftIndent=12, firstLineIndent=-8, spaceAfter=2
     )
 
     flowables = []
-    i = 0
-    while i < len(raw_lines):
-        line = raw_lines[i].strip()
-        if not line:
-            i += 1
+    table_buffer = []
+    in_table = False
+
+    def flush_table():
+        nonlocal table_buffer, in_table
+        if table_buffer:
+            t = create_styled_table(table_buffer, available_width=available_width)
+            flowables.append(t)
+            flowables.append(Spacer(1, 4))
+            table_buffer = []
+        in_table = False
+
+    for line in raw_lines:
+        line_str = line.strip()
+
+        # Handle Markdown Tables
+        if line_str.startswith('|') and line_str.endswith('|'):
+            # Check if divider line
+            if re.match(r'^\|[\s\-:|]+\|$', line_str):
+                in_table = True
+                continue
+            cols = [c.strip() for c in line_str.strip('|').split('|')]
+            table_buffer.append(cols)
+            continue
+        else:
+            if in_table or table_buffer:
+                flush_table()
+
+        if not line_str:
             continue
 
-        if line.startswith('### '):
-            flowables.append(safe_paragraph(line[4:].strip(), h3_style))
-            i += 1
-            continue
+        if line_str.startswith('### '):
+            flowables.append(safe_paragraph(line_str[4:], h3_style))
+        elif line_str.startswith('#### '):
+            flowables.append(safe_paragraph(line_str[5:], h4_style))
+        elif line_str.startswith('• ') or line_str.startswith('* ') or line_str.startswith('- '):
+            flowables.append(safe_paragraph("&bull; " + line_str[2:], bullet_style))
+        elif re.match(r'^\d+\.\s+', line_str):
+            m = re.match(r'^(\d+\.\s+)(.*)$', line_str)
+            flowables.append(safe_paragraph(f"<b>{m.group(1)}</b>{m.group(2)}", bullet_style))
+        else:
+            flowables.append(safe_paragraph(line_str, body_style))
 
-        if line.startswith('#### '):
-            flowables.append(safe_paragraph(line[5:].strip(), h4_style))
-            i += 1
-            continue
-
-        if line.startswith('```'):
-            i += 1
-            code_lines = []
-            while i < len(raw_lines) and not raw_lines[i].strip().startswith('```'):
-                code_lines.append(raw_lines[i].rstrip())
-                i += 1
-            if i < len(raw_lines):
-                i += 1
-
-            code_text = "<br/>".join(escape(cl) for cl in code_lines)
-            t_code = Table([[Paragraph(code_text, code_style)]], colWidths=[available_width])
-            t_code.setStyle(TableStyle([
-                ('BACKGROUND', (0,0), (-1,-1), colors.HexColor('#f8fafc')),
-                ('BOX', (0,0), (-1,-1), 1, colors.HexColor('#cbd5e1')),
-                ('PADDING', (0,0), (-1,-1), 5),
-            ]))
-            flowables.append(Spacer(1, 3))
-            flowables.append(t_code)
-            flowables.append(Spacer(1, 5))
-            continue
-
-        if line.startswith('|') and line.endswith('|'):
-            table_lines = []
-            while i < len(raw_lines) and raw_lines[i].strip().startswith('|'):
-                table_lines.append(raw_lines[i].strip())
-                i += 1
-
-            table_rows = []
-            for tl in table_lines:
-                if re.match(r'^\|?[\s\-:|]+\|?$', tl):
-                    continue
-                cells = [c.strip() for c in tl.split('|')[1:-1]]
-                if cells:
-                    table_rows.append(cells)
-
-            if table_rows:
-                flowables.append(Spacer(1, 4))
-                flowables.append(create_styled_table(table_rows, available_width=available_width))
-                flowables.append(Spacer(1, 5))
-            continue
-
-        if line.startswith('- ') or line.startswith('* '):
-            flowables.append(safe_paragraph(f"• {line[2:]}", bullet_style))
-            i += 1
-            continue
-
-        if line[0].isdigit() and len(line) > 2 and line[1:3] in ['. ', ') ']:
-            flowables.append(safe_paragraph(line, bullet_style))
-            i += 1
-            continue
-
-        flowables.append(safe_paragraph(line, body_style))
-        i += 1
+    if table_buffer:
+        flush_table()
 
     return flowables
 
 def build_proposal_pdf(output_path):
     doc = SimpleDocTemplate(
-        output_path, pagesize=letter, leftMargin=54, rightMargin=54, topMargin=54, bottomMargin=54
+        output_path,
+        pagesize=letter,
+        leftMargin=54,
+        rightMargin=54,
+        topMargin=54,
+        bottomMargin=54
     )
     styles = getSampleStyleSheet()
 
     title_style = ParagraphStyle(
-        'DocTitle', parent=styles['Heading1'], fontName='Helvetica-Bold', fontSize=18, leading=22,
-        textColor=colors.HexColor('#064e3b'), spaceAfter=4
+        'DocTitle', parent=styles['Title'], fontName='Helvetica-Bold', fontSize=15, leading=19,
+        textColor=colors.HexColor('#065f46'), alignment=0, spaceAfter=2
     )
     subtitle_style = ParagraphStyle(
-        'DocSubTitle', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=10.5, leading=14,
-        textColor=colors.HexColor('#0f766e'), spaceAfter=8
+        'DocSub', parent=styles['Normal'], fontName='Helvetica', fontSize=9, leading=12.5,
+        textColor=colors.HexColor('#0f766e'), spaceAfter=4
     )
     meta_style = ParagraphStyle(
-        'MetaStyle', parent=styles['Normal'], fontName='Helvetica', fontSize=8.5, leading=12, textColor=colors.HexColor('#334155')
+        'MetaStyle', parent=styles['Normal'], fontName='Helvetica', fontSize=8, leading=11, textColor=colors.HexColor('#334155')
     )
-    field_title_style = ParagraphStyle(
-        'FieldTitle', parent=styles['Heading2'], fontName='Helvetica-Bold', fontSize=11, leading=15,
-        textColor=colors.HexColor('#064e3b'), spaceBefore=8, spaceAfter=4, keepWithNext=True
+    h2_style = ParagraphStyle(
+        'H2Style', parent=styles['Heading2'], fontName='Helvetica-Bold', fontSize=10.5, leading=14,
+        textColor=colors.HexColor('#065f46'), spaceBefore=8, spaceAfter=4, keepWithNext=True
     )
 
     story = []
-    story.append(safe_paragraph("BHUMIBINIMOY (Assam Land Exchange)", title_style))
-    story.append(safe_paragraph("Government-Verified Cadastral Marketplace for Buying and Selling Land", subtitle_style))
-    story.append(safe_paragraph("<b>Grant Proposal & Technical Solution Submission Document</b>", subtitle_style))
+    story.append(safe_paragraph("NORTH EAST SEVA FIRST INNOVATION CHALLENGE (NESFIC 2026)", subtitle_style))
+    story.append(safe_paragraph("STREAM 1 — GOVERNMENT TRACK • OFFICIAL SOLUTION PROPOSAL", title_style))
+    story.append(safe_paragraph("<b>NikshayDrishti (Assam TB Sentinel)</b> — AI-Powered TB Risk Stratification & Decision Support", subtitle_style))
 
     meta_data = [
-        [safe_paragraph("<b>Problem Statement ID:</b> NESFIC-D-52 (Stream 1)", meta_style), safe_paragraph("<b>Challenge Owner:</b> Rev. & Disaster Mgmt Dept, Assam", meta_style)],
-        [safe_paragraph("<b>Lead Applicant:</b> Ron Hatibaruah", meta_style), safe_paragraph("<b>Platform:</b> Assam Startup (AISF) NESFIC 2026", meta_style)],
-        [safe_paragraph("<b>Live Demo:</b> https://bhumi-binimoy.pages.dev/", meta_style), safe_paragraph("<b>Status:</b> Working Prototype Verified", meta_style)]
+        [safe_paragraph("<b>Challenge ID:</b> NESFIC-D-30 (Govt Track)", meta_style), safe_paragraph("<b>Department:</b> NHM & State TB Cell, Govt of Assam", meta_style)],
+        [safe_paragraph("<b>Lead Applicant:</b> Ron Hatibaruah", meta_style), safe_paragraph("<b>Application Format:</b> USPR Standard Proposal (PDF)", meta_style)],
+        [safe_paragraph("<b>Live Prototype:</b> https://nikshay-drishti.pages.dev/", meta_style), safe_paragraph("<b>GitHub:</b> github.com/RonHatibaruah/nikshay-drishti-assam", meta_style)]
     ]
     t_meta = Table(meta_data, colWidths=[240, 264])
     t_meta.setStyle(TableStyle([
@@ -284,47 +257,43 @@ def build_proposal_pdf(output_path):
     story.append(t_meta)
     story.append(Spacer(1, 8))
 
-    proposal_md = os.path.join(base_dir, 'proposal_contents.md')
-    with open(proposal_md) as f:
+    prop_md = os.path.join(base_dir, 'proposal_contents.md')
+    with open(prop_md) as f:
         content = f.read()
 
-    sections = content.split('## Field ')
+    sections = content.split('## ')
+    if sections[0].strip():
+        story.extend(parse_markdown_content(sections[0].strip().split('\n'), available_width=490))
+
     for sec in sections[1:]:
         lines = sec.strip().split('\n')
-        sec_header = lines[0].strip()
-        story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor('#059669'), spaceBefore=8, spaceAfter=5))
-        story.append(safe_paragraph(f"Field {sec_header}", field_title_style))
+        sec_title = lines[0].strip()
+        story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor('#0f766e'), spaceBefore=8, spaceAfter=5))
+        story.append(safe_paragraph(sec_title, h2_style))
 
-        # Embed appropriate diagram
-        if '1: Problem understanding' in sec_header:
+        if 'Field 1:' in sec_title:
             img = os.path.join(img_dir, 'diagram_1_before_after_workflow.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
-                story.append(Image(img, width=490, height=265))
+                story.append(Image(img, width=490, height=275.6))
                 story.append(Spacer(1, 5))
-        elif '2: Proposed solution' in sec_header:
+        elif 'Field 2:' in sec_title:
             img = os.path.join(img_dir, 'diagram_3_cadastral_anomaly_catalog.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
-                story.append(Image(img, width=490, height=265))
+                story.append(Image(img, width=490, height=275.6))
                 story.append(Spacer(1, 5))
-        elif '3: Technology architecture' in sec_header:
+        elif 'Field 3:' in sec_title:
             img = os.path.join(img_dir, 'diagram_2_dual_system_reconciliation.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
-                story.append(Image(img, width=490, height=265))
+                story.append(Image(img, width=490, height=275.6))
                 story.append(Spacer(1, 5))
-        elif '4: Pilot proposal' in sec_header:
-            img = os.path.join(img_dir, 'diagram_6_citizen_land_health_certificate.jpg')
+        elif 'Field 4:' in sec_title:
+            img = os.path.join(img_dir, 'diagram_4_land_health_score_hierarchy.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
-                story.append(Image(img, width=490, height=265))
-                story.append(Spacer(1, 5))
-        elif '5: Team capabilities' in sec_header:
-            img = os.path.join(img_dir, 'diagram_7_enterprise_system_architecture.jpg')
-            if os.path.exists(img):
-                story.append(Spacer(1, 4))
-                story.append(Image(img, width=490, height=265))
+                story.append(Image(img, width=490, height=275.6))
                 story.append(Spacer(1, 5))
 
         body_flowables = parse_markdown_content(lines[1:], available_width=490)
@@ -335,40 +304,45 @@ def build_proposal_pdf(output_path):
 
 def build_proof_of_work_pdf(output_path):
     doc = SimpleDocTemplate(
-        output_path, pagesize=letter, leftMargin=54, rightMargin=54, topMargin=54, bottomMargin=54
+        output_path,
+        pagesize=letter,
+        leftMargin=54,
+        rightMargin=54,
+        topMargin=54,
+        bottomMargin=54
     )
     styles = getSampleStyleSheet()
 
     title_style = ParagraphStyle(
-        'DocTitle', parent=styles['Heading1'], fontName='Helvetica-Bold', fontSize=18, leading=22,
-        textColor=colors.HexColor('#064e3b'), spaceAfter=4
+        'DocTitle', parent=styles['Title'], fontName='Helvetica-Bold', fontSize=15, leading=19,
+        textColor=colors.HexColor('#065f46'), alignment=0, spaceAfter=2
     )
     subtitle_style = ParagraphStyle(
-        'DocSubTitle', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=10.5, leading=14,
-        textColor=colors.HexColor('#0f766e'), spaceAfter=8
+        'DocSub', parent=styles['Normal'], fontName='Helvetica', fontSize=9, leading=12.5,
+        textColor=colors.HexColor('#0f766e'), spaceAfter=4
     )
     meta_style = ParagraphStyle(
-        'MetaStyle', parent=styles['Normal'], fontName='Helvetica', fontSize=8.5, leading=12, textColor=colors.HexColor('#334155')
+        'MetaStyle', parent=styles['Normal'], fontName='Helvetica', fontSize=8, leading=11, textColor=colors.HexColor('#334155')
     )
     h2_style = ParagraphStyle(
-        'H2Style', parent=styles['Heading2'], fontName='Helvetica-Bold', fontSize=11, leading=15,
-        textColor=colors.HexColor('#064e3b'), spaceBefore=8, spaceAfter=4, keepWithNext=True
+        'H2Style', parent=styles['Heading2'], fontName='Helvetica-Bold', fontSize=10.5, leading=14,
+        textColor=colors.HexColor('#065f46'), spaceBefore=8, spaceAfter=4, keepWithNext=True
     )
 
     story = []
     story.append(safe_paragraph("PROOF OF WORK & SOLUTION EVIDENCE DOSSIER", title_style))
-    story.append(safe_paragraph("BhumiBinimoy (Assam Land Exchange) - Cadastral Marketplace System", subtitle_style))
-    story.append(safe_paragraph("<b>Empirical Test Benchmarks, Prototype Architecture & Data Schemas</b>", subtitle_style))
+    story.append(safe_paragraph("NikshayDrishti (Assam TB Sentinel) — AI Decision Support System", subtitle_style))
+    story.append(safe_paragraph("<b>Empirical Machine Learning Benchmarks, SHAP Validation & Prototype Architecture</b>", subtitle_style))
 
     meta_data = [
-        [safe_paragraph("<b>Challenge ID:</b> NESFIC-D-52 (Stream 1)", meta_style), safe_paragraph("<b>Department:</b> Rev. & Disaster Mgmt, Assam", meta_style)],
+        [safe_paragraph("<b>Challenge ID:</b> NESFIC-D-30 (Govt Track)", meta_style), safe_paragraph("<b>Department:</b> NHM & State TB Cell, Govt of Assam", meta_style)],
         [safe_paragraph("<b>Lead Applicant:</b> Ron Hatibaruah", meta_style), safe_paragraph("<b>Format:</b> Solution Evidence (PDF < 10 MB)", meta_style)],
-        [safe_paragraph("<b>Live Prototype:</b> https://bhumi-binimoy.pages.dev/", meta_style), safe_paragraph("<b>Verification Status:</b> Fully Built & Tested", meta_style)]
+        [safe_paragraph("<b>Live Prototype:</b> https://nikshay-drishti.pages.dev/", meta_style), safe_paragraph("<b>Verification Status:</b> Fully Built & Benchmarked", meta_style)]
     ]
     t_meta = Table(meta_data, colWidths=[240, 264])
     t_meta.setStyle(TableStyle([
-        ('BACKGROUND', (0,0), (-1,-1), colors.HexColor('#eff6ff')),
-        ('BOX', (0,0), (-1,-1), 1, colors.HexColor('#93c5fd')),
+        ('BACKGROUND', (0,0), (-1,-1), colors.HexColor('#f0fdf4')),
+        ('BOX', (0,0), (-1,-1), 1, colors.HexColor('#86efac')),
         ('PADDING', (0,0), (-1,-1), 5),
         ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
     ]))
@@ -386,32 +360,32 @@ def build_proof_of_work_pdf(output_path):
     for sec in sections[1:]:
         lines = sec.strip().split('\n')
         sec_title = lines[0].strip()
-        story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor('#0284c7'), spaceBefore=8, spaceAfter=5))
+        story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor('#0f766e'), spaceBefore=8, spaceAfter=5))
         story.append(safe_paragraph(sec_title, h2_style))
 
         if '1. Executive Summary' in sec_title:
             img = os.path.join(img_dir, 'diagram_1_before_after_workflow.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
-                story.append(Image(img, width=490, height=265))
+                story.append(Image(img, width=490, height=275.6))
                 story.append(Spacer(1, 5))
-        elif '2. Live System Architecture' in sec_title:
-            img = os.path.join(img_dir, 'diagram_2_dual_system_reconciliation.jpg')
-            if os.path.exists(img):
-                story.append(Spacer(1, 4))
-                story.append(Image(img, width=490, height=265))
-                story.append(Spacer(1, 5))
-        elif '4. 8-Point Title Due-Diligence' in sec_title:
-            img = os.path.join(img_dir, 'diagram_4_land_health_score_hierarchy.jpg')
-            if os.path.exists(img):
-                story.append(Spacer(1, 4))
-                story.append(Image(img, width=490, height=265))
-                story.append(Spacer(1, 5))
-        elif '5. Assisted Conveyancing' in sec_title:
+        elif '2. Machine Learning Model Architecture' in sec_title:
             img = os.path.join(img_dir, 'diagram_3_cadastral_anomaly_catalog.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
-                story.append(Image(img, width=490, height=265))
+                story.append(Image(img, width=490, height=275.6))
+                story.append(Spacer(1, 5))
+        elif '3. Algorithmic De-Duplication' in sec_title:
+            img = os.path.join(img_dir, 'diagram_7_enterprise_system_architecture.jpg')
+            if os.path.exists(img):
+                story.append(Spacer(1, 4))
+                story.append(Image(img, width=490, height=275.6))
+                story.append(Spacer(1, 5))
+        elif '4. Closed-Loop Referral' in sec_title:
+            img = os.path.join(img_dir, 'diagram_5_lat_mandal_mobile_app.jpg')
+            if os.path.exists(img):
+                story.append(Spacer(1, 4))
+                story.append(Image(img, width=490, height=275.6))
                 story.append(Spacer(1, 5))
 
         body_flowables = parse_markdown_content(lines[1:], available_width=490)
@@ -421,8 +395,8 @@ def build_proof_of_work_pdf(output_path):
     print(f"Generated {output_path}")
 
 if __name__ == '__main__':
-    proposal_pdf = os.path.join(base_dir, 'NESFIC_D52_Proposal_Ron_Hatibaruah.pdf')
-    pow_pdf = os.path.join(base_dir, 'NESFIC_D52_Proof_of_Work_Ron_Hatibaruah.pdf')
+    proposal_pdf = os.path.join(base_dir, 'NESFIC_D30_Proposal_Ron_Hatibaruah.pdf')
+    pow_pdf = os.path.join(base_dir, 'NESFIC_D30_Proof_of_Work_Ron_Hatibaruah.pdf')
     
     build_proposal_pdf(proposal_pdf)
     build_proof_of_work_pdf(pow_pdf)

@@ -1,192 +1,135 @@
 import React from 'react';
-import { 
-  Building2, 
-  Map, 
-  SearchCheck, 
-  PlusCircle, 
-  ArrowRightLeft, 
-  ShieldCheck, 
-  HelpCircle,
-  TrendingUp,
-  FileBadge
-} from 'lucide-react';
-import { LandMarketplaceListing } from '../types/landRecords';
-import { formatINR } from '../services/marketplaceEngine';
-
-export type ActiveTab = 'marketplace' | 'deal-room' | 'seller-portal' | 'workflow-tracker' | 'admin-console';
+import { Activity, Shield, AlertTriangle, Database, MapPin, Stethoscope, CheckCircle2, BookOpen, HelpCircle } from 'lucide-react';
 
 interface NavbarProps {
-  activeTab: ActiveTab;
-  setActiveTab: (tab: ActiveTab) => void;
-  selectedCircle: string;
-  setSelectedCircle: (circle: string) => void;
-  listings: LandMarketplaceListing[];
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+  selectedRole: string;
+  setSelectedRole: (role: string) => void;
   onOpenTutorial: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   activeTab,
   setActiveTab,
-  selectedCircle,
-  setSelectedCircle,
-  listings,
+  selectedRole,
+  setSelectedRole,
   onOpenTutorial
 }) => {
-  const verifiedCount = listings.filter(l => l.governmentVerified.titleClearanceBadge === 'GOLD_VERIFIED').length;
-  const totalValuation = listings.reduce((sum, l) => sum + l.sellerRepresentations.askingPriceINR, 0);
-
   return (
-    <header className="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-50 shadow-md">
-      {/* Top Government Banner */}
-      <div className="bg-slate-950 px-4 py-1.5 text-xs text-slate-300 flex flex-wrap justify-between items-center border-b border-slate-800">
-        <div className="flex items-center space-x-2">
-          <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span className="font-semibold text-slate-200">Government of Assam</span>
-          <span className="text-slate-500">•</span>
-          <span>Revenue & Disaster Management Department</span>
-          <span className="text-slate-500">•</span>
-          <span className="text-amber-400 font-semibold">NESFIC-D-52 Pilot Solution</span>
-        </div>
-        <div className="flex items-center space-x-4">
-          <span className="text-slate-400 hidden sm:inline">Dharitree • Bhudakshya • e-Panjeeyan • e-Khajana</span>
-          <span className="bg-emerald-950 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded text-[11px] font-mono">
-            {listings.length} Active Listings ({verifiedCount} Gold Verified)
+    <header className="bg-slate-900 text-white sticky top-0 z-40 shadow-md border-b border-teal-800">
+      {/* Top Government Strip */}
+      <div className="bg-teal-950 text-teal-200 text-xs px-4 py-1.5 flex flex-wrap justify-between items-center border-b border-teal-800/60">
+        <div className="flex items-center gap-2">
+          <span className="font-semibold text-white tracking-wide flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            GOVERNMENT OF ASSAM
           </span>
-          <span className="bg-slate-800 text-slate-300 px-2 py-0.5 rounded text-[11px] font-mono hidden md:inline">
-            Marketplace Volume: {formatINR(totalValuation)}
+          <span className="text-teal-400/50">•</span>
+          <span>National Health Mission (NHM) & State TB Cell</span>
+          <span className="text-teal-400/50">•</span>
+          <span className="bg-teal-900 text-teal-300 px-1.5 py-0.5 rounded text-[11px] font-mono font-medium">
+            NESFIC-D-30: Govt Track
+          </span>
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="hidden md:inline text-teal-300/80">
+            National TB Elimination Programme (NTEP)
+          </span>
+          <span className="bg-emerald-900/80 border border-emerald-500/40 text-emerald-300 px-2 py-0.5 rounded text-[11px] font-semibold flex items-center gap-1">
+            <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+            Decision-Support Only (CDSS)
           </span>
         </div>
       </div>
 
-      {/* Main Navigation Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          
-          {/* Logo & Platform Title */}
-          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setActiveTab('marketplace')}>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center shadow-lg shadow-emerald-900/30">
-              <Building2 className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <div className="flex items-center space-x-2">
-                <h1 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-                  BhumiBinimoy <span className="text-xs bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-normal">ভূমি বিনিময়</span>
-                </h1>
-              </div>
-              <p className="text-xs text-slate-400 font-medium">
-                Assam Land Exchange • Government-Verified Cadastral Marketplace
-              </p>
-            </div>
+      {/* Main Navbar */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
+        {/* Brand */}
+        <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveTab('executive')}>
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center text-white shadow-lg shadow-teal-900/30">
+            <Activity className="w-6 h-6" />
           </div>
-
-          {/* Action Tabs */}
-          <div className="flex flex-wrap items-center gap-2">
-            <button
-              onClick={() => setActiveTab('marketplace')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all ${
-                activeTab === 'marketplace'
-                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-900/20'
-                  : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800 hover:text-white'
-              }`}
-            >
-              <Map className="w-4 h-4 text-emerald-400" />
-              <span>Cadastral Marketplace</span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('deal-room')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all ${
-                activeTab === 'deal-room'
-                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-900/20'
-                  : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800 hover:text-white'
-              }`}
-            >
-              <SearchCheck className="w-4 h-4 text-teal-400" />
-              <span>Buyer Deal Room</span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('seller-portal')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all ${
-                activeTab === 'seller-portal'
-                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-900/20'
-                  : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800 hover:text-white'
-              }`}
-            >
-              <PlusCircle className="w-4 h-4 text-amber-400" />
-              <span>Sell Land</span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('workflow-tracker')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all ${
-                activeTab === 'workflow-tracker'
-                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-900/20'
-                  : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800 hover:text-white'
-              }`}
-            >
-              <ArrowRightLeft className="w-4 h-4 text-blue-400" />
-              <span>Assisted Pipeline</span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('admin-console')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all ${
-                activeTab === 'admin-console'
-                  ? 'bg-purple-600 text-white shadow-md shadow-purple-900/20'
-                  : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800 hover:text-white'
-              }`}
-            >
-              <ShieldCheck className="w-4 h-4 text-purple-400" />
-              <span>Dept Console</span>
-            </button>
-
-            {/* Tutorial Button */}
-            <button
-              onClick={onOpenTutorial}
-              title="Platform Guide & Architecture Walkthrough"
-              className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
-            >
-              <HelpCircle className="w-4 h-4" />
-            </button>
+          <div>
+            <div className="flex items-center gap-2">
+              <h1 className="text-xl font-bold tracking-tight text-white flex items-center gap-1.5">
+                NikshayDrishti <span className="text-teal-400 text-sm font-normal">নিশ্চয় দৃষ্টি</span>
+              </h1>
+              <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 bg-teal-800/80 text-teal-200 rounded border border-teal-600/40">
+                Assam TB Sentinel
+              </span>
+            </div>
+            <p className="text-xs text-slate-300">
+              TB Risk Stratification & Programme Decision Support Platform
+            </p>
           </div>
         </div>
 
-        {/* Circle Filter Bar */}
-        <div className="mt-3 pt-2 border-t border-slate-800/60 flex items-center justify-between text-xs">
-          <div className="flex items-center space-x-2">
-            <span className="text-slate-400">Target Pilot Circle:</span>
-            <div className="flex items-center space-x-1">
-              {['ALL', 'Dispur', 'Guwahati', 'Sonapur', 'North Guwahati'].map(circle => (
+        {/* Action Controls: Tutorial Button & Role Selector */}
+        <div className="flex flex-wrap items-center gap-2.5">
+          {/* Prominent Tutorial Link */}
+          <button
+            onClick={onOpenTutorial}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-teal-600 hover:bg-teal-500 text-white shadow-md transition-all border border-teal-400/50"
+            title="What the application is and how to use it"
+          >
+            <BookOpen className="w-3.5 h-3.5" />
+            <span>Tutorial & User Guide</span>
+          </button>
+
+          {/* Role Selector */}
+          <div className="flex items-center gap-1 bg-slate-800/90 p-1 rounded-lg border border-slate-700">
+            <span className="text-xs text-slate-400 px-2 font-medium hidden sm:inline">Role:</span>
+            {[
+              { id: 'STO', label: 'State TB Officer', icon: Shield },
+              { id: 'DTO', label: 'District TB Officer', icon: MapPin },
+              { id: 'MO_STS', label: 'MO / Field Staff', icon: Stethoscope }
+            ].map((role) => {
+              const Icon = role.icon;
+              const isSelected = selectedRole === role.id;
+              return (
                 <button
-                  key={circle}
-                  onClick={() => setSelectedCircle(circle)}
-                  className={`px-2.5 py-1 rounded text-[11px] font-medium transition-colors ${
-                    selectedCircle === circle
-                      ? 'bg-emerald-500 text-slate-950 font-bold'
-                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                  key={role.id}
+                  onClick={() => setSelectedRole(role.id)}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 text-xs rounded-md font-medium transition-all ${
+                    isSelected
+                      ? 'bg-teal-700 text-white shadow border border-teal-500/40'
+                      : 'text-slate-300 hover:text-white hover:bg-slate-700/60'
                   }`}
                 >
-                  {circle === 'ALL' ? 'All Circles' : `${circle} Circle`}
+                  <Icon className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">{role.label}</span>
+                  <span className="sm:hidden">{role.id}</span>
                 </button>
-              ))}
-            </div>
+              );
+            })}
           </div>
+        </div>
+      </div>
 
-          <div className="hidden lg:flex items-center space-x-3 text-slate-400 text-[11px]">
-            <span className="flex items-center gap-1">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
-              Gold Verified (Clean Title)
-            </span>
-            <span className="flex items-center gap-1">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
-              Conditional (Co-Sharer / Dues)
-            </span>
-            <span className="flex items-center gap-1">
-              <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span>
-              Chapter X Tribal Belt
-            </span>
-          </div>
+      {/* Navigation Tabs */}
+      <div className="bg-slate-800/95 border-t border-slate-700/60 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto flex space-x-1 sm:space-x-2 overflow-x-auto py-1.5 scrollbar-thin">
+          {[
+            { id: 'executive', label: 'Executive Command' },
+            { id: 'worklist', label: 'Risk Stratification & Differentiated Care' },
+            { id: 'gis', label: 'Geospatial Vulnerability & ACF' },
+            { id: 'referrals', label: 'Closed-Loop Referrals' },
+            { id: 'facilities', label: 'Facility Supervision & Logistics' },
+            { id: 'audit', label: 'Audit & De-duplication' }
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`whitespace-nowrap px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all ${
+                activeTab === tab.id
+                  ? 'bg-teal-700/80 text-white shadow border border-teal-500/50'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
       </div>
     </header>

@@ -1,217 +1,361 @@
 import React, { useState } from 'react';
 import { 
-  X, 
   BookOpen, 
-  Building2, 
-  ShieldCheck, 
-  Map, 
-  SearchCheck, 
-  PlusCircle, 
-  ArrowRightLeft, 
-  DollarSign, 
-  CheckCircle2, 
-  HelpCircle,
-  ArrowRight,
+  CheckCircle, 
+  Copy, 
+  Download, 
+  ExternalLink, 
+  HelpCircle, 
+  Layers, 
+  MapPin, 
+  Shield, 
+  ShieldAlert, 
+  Stethoscope, 
+  Activity, 
+  HeartPulse, 
+  FileText,
+  Truck,
+  Cpu,
+  Clock,
+  ChevronRight,
   Info
 } from 'lucide-react';
-import { ActiveTab } from './Navbar';
 
 interface TutorialModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onNavigateTab: (tab: ActiveTab) => void;
+  setActiveTab: (tab: string) => void;
 }
 
 export const TutorialModal: React.FC<TutorialModalProps> = ({
   isOpen,
   onClose,
-  onNavigateTab
+  setActiveTab
 }) => {
-  const [activeSection, setActiveSection] = useState<'overview' | 'features' | 'due-diligence' | 'pilot'>('overview');
+  const [activeStep, setActiveStep] = useState<number>(1);
+  const [copiedNotice, setCopiedNotice] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
+  const handleCopy = (filename: string, textUrl: string) => {
+    fetch(textUrl)
+      .then(r => r.text())
+      .then(text => {
+        navigator.clipboard.writeText(text);
+        setCopiedNotice(`Copied full text of ${filename} to clipboard!`);
+        setTimeout(() => setCopiedNotice(null), 3500);
+      })
+      .catch(() => {
+        setCopiedNotice(`Please download ${filename} directly via the link below.`);
+        setTimeout(() => setCopiedNotice(null), 3500);
+      });
+  };
+
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-slate-900 rounded-2xl max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl border border-slate-800 overflow-hidden animate-fadeIn text-white">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-slate-950/70 backdrop-blur-sm animate-fadeIn">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[92vh] flex flex-col border border-slate-200 overflow-hidden">
         
         {/* Header */}
-        <div className="bg-slate-950 px-6 py-4 flex justify-between items-center border-b border-slate-800">
-          <div className="flex items-center space-x-3">
-            <div className="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-              <Building2 className="w-5 h-5" />
+        <div className="bg-slate-900 text-white p-5 flex items-center justify-between border-b border-teal-800">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center text-white shadow-lg">
+              <BookOpen className="w-5 h-5" />
             </div>
             <div>
-              <div className="flex items-center space-x-2">
-                <h3 className="text-base font-bold text-white">
-                  BhumiBinimoy (ভূমি বিনিময়) • Assam Land Exchange Guide
-                </h3>
-                <span className="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-semibold">
-                  NESFIC-D-52
+              <div className="flex items-center gap-2">
+                <h2 className="text-base sm:text-lg font-bold">
+                  Tutorial & System Guide: NikshayDrishti (নিশ্চয় দৃষ্টি)
+                </h2>
+                <span className="text-[10px] font-mono bg-teal-800 text-teal-200 px-2 py-0.5 rounded border border-teal-600/40">
+                  NESFIC-D-30
                 </span>
               </div>
-              <p className="text-xs text-slate-400">
-                Government-Verified Cadastral Marketplace for Buying and Selling Land
+              <p className="text-xs text-slate-300">
+                What the application is, how to use it, and how to test every departmental capability.
               </p>
             </div>
           </div>
-
           <button
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors"
+            className="text-slate-400 hover:text-white text-lg font-bold p-1.5 rounded-lg hover:bg-slate-800 transition-colors"
           >
-            <X className="w-5 h-5" />
+            ✕
           </button>
         </div>
 
-        {/* Navigation Tabs */}
-        <div className="flex border-b border-slate-800 px-6 bg-slate-900/60 text-xs">
+        {/* Step Navigation Pill Tabs */}
+        <div className="bg-slate-100 p-2 border-b border-slate-200 flex gap-2 overflow-x-auto text-xs font-semibold">
           {[
-            { id: 'overview', label: '1. Problem & Vision' },
-            { id: 'features', label: '2. Core Marketplace Capabilities' },
-            { id: 'due-diligence', label: '3. 8-Point Due-Diligence' },
-            { id: 'pilot', label: '4. Dispur Pilot & Revenue Model' }
-          ].map(tab => (
+            { step: 1, label: '1. What It Is' },
+            { step: 2, label: '2. User Roles' },
+            { step: 3, label: '3. Feature Tour' },
+            { step: 4, label: '4. Copy Text / Dossiers' }
+          ].map(s => (
             <button
-              key={tab.id}
-              onClick={() => setActiveSection(tab.id as any)}
-              className={`py-3 px-4 font-semibold border-b-2 transition-all ${
-                activeSection === tab.id
-                  ? 'border-emerald-500 text-emerald-400'
-                  : 'border-transparent text-slate-400 hover:text-slate-200'
+              key={s.step}
+              onClick={() => setActiveStep(s.step)}
+              className={`px-3 py-1.5 rounded-lg transition-all whitespace-nowrap ${
+                activeStep === s.step
+                  ? 'bg-teal-700 text-white shadow'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200'
               }`}
             >
-              {tab.label}
+              {s.label}
             </button>
           ))}
         </div>
 
+        {/* Notification Toast */}
+        {copiedNotice && (
+          <div className="bg-emerald-800 text-white text-xs px-4 py-2 font-medium flex items-center gap-2 animate-fadeIn">
+            <CheckCircle className="w-4 h-4 text-emerald-300" />
+            <span>{copiedNotice}</span>
+          </div>
+        )}
+
         {/* Content Body */}
-        <div className="p-6 overflow-y-auto space-y-4 text-xs leading-relaxed text-slate-300">
+        <div className="p-6 overflow-y-auto space-y-5 text-xs text-slate-700 leading-relaxed flex-1">
           
-          {activeSection === 'overview' && (
+          {/* STEP 1: What is NikshayDrishti? */}
+          {activeStep === 1 && (
             <div className="space-y-4">
-              <h4 className="text-sm font-bold text-white">The Challenge (NESFIC-D-52): Opaque Broker Networks vs. Verified Land Exchange</h4>
-              <p>
-                Citizens buying or selling land in Assam currently depend on informal private brokers and multiple disconnected government portals (<em>Dharitree</em>, <em>Bhudakshya</em>, <em>e-Panjeeyan</em>, <em>e-Khajana</em>) to verify title, boundaries, and land revenue status.
+              <div className="bg-teal-50 border border-teal-200 p-4 rounded-xl text-teal-950">
+                <h3 className="text-sm font-bold text-teal-900 mb-1 flex items-center gap-1.5">
+                  <Activity className="w-4 h-4 text-teal-700" />
+                  What is NikshayDrishti?
+                </h3>
+                <p>
+                  <strong>NikshayDrishti (নিশ্চয় দৃষ্টি)</strong> is an artificial intelligence-powered clinical decision-support and programmatic decision-support system (CDSS) developed for the <strong>National Health Mission (NHM) and State TB Cell, Government of Assam</strong> under <strong>NESFIC-D-30 (Stream 1 — Government Track: Health Sector)</strong>.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="font-bold text-slate-900 text-sm mb-2">The Real-World Challenge in Assam:</h4>
+                <ul className="space-y-2 pl-2">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></span>
+                    <span><strong>High Early Mortality:</strong> Approximately 74% of patient deaths occur within the first 30 days of treatment initiation, predominantly driven by severe undernutrition (BMI &lt; 14), delayed presentation, and diagnostic lag.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></span>
+                    <span><strong>Vulnerable Geographic Pockets:</strong> Tea garden line bastis in Upper Assam (Dibrugarh, Tinsukia) and riverine char sandbars in Lower Assam (Barpeta, Dhubri) face acute access barriers.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></span>
+                    <span><strong>Diagnostic Referral Leakage:</strong> High dropout rates between cough screening at peripheral Ayushman Arogya Mandirs and molecular NAAT testing at distant labs.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="p-3 bg-amber-50 rounded-xl border border-amber-300 text-amber-900">
+                <strong>Mandatory Statutory Guardrail:</strong> In strict compliance with the challenge mandate, all risk outputs and recommendations are <em>decision-support only</em> and do not replace clinical diagnosis or authorized programme decisions by medical officers.
+              </div>
+            </div>
+          )}
+
+          {/* STEP 2: User Roles */}
+          {activeStep === 2 && (
+            <div className="space-y-4">
+              <h3 className="text-sm font-bold text-slate-900 mb-1">
+                Role-Based Consoles (Switch using the top navigation bar):
+              </h3>
+              <p className="text-slate-500">
+                The platform tailors features for four primary stakeholders in Assam’s health system:
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
-                <div className="p-4 bg-red-950/20 border border-red-800/40 rounded-xl space-y-1">
-                  <h5 className="font-bold text-red-300">Current Broker-Driven Market</h5>
-                  <ul className="list-disc list-inside space-y-1 text-red-200/80 text-[11px]">
-                    <li>Information asymmetry and hidden title defects.</li>
-                    <li>Extortionate 5% to 10% private broker commissions.</li>
-                    <li>Speculative, inflated prices disconnected from Zonal rates.</li>
-                    <li>45 to 90 days manual physical searches across offices.</li>
-                  </ul>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                  <div className="flex items-center gap-2 font-bold text-slate-900 mb-2">
+                    <Shield className="w-4 h-4 text-teal-600" />
+                    State TB Officer (STO)
+                  </div>
+                  <p className="text-slate-600 text-[11px] leading-relaxed">
+                    Accesses statewide strategic dashboards, 35-district notification trajectories, mortality reduction trends vs 2015 baseline, and Nikshay Poshan DBT disbursement oversight.
+                  </p>
                 </div>
 
-                <div className="p-4 bg-emerald-950/20 border border-emerald-800/40 rounded-xl space-y-1">
-                  <h5 className="font-bold text-emerald-300">BhumiBinimoy Solution</h5>
-                  <ul className="list-disc list-inside space-y-1 text-emerald-200/80 text-[11px]">
-                    <li>Interactive Cadastral GIS map with verified boundaries.</li>
-                    <li>0% private broker cut; 0.25% Govt facilitation fee.</li>
-                    <li>Transparent comparison against official Zonal Rates.</li>
-                    <li>Instantaneous 8-point automated title reconciliation.</li>
-                  </ul>
+                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                  <div className="flex items-center gap-2 font-bold text-slate-900 mb-2">
+                    <MapPin className="w-4 h-4 text-teal-600" />
+                    District TB Officer (DTO)
+                  </div>
+                  <p className="text-slate-600 text-[11px] leading-relaxed">
+                    Monitors diagnostic cartridge burn rates, receives 14-day stock-out early warnings, schedules automated Supervisory Priority Index (SPI) tours, and conducts death audits.
+                  </p>
+                </div>
+
+                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                  <div className="flex items-center gap-2 font-bold text-slate-900 mb-2">
+                    <Stethoscope className="w-4 h-4 text-teal-600" />
+                    Medical Officer & STS
+                  </div>
+                  <p className="text-slate-600 text-[11px] leading-relaxed">
+                    Reviews clinical patient worklists, inspects SHAP explainability cards, approves inpatient bed triage for critical patients, and delivers high-protein food baskets.
+                  </p>
                 </div>
               </div>
             </div>
           )}
 
-          {activeSection === 'features' && (
+          {/* STEP 3: Feature Tour */}
+          {activeStep === 3 && (
             <div className="space-y-3">
-              <h4 className="text-sm font-bold text-white">4 Primary Platform Modules</h4>
+              <h3 className="text-sm font-bold text-slate-900 mb-1">
+                How to Test Each Core Capability:
+              </h3>
               
               <div className="space-y-2.5">
-                <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1">
-                  <span className="font-bold text-emerald-400">1. Cadastral Map Marketplace Explorer</span>
-                  <p className="text-[11px] text-slate-400">
-                    Buyers can navigate the official cadastral map of Assam, click on verified polygons, and inspect authenticated Dag and Patta records in real time.
-                  </p>
-                </div>
-
-                <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1">
-                  <span className="font-bold text-teal-400">2. Buyer Due-Diligence & Deal Room</span>
-                  <p className="text-[11px] text-slate-400">
-                    Enforces strict separation between Government-verified official particulars and self-reported seller representations. Displays Zonal Value benchmark and statutory fee calculator.
-                  </p>
-                </div>
-
-                <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1">
-                  <span className="font-bold text-amber-400">3. Voluntary Seller Onboarding Portal</span>
-                  <p className="text-[11px] text-slate-400">
-                    Lawful landowners authenticate via Aadhaar e-KYC, query Dharitree to fetch official Jamabandi records, set asking prices, and sign a voluntary consent declaration.
-                  </p>
-                </div>
-
-                <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1">
-                  <span className="font-bold text-blue-400">4. Assisted Conveyancing Pipeline</span>
-                  <p className="text-[11px] text-slate-400">
-                    Streamlines the transaction through 5 milestones: EOI Agreement ➔ Milestone Escrow ➔ Circle Officer Sale NOC ➔ e-Panjeeyan Deed ➔ Mission Basundhara Auto-Mutation.
-                  </p>
-                </div>
+                {[
+                  {
+                    tab: 'worklist',
+                    title: '1. Risk Stratification & Differentiated Care',
+                    desc: 'Filter by Critical/High risk, click "Explain & CDSS" to view the SHAP biomarker breakdown (BMI < 14, smear 3+, MDR), and approve high-protein food baskets.',
+                    icon: HeartPulse
+                  },
+                  {
+                    tab: 'gis',
+                    title: '2. Geospatial Vulnerability & ACF Map',
+                    desc: 'Explore Assam tea estates, char areas, and slums on the Leaflet map. Click any cluster to inspect population yield and click "Dispatch AI-Xray Van".',
+                    icon: Layers
+                  },
+                  {
+                    tab: 'referrals',
+                    title: '3. Closed-Loop Referral Cascade',
+                    desc: 'Follow the 5-stage diagnostic pipeline from Ayushman Arogya Mandirs to NAAT testing. Click "Advance Step" or "Escalate" on SLA overdue samples.',
+                    icon: Clock
+                  },
+                  {
+                    tab: 'facilities',
+                    title: '4. Facility Supervision & Predictive Logistics',
+                    desc: 'Monitor Truenat/CBNAAT capacity utilization, view the 14-day cartridge stockout predictor, and schedule weekly Supervisory Priority Index (SPI) tours.',
+                    icon: Cpu
+                  },
+                  {
+                    tab: 'audit',
+                    title: '5. Audit & Algorithmic De-Duplication',
+                    desc: 'Test the Double Metaphone Assamese fuzzy record matcher to merge duplicate Nikshay IDs, and review 60-day early mortality verbal autopsies.',
+                    icon: FileText
+                  }
+                ].map(feat => {
+                  const Icon = feat.icon;
+                  return (
+                    <div key={feat.tab} className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-start justify-between gap-3">
+                      <div className="flex items-start gap-2.5">
+                        <Icon className="w-4 h-4 text-teal-600 flex-shrink-0 mt-0.5" />
+                        <div>
+                          <h4 className="font-bold text-slate-900">{feat.title}</h4>
+                          <p className="text-slate-600 text-[11px] mt-0.5">{feat.desc}</p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setActiveTab(feat.tab);
+                          onClose();
+                        }}
+                        className="px-2.5 py-1 bg-teal-600 hover:bg-teal-700 text-white rounded font-bold text-[10px] whitespace-nowrap shadow flex items-center gap-1"
+                      >
+                        Open Tab <ChevronRight className="w-3 h-3" />
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
 
-          {activeSection === 'due-diligence' && (
-            <div className="space-y-3">
-              <h4 className="text-sm font-bold text-white">8-Point Statutory Due-Diligence Framework</h4>
-              <p className="text-slate-400 text-[11px]">
-                Every parcel listed on the exchange is cross-checked against 8 statutory dimensions under the <em>Assam Land and Revenue Regulation 1886</em>:
-              </p>
-
-              <div className="grid grid-cols-2 gap-2 text-[11px]">
-                <div className="p-2.5 bg-slate-950 rounded-lg border border-slate-800">
-                  <strong className="text-emerald-400 block">1. Patta Tenure:</strong>
-                  <span>Periodic Patta (Khiraj Myadi) alienability confirmed.</span>
-                </div>
-                <div className="p-2.5 bg-slate-950 rounded-lg border border-slate-800">
-                  <strong className="text-emerald-400 block">2. Area Variance:</strong>
-                  <span>Bhudakshya polygon and Jamabandi match within 5%.</span>
-                </div>
-                <div className="p-2.5 bg-slate-950 rounded-lg border border-slate-800">
-                  <strong className="text-emerald-400 block">3. Share Balance:</strong>
-                  <span>Co-sharer Pattadar fractional shares equal 100%.</span>
-                </div>
-                <div className="p-2.5 bg-slate-950 rounded-lg border border-slate-800">
-                  <strong className="text-emerald-400 block">4. e-Khajana Revenue:</strong>
-                  <span>Zero outstanding land revenue or local cess arrears.</span>
-                </div>
-                <div className="p-2.5 bg-slate-950 rounded-lg border border-slate-800">
-                  <strong className="text-emerald-400 block">5. Encumbrance Search:</strong>
-                  <span>Zero active bank mortgages or financial attachments.</span>
-                </div>
-                <div className="p-2.5 bg-slate-950 rounded-lg border border-slate-800">
-                  <strong className="text-emerald-400 block">6. Litigation Check:</strong>
-                  <span>Zero pending civil injunctions or revenue stay orders.</span>
-                </div>
-                <div className="p-2.5 bg-slate-950 rounded-lg border border-slate-800">
-                  <strong className="text-emerald-400 block">7. Chapter X Safeguards:</strong>
-                  <span>Protection of backward classes in Tribal Belts/Blocks.</span>
-                </div>
-                <div className="p-2.5 bg-slate-950 rounded-lg border border-slate-800">
-                  <strong className="text-emerald-400 block">8. Ecological Buffers:</strong>
-                  <span>Zero overlap with Village Grazing Reserves (VGR/PGR).</span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {activeSection === 'pilot' && (
-            <div className="space-y-3">
-              <h4 className="text-sm font-bold text-white">Dispur Pilot & Economic Sustainability</h4>
-              <p>
-                The initial 6-month pilot is launched in <strong>Dispur Revenue Circle</strong> (Kamrup Metropolitan District), where cadastral mapping and Jamabandi digitization are 100% complete.
-              </p>
-
-              <div className="p-4 bg-purple-950/20 border border-purple-800/40 rounded-xl space-y-2">
-                <span className="font-bold text-purple-300 block">Government Facilitation Fee (Policy Option)</span>
-                <p className="text-[11px] text-purple-200/80 leading-relaxed">
-                  In lieu of unregulated 5% private broker cuts, the State can levy a modest <strong>0.25% to 0.50% statutory facilitation fee</strong>. In Kamrup Metro alone, this projects to generate <strong>₹7.5 to ₹15 Crore in annual non-tax revenue</strong> for the Revenue Department, fully self-funding platform operations.
+          {/* STEP 4: Copy Text & Download Dossiers */}
+          {activeStep === 4 && (
+            <div className="space-y-4">
+              <div className="bg-slate-900 text-white p-4 rounded-xl border border-teal-800">
+                <h3 className="text-sm font-bold text-teal-300 flex items-center gap-2 mb-1">
+                  <Copy className="w-4 h-4 text-teal-400" />
+                  Text Versions for Copy-Pasting into Application Forms
+                </h3>
+                <p className="text-slate-300 text-[11px] leading-relaxed">
+                  The official NESFIC 2026 application form requires copying plain-text content into textarea fields. Use the 1-click copy buttons below or download the TXT files directly:
                 </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Proposal Text Block */}
+                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-slate-900">Official Proposal Form (TXT)</span>
+                    <span className="text-[10px] bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded font-mono font-bold">17 KB</span>
+                  </div>
+                  <p className="text-slate-500 text-[11px]">
+                    Structured field-by-field blocks for Fields 1 through 5 matching portal character limits.
+                  </p>
+                  <div className="pt-2 flex items-center gap-2">
+                    <button
+                      onClick={() => handleCopy('Proposal Text', '/downloads/NESFIC_D30_Proposal_Ron_Hatibaruah.txt')}
+                      className="px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-lg shadow flex items-center gap-1.5"
+                    >
+                      <Copy className="w-3.5 h-3.5" />
+                      Copy Proposal Text
+                    </button>
+                    <a
+                      href="/downloads/NESFIC_D30_Proposal_Ron_Hatibaruah.txt"
+                      download="NESFIC_D30_Proposal_Ron_Hatibaruah.txt"
+                      className="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-bold text-xs rounded-lg shadow-sm flex items-center gap-1"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      Download TXT
+                    </a>
+                  </div>
+                </div>
+
+                {/* Proof of Work Text Block */}
+                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-slate-900">Proof of Work Dossier (TXT)</span>
+                    <span className="text-[10px] bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded font-mono font-bold">12 KB</span>
+                  </div>
+                  <p className="text-slate-500 text-[11px]">
+                    Technical evidence, ML benchmark tables, SHAP feature matrix, and latency telemetry.
+                  </p>
+                  <div className="pt-2 flex items-center gap-2">
+                    <button
+                      onClick={() => handleCopy('Proof of Work Text', '/downloads/NESFIC_D30_Proof_of_Work_Ron_Hatibaruah.txt')}
+                      className="px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-lg shadow flex items-center gap-1.5"
+                    >
+                      <Copy className="w-3.5 h-3.5" />
+                      Copy PoW Text
+                    </button>
+                    <a
+                      href="/downloads/NESFIC_D30_Proof_of_Work_Ron_Hatibaruah.txt"
+                      download="NESFIC_D30_Proof_of_Work_Ron_Hatibaruah.txt"
+                      className="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-bold text-xs rounded-lg shadow-sm flex items-center gap-1"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      Download TXT
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Official PDFs */}
+              <div className="p-3 bg-teal-50/80 rounded-xl border border-teal-200 flex items-center justify-between text-xs">
+                <span className="text-teal-950 font-medium">
+                  Need official submission PDFs with embedded 16:9 infographics?
+                </span>
+                <div className="flex items-center gap-2">
+                  <a
+                    href="/downloads/NESFIC_D30_Proposal_Ron_Hatibaruah.pdf"
+                    download
+                    className="text-teal-700 font-bold hover:underline flex items-center gap-1"
+                  >
+                    <Download className="w-3.5 h-3.5" /> Proposal (PDF)
+                  </a>
+                  <span className="text-teal-300">•</span>
+                  <a
+                    href="/downloads/NESFIC_D30_Proof_of_Work_Ron_Hatibaruah.pdf"
+                    download
+                    className="text-teal-700 font-bold hover:underline flex items-center gap-1"
+                  >
+                    <Download className="w-3.5 h-3.5" /> PoW (PDF)
+                  </a>
+                </div>
               </div>
             </div>
           )}
@@ -219,15 +363,15 @@ export const TutorialModal: React.FC<TutorialModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="bg-slate-950 px-6 py-3 border-t border-slate-800 flex items-center justify-between">
-          <span className="text-[11px] text-slate-500">
-            Assam Innovation & Startup Foundation • NESFIC 2026
-          </span>
+        <div className="bg-slate-50 p-4 border-t border-slate-200 flex items-center justify-between">
+          <div className="text-[11px] text-slate-500">
+            Principal Investigator: <strong>Ron Hatibaruah</strong> (ron.hatibaruah@gmail.com)
+          </div>
           <button
             onClick={onClose}
-            className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs"
+            className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-bold shadow"
           >
-            Explore Platform
+            Close Guide
           </button>
         </div>
 
