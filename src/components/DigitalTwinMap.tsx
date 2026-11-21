@@ -11,7 +11,12 @@ import {
   Filter,
   CheckSquare,
   Square,
-  Compass
+  Compass,
+  Satellite,
+  Mountain,
+  Moon,
+  Sun,
+  Globe
 } from 'lucide-react';
 import L from 'leaflet';
 import { 
@@ -21,9 +26,58 @@ import {
 } from '../data/assam_flood_data';
 import { DataProvenanceTier } from '../types/flood';
 
+type BaseMapMode = 'satellite' | 'topo' | 'dark' | 'light';
+
+interface BaseMapConfig {
+  id: BaseMapMode;
+  name: string;
+  url: string;
+  attribution: string;
+  subdomains?: string[];
+  maxZoom: number;
+}
+
+const BASE_MAPS: Record<BaseMapMode, BaseMapConfig> = {
+  satellite: {
+    id: 'satellite',
+    name: 'Satellite (ESRI)',
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+    maxZoom: 19
+  },
+  topo: {
+    id: 'topo',
+    name: 'Topography (OpenTopo)',
+    url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+    attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
+    subdomains: ['a', 'b', 'c'],
+    maxZoom: 17
+  },
+  dark: {
+    id: 'dark',
+    name: 'Dark Tactical (CARTO)',
+    url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: ['a', 'b', 'c', 'd'],
+    maxZoom: 19
+  },
+  light: {
+    id: 'light',
+    name: 'Light Blueprint (CARTO)',
+    url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: ['a', 'b', 'c', 'd'],
+    maxZoom: 19
+  }
+};
+
 export const DigitalTwinMap: React.FC = () => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
+  const activeTileLayerRef = useRef<L.TileLayer | null>(null);
+
+  // Active Basemap Selection
+  const [activeBaseMap, setActiveBaseMap] = useState<BaseMapMode>('satellite');
 
   // Layer Visibility State
   const [showObservedSAR, setShowObservedSAR] = useState<boolean>(true);
@@ -36,11 +90,11 @@ export const DigitalTwinMap: React.FC = () => {
   const [activeProvenanceFilter, setActiveProvenanceFilter] = useState<DataProvenanceTier | 'ALL'>('ALL');
   const [selectedStation, setSelectedStation] = useState<string | null>(null);
 
+  // Initialize Map Once
   useEffect(() => {
     if (!mapContainerRef.current) return;
 
     if (!mapInstanceRef.current) {
-      // Initialize Leaflet Map centered on Assam
       const map = L.map(mapContainerRef.current, {
         center: [26.35, 92.50],
         zoom: 7,
@@ -48,20 +102,46 @@ export const DigitalTwinMap: React.FC = () => {
         attributionControl: true
       });
 
-      // CartoDB Dark Matter Basemap for contrast
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 19
+      // Initialize with default basemap (Satellite)
+      const initialConfig = BASE_MAPS[activeBaseMap];
+      const tileLayer = L.tileLayer(initialConfig.url, {
+        attribution: initialConfig.attribution,
+        subdomains: initialConfig.subdomains || ['a', 'b', 'c'],
+        maxZoom: initialConfig.maxZoom
       }).addTo(map);
 
+      activeTileLayerRef.current = tileLayer;
       mapInstanceRef.current = map;
     }
+  }, []);
 
+  // Update Basemap Layer when activeBaseMap changes
+  useEffect(() => {
     const map = mapInstanceRef.current;
     if (!map) return;
 
-    // Clear existing dynamic layers
+    if (activeTileLayerRef.current) {
+      map.removeLayer(activeTileLayerRef.current);
+    }
+
+    const config = BASE_MAPS[activeBaseMap];
+    const newTileLayer = L.tileLayer(config.url, {
+      attribution: config.attribution,
+      subdomains: config.subdomains || ['a', 'b', 'c'],
+      maxZoom: config.maxZoom
+    }).addTo(map);
+
+    // Send tile layer to back so vector layers stay on top
+    newTileLayer.bringToBack();
+    activeTileLayerRef.current = newTileLayer;
+  }, [activeBaseMap]);
+
+  // Update Vector Overlays (Polygons, Embankments, Markers)
+  useEffect(() => {
+    const map = mapInstanceRef.current;
+    if (!map) return;
+
+    // Clear existing vector layers (preserve tileLayer)
     map.eachLayer((layer) => {
       if (layer instanceof L.Marker || layer instanceof L.Polygon || layer instanceof L.Polyline) {
         map.removeLayer(layer);
@@ -70,7 +150,6 @@ export const DigitalTwinMap: React.FC = () => {
 
     // 1. Draw Inundation Polygons
     ASSAM_INUNDATION_LAYERS.forEach((poly) => {
-      // Check visibility filter
       if (poly.provenance === 'OBSERVED' && !showObservedSAR) return;
       if (poly.provenance === 'FORECAST' && !showForecastWavefront) return;
       if (poly.provenance === 'SIMULATED' && !showSimulatedBreach) return;
@@ -83,9 +162,9 @@ export const DigitalTwinMap: React.FC = () => {
       const polygon = L.polygon(poly.coordinates, {
         color: fillColor,
         fillColor: fillColor,
-        fillOpacity: 0.45,
-        weight: 2,
-        dashArray: poly.provenance === 'SIMULATED' ? '5, 5' : undefined
+        fillOpacity: activeBaseMap === 'satellite' ? 0.55 : 0.45,
+        weight: 2.5,
+        dashArray: poly.provenance === 'SIMULATED' ? '6, 6' : undefined
       }).addTo(map);
 
       polygon.bindPopup(`
@@ -116,8 +195,8 @@ export const DigitalTwinMap: React.FC = () => {
 
         const polyline = L.polyline(emb.coordinates, {
           color: strokeColor,
-          weight: 4,
-          opacity: 0.9
+          weight: 4.5,
+          opacity: 0.95
         }).addTo(map);
 
         polyline.bindPopup(`
@@ -147,22 +226,21 @@ export const DigitalTwinMap: React.FC = () => {
         const isCritical = station.status === 'ABOVE_DANGER_LEVEL';
         const markerColor = isCritical ? '#ef4444' : '#f59e0b';
 
-        // Custom HTML Marker Icon
         const customIcon = L.divIcon({
           className: 'custom-river-marker',
           html: `
             <div style="
-              width: 16px; 
-              height: 16px; 
+              width: 18px; 
+              height: 18px; 
               background: ${markerColor}; 
               border: 2px solid #ffffff; 
               border-radius: 50%; 
-              box-shadow: 0 0 10px ${markerColor};
+              box-shadow: 0 0 12px ${markerColor};
               animation: ${isCritical ? 'pulse 1.5s infinite' : 'none'};
             "></div>
           `,
-          iconSize: [16, 16],
-          iconAnchor: [8, 8]
+          iconSize: [18, 18],
+          iconAnchor: [9, 9]
         });
 
         const marker = L.marker([station.latitude, station.longitude], { icon: customIcon }).addTo(map);
@@ -198,7 +276,8 @@ export const DigitalTwinMap: React.FC = () => {
     showSimulatedBreach, 
     showRiverStations, 
     showEmbankments, 
-    activeProvenanceFilter
+    activeProvenanceFilter,
+    activeBaseMap
   ]);
 
   return (
@@ -208,7 +287,7 @@ export const DigitalTwinMap: React.FC = () => {
         {/* Layer Toggles */}
         <div className="flex flex-wrap items-center gap-2 text-xs">
           <span className="text-slate-400 font-semibold mr-1 flex items-center gap-1">
-            <Layers className="w-4 h-4 text-cyan-400" /> Layers:
+            <Layers className="w-4 h-4 text-cyan-400" /> Overlays:
           </span>
 
           <button
@@ -244,7 +323,7 @@ export const DigitalTwinMap: React.FC = () => {
             }`}
           >
             <span className="w-2.5 h-2.5 rounded-full bg-purple-400"></span>
-            <span>Simulated Breach Inundation</span>
+            <span>Simulated Breach</span>
           </button>
 
           <button
@@ -314,11 +393,74 @@ export const DigitalTwinMap: React.FC = () => {
       <div className="relative rounded-xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-950 h-[640px]">
         <div ref={mapContainerRef} className="w-full h-full z-10" />
 
+        {/* Top-Right Free Base Map Mode Selector */}
+        <div className="absolute top-4 right-4 z-20 bg-slate-900/90 backdrop-blur-md p-2 rounded-xl border border-slate-700 text-xs text-slate-300 shadow-xl flex items-center gap-1">
+          <div className="text-[11px] font-bold text-slate-300 px-2 flex items-center gap-1">
+            <Globe className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Basemap:</span>
+          </div>
+
+          <button
+            onClick={() => setActiveBaseMap('satellite')}
+            title="ESRI World Imagery (Free High-Resolution Satellite)"
+            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+              activeBaseMap === 'satellite'
+                ? 'bg-cyan-600 text-white shadow-md font-bold'
+                : 'text-slate-400 hover:text-white hover:bg-slate-800'
+            }`}
+          >
+            <Satellite className="w-3.5 h-3.5" />
+            <span>Satellite</span>
+          </button>
+
+          <button
+            onClick={() => setActiveBaseMap('topo')}
+            title="OpenTopoMap (Free Elevation Contours & Drainage Terrain)"
+            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+              activeBaseMap === 'topo'
+                ? 'bg-emerald-600 text-white shadow-md font-bold'
+                : 'text-slate-400 hover:text-white hover:bg-slate-800'
+            }`}
+          >
+            <Mountain className="w-3.5 h-3.5" />
+            <span>Topography</span>
+          </button>
+
+          <button
+            onClick={() => setActiveBaseMap('dark')}
+            title="CartoDB Dark Matter (Free High-Contrast Tactical View)"
+            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+              activeBaseMap === 'dark'
+                ? 'bg-slate-800 text-white shadow-md font-bold border border-slate-600'
+                : 'text-slate-400 hover:text-white hover:bg-slate-800'
+            }`}
+          >
+            <Moon className="w-3.5 h-3.5" />
+            <span>Dark</span>
+          </button>
+
+          <button
+            onClick={() => setActiveBaseMap('light')}
+            title="CartoDB Positron (Free Clean Light Blueprint)"
+            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+              activeBaseMap === 'light'
+                ? 'bg-slate-200 text-slate-900 shadow-md font-bold'
+                : 'text-slate-400 hover:text-white hover:bg-slate-800'
+            }`}
+          >
+            <Sun className="w-3.5 h-3.5" />
+            <span>Light</span>
+          </button>
+        </div>
+
         {/* Floating Map Legend Overlay */}
         <div className="absolute bottom-4 left-4 z-20 bg-slate-900/90 backdrop-blur-md p-3.5 rounded-xl border border-slate-700 text-xs text-slate-300 shadow-xl max-w-xs space-y-2">
           <div className="font-bold text-white flex items-center justify-between border-b border-slate-800 pb-1.5">
             <span>4D Map Legend</span>
-            <Compass className="w-4 h-4 text-cyan-400" />
+            <div className="flex items-center gap-1 text-[10px] text-cyan-400 font-mono">
+              <Compass className="w-3.5 h-3.5" />
+              <span>{BASE_MAPS[activeBaseMap].name}</span>
+            </div>
           </div>
 
           <div className="space-y-1.5 text-[11px]">
@@ -345,7 +487,7 @@ export const DigitalTwinMap: React.FC = () => {
           </div>
 
           <div className="pt-2 border-t border-slate-800 text-[10px] text-slate-400">
-            Click any polygon or marker for telemetry & uncertainty indicators.
+            Switch basemaps above. Click any feature for telemetry & uncertainty indicators.
           </div>
         </div>
       </div>
