@@ -89,7 +89,7 @@ export const TutorialModal: React.FC<TutorialModalProps> = ({
             { step: 1, label: '1. What It Is' },
             { step: 2, label: '2. User Roles' },
             { step: 3, label: '3. Feature Tour' },
-            { step: 4, label: '4. Copy Text / Dossiers' }
+            { step: 4, label: '4. Official Proposal' }
           ].map(s => (
             <button
               key={s.step}
@@ -263,99 +263,37 @@ export const TutorialModal: React.FC<TutorialModalProps> = ({
             </div>
           )}
 
-          {/* STEP 4: Copy Text & Download Dossiers */}
+          {/* STEP 4: Official Proposal Document */}
           {activeStep === 4 && (
             <div className="space-y-4">
-              <div className="bg-slate-900 text-white p-4 rounded-xl border border-teal-800">
+              <div className="bg-slate-900 text-white p-5 rounded-xl border border-teal-800">
                 <h3 className="text-sm font-bold text-teal-300 flex items-center gap-2 mb-1">
-                  <Copy className="w-4 h-4 text-teal-400" />
-                  Text Versions for Copy-Pasting into Application Forms
+                  <FileText className="w-4 h-4 text-teal-400" />
+                  Official NESFIC-D-30 Solution Proposal
                 </h3>
                 <p className="text-slate-300 text-[11px] leading-relaxed">
-                  The official NESFIC 2026 application form requires copying plain-text content into textarea fields. Use the 1-click copy buttons below or download the TXT files directly:
+                  The complete official proposal submission document prepared for the National Health Mission (NHM) and State TB Cell, Government of Assam, formatted under the Uniform Solution Proposal Requirements (USPR).
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Proposal Text Block */}
-                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold text-slate-900">Official Proposal Form (TXT)</span>
-                    <span className="text-[10px] bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded font-mono font-bold">17 KB</span>
-                  </div>
-                  <p className="text-slate-500 text-[11px]">
-                    Structured field-by-field blocks for Fields 1 through 5 matching portal character limits.
+              {/* Official Proposal Download Card */}
+              <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <h4 className="font-bold text-slate-900 text-sm">Official Solution Proposal Document (PDF)</h4>
+                  <p className="text-slate-500 text-[11px] mt-0.5">
+                    Includes all 5 submission fields, implementation roadmap, budget allocation, and embedded 16:9 widescreen technological framework infographics.
                   </p>
-                  <div className="pt-2 flex items-center gap-2">
-                    <button
-                      onClick={() => handleCopy('Proposal Text', '/downloads/NESFIC_D30_Proposal_Ron_Hatibaruah.txt')}
-                      className="px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-lg shadow flex items-center gap-1.5"
-                    >
-                      <Copy className="w-3.5 h-3.5" />
-                      Copy Proposal Text
-                    </button>
-                    <a
-                      href="/downloads/NESFIC_D30_Proposal_Ron_Hatibaruah.txt"
-                      download="NESFIC_D30_Proposal_Ron_Hatibaruah.txt"
-                      className="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-bold text-xs rounded-lg shadow-sm flex items-center gap-1"
-                    >
-                      <Download className="w-3.5 h-3.5" />
-                      Download TXT
-                    </a>
-                  </div>
                 </div>
-
-                {/* Proof of Work Text Block */}
-                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold text-slate-900">Proof of Work Dossier (TXT)</span>
-                    <span className="text-[10px] bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded font-mono font-bold">12 KB</span>
-                  </div>
-                  <p className="text-slate-500 text-[11px]">
-                    Technical evidence, ML benchmark tables, SHAP feature matrix, and latency telemetry.
-                  </p>
-                  <div className="pt-2 flex items-center gap-2">
-                    <button
-                      onClick={() => handleCopy('Proof of Work Text', '/downloads/NESFIC_D30_Proof_of_Work_Ron_Hatibaruah.txt')}
-                      className="px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-lg shadow flex items-center gap-1.5"
-                    >
-                      <Copy className="w-3.5 h-3.5" />
-                      Copy PoW Text
-                    </button>
-                    <a
-                      href="/downloads/NESFIC_D30_Proof_of_Work_Ron_Hatibaruah.txt"
-                      download="NESFIC_D30_Proof_of_Work_Ron_Hatibaruah.txt"
-                      className="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-bold text-xs rounded-lg shadow-sm flex items-center gap-1"
-                    >
-                      <Download className="w-3.5 h-3.5" />
-                      Download TXT
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              {/* Official PDFs */}
-              <div className="p-3 bg-teal-50/80 rounded-xl border border-teal-200 flex items-center justify-between text-xs">
-                <span className="text-teal-950 font-medium">
-                  Need official submission PDFs with embedded 16:9 infographics?
-                </span>
-                <div className="flex items-center gap-2">
-                  <a
-                    href="/downloads/NESFIC_D30_Proposal_Ron_Hatibaruah.pdf"
-                    download
-                    className="text-teal-700 font-bold hover:underline flex items-center gap-1"
-                  >
-                    <Download className="w-3.5 h-3.5" /> Proposal (PDF)
-                  </a>
-                  <span className="text-teal-300">•</span>
-                  <a
-                    href="/downloads/NESFIC_D30_Proof_of_Work_Ron_Hatibaruah.pdf"
-                    download
-                    className="text-teal-700 font-bold hover:underline flex items-center gap-1"
-                  >
-                    <Download className="w-3.5 h-3.5" /> PoW (PDF)
-                  </a>
-                </div>
+                <a
+                  href="/downloads/NESFIC_D30_Proposal_Ron_Hatibaruah.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                  download="NESFIC_D30_Proposal_Ron_Hatibaruah.pdf"
+                  className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-lg shadow flex items-center gap-2 whitespace-nowrap self-start sm:self-center"
+                >
+                  <Download className="w-4 h-4" />
+                  Download Proposal (PDF)
+                </a>
               </div>
             </div>
           )}

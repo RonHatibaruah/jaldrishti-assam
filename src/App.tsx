@@ -64,17 +64,6 @@ export const App: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          {/* Quick Copy Text Button */}
-          <a
-            href="/downloads/NESFIC_D30_Proposal_Ron_Hatibaruah.txt"
-            download
-            className="flex items-center gap-1.5 px-3 py-1 bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 rounded-lg text-xs font-semibold shadow-sm transition-all"
-            title="Download Plain Text Submission for Application Form"
-          >
-            <FileText className="w-3.5 h-3.5 text-teal-600" />
-            <span>Proposal Text (TXT)</span>
-          </a>
-
           {/* Tutorial / Guide Pill */}
           <button
             onClick={() => setIsTutorialOpen(true)}

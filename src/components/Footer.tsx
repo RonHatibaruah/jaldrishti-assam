@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, ExternalLink, Mail, AlertTriangle, FileText, Download, HeartHandshake } from 'lucide-react';
+import { Shield, ExternalLink, Mail, AlertTriangle, FileText, Download } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -24,7 +24,7 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Col 1: Platform Overview */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 text-white font-bold text-base mb-2">
@@ -38,7 +38,7 @@ export const Footer: React.FC = () => {
             </p>
 
             {/* Contact Email Box */}
-            <div className="p-3 bg-slate-800/80 rounded-lg border border-teal-700/50 flex flex-wrap items-center justify-between gap-2">
+            <div className="p-3 bg-slate-800/80 rounded-lg border border-teal-700/50 flex flex-wrap items-center justify-between gap-2 max-w-xl">
               <div className="flex items-center gap-2 text-slate-200">
                 <Mail className="w-4 h-4 text-teal-400 flex-shrink-0" />
                 <span className="text-xs">
@@ -54,12 +54,9 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Col 2: Official Submissions & Downloads */}
+          {/* Col 2: Official References & Proposal */}
           <div>
-            <h4 className="text-slate-200 font-semibold mb-3 flex items-center gap-1.5">
-              <FileText className="w-3.5 h-3.5 text-teal-400" />
-              Submission Dossiers (PDF & TXT)
-            </h4>
+            <h4 className="text-slate-200 font-semibold mb-3">Official References</h4>
             <ul className="space-y-2 text-xs">
               <li>
                 <a
@@ -67,55 +64,12 @@ export const Footer: React.FC = () => {
                   target="_blank"
                   rel="noreferrer"
                   download="NESFIC_D30_Proposal_Ron_Hatibaruah.pdf"
-                  className="hover:text-teal-300 flex items-center gap-1 text-slate-300"
+                  className="hover:text-teal-300 flex items-center gap-1 text-slate-200 font-medium"
                 >
                   <Download className="w-3 h-3 text-teal-400" />
                   Official Proposal (PDF)
                 </a>
               </li>
-              <li>
-                <a
-                  href="/downloads/NESFIC_D30_Proof_of_Work_Ron_Hatibaruah.pdf"
-                  target="_blank"
-                  rel="noreferrer"
-                  download="NESFIC_D30_Proof_of_Work_Ron_Hatibaruah.pdf"
-                  className="hover:text-teal-300 flex items-center gap-1 text-slate-300"
-                >
-                  <Download className="w-3 h-3 text-teal-400" />
-                  Proof of Work Dossier (PDF)
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/downloads/NESFIC_D30_Proposal_Ron_Hatibaruah.txt"
-                  target="_blank"
-                  rel="noreferrer"
-                  download="NESFIC_D30_Proposal_Ron_Hatibaruah.txt"
-                  className="hover:text-teal-300 flex items-center gap-1 text-teal-300 font-mono text-[11px]"
-                >
-                  <FileText className="w-3 h-3 text-teal-400" />
-                  Proposal Text Form (Copy-Paste)
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/downloads/NESFIC_D30_Proof_of_Work_Ron_Hatibaruah.txt"
-                  target="_blank"
-                  rel="noreferrer"
-                  download="NESFIC_D30_Proof_of_Work_Ron_Hatibaruah.txt"
-                  className="hover:text-teal-300 flex items-center gap-1 text-teal-300 font-mono text-[11px]"
-                >
-                  <FileText className="w-3 h-3 text-teal-400" />
-                  Proof of Work Text (Copy-Paste)
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Col 3: Official References */}
-          <div>
-            <h4 className="text-slate-200 font-semibold mb-3">Official References</h4>
-            <ul className="space-y-2 text-xs">
               <li>
                 <a
                   href="https://startup.assam.gov.in/nesfic26/problem-statements/nesfic-d-30"
