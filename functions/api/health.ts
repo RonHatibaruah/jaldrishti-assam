@@ -4,18 +4,22 @@
 export async function onRequestGet() {
   const payload = {
     status: "healthy",
-    platform: "NikshayDrishti (Assam TB Sentinel)",
-    assameseTitle: "নিশ্চয় দৃষ্টি",
-    problemStatement: "NESFIC-D-30 (Stream 1 — Government Track: Health Sector)",
-    challengeTitle: "TB Risk Stratification & Programme Decision Support",
-    challengeOwners: "National Health Mission (NHM) & State TB Cell, Department of Health & Family Welfare, Government of Assam",
+    platform: "JalDrishti (Assam Flood & Space Digital Twin Sentinel)",
+    assameseTitle: "জলদৃষ্টি",
+    problemStatement: "NESFIC-D-18 (Stream 1 — Government Track: Department of Science & Technology)",
+    challengeTitle: "Digital Twin for Flood Management, Simulation and Early Warning Using Space Technology",
+    challengeOwners: "Department of Science & Technology ● Government of Assam – ASSAC & ASDMA",
     innovator: "Ron Hatibaruah",
     contactEmail: "ron.hatibaruah@gmail.com",
     edgeRuntime: "Cloudflare Pages Functions",
-    cdssDisclaimer: "Risk outputs are decision-support only and must not replace clinical diagnosis or authorized programme decisions.",
-    mlInferenceEngine: "XGBoost Multi-Variable Clinical Classifier (AUROC: 0.887)",
-    explainabilityEngine: "SHAP Local Feature Weight Matrix Active",
-    referralSLAEngine: "48-Hour Cold-Chain & Diagnostic Cascade Active",
+    statutoryProvenanceMandate: {
+      rule: "ASSAC Mandatory Segregation of Observed, Forecast, and Simulated data",
+      observedSources: "Sentinel-1 C-SAR (10m GRD dual-pol) + CWC 35 River Gauges + IMD AWS",
+      forecastSources: "IMD WRF 3km gridded precipitation + CWC 24h-48h river stage models",
+      simulatedSources: "2D Saint-Venant Shallow Water PINN Surrogate (<39s latency)"
+    },
+    bhiEngine: "Embankment Breach Hazard Index (4,400 km network monitored)",
+    capEarlyWarning: "OASIS CAP v1.2 / NDMA Sachet Bilingual (Assamese & English)",
     version: "1.0.0",
     timestamp: new Date().toISOString()
   };

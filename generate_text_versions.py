@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 Generate clean, copy-paste-ready, textarea-compliant plain text files for NESFIC 2026:
-1. NESFIC_D30_Proposal_Ron_Hatibaruah.txt (Field-by-field copy-paste textarea blocks)
-2. NESFIC_D30_Proof_of_Work_Ron_Hatibaruah.txt (Full and modular copy-paste textarea blocks)
+1. NESFIC_D18_Proposal_Ron_Hatibaruah.txt (Field-by-field copy-paste textarea blocks)
+2. NESFIC_D18_Proof_of_Work_Ron_Hatibaruah.txt (Full and modular copy-paste textarea blocks)
 """
 
 import os
@@ -48,71 +48,62 @@ def clean_text_for_textarea(text):
     # Clean latex math
     t = re.sub(r'\$([^$]+)\$', r'\1', t)
     
-    # Standardize bullet points
-    t = re.sub(r'^[ \t]*[-*]\s+', '• ', t, flags=re.MULTILINE)
+    # Standardize dashes
+    t = t.replace('—', ' - ').replace('–', '-')
     
-    # Clean excessive empty lines
+    # Clean up double blank lines
     t = re.sub(r'\n{3,}', '\n\n', t)
+    
     return t.strip()
 
 def generate_proposal_text():
     src_file = os.path.join(base_dir, 'proposal_contents.md')
-    out_file = os.path.join(base_dir, 'NESFIC_D30_Proposal_Ron_Hatibaruah.txt')
+    out_file = os.path.join(base_dir, 'NESFIC_D18_Proposal_Ron_Hatibaruah.txt')
     
     with open(src_file, 'r', encoding='utf-8') as f:
         raw = f.read()
         
-    # Split by Field headers
-    parts = re.split(r'##\s+Field\s+(\d+):\s+(.*?)\n', raw)
+    # Split by Field
+    sections = re.split(r'##\s+Field\s+(\d+):', raw)
     
     header = "=" * 80 + "\n"
-    header += "NESFIC 2026 - STREAM 1 (GOVERNMENT TRACK) - OFFICIAL PROPOSAL SUBMISSION\n"
-    header += "Problem Statement ID: NESFIC-D-30: TB Risk Stratification & Programme Decision Support\n"
-    header += "Sponsoring Department: National Health Mission & State TB Cell, Govt of Assam\n"
+    header += "NESFIC 2026 - STREAM 1 (GOVERNMENT TRACK) - OFFICIAL PROPOSAL TEXT\n"
+    header += "Problem Statement ID: NESFIC-D-18: Digital Twin for Flood Management, Simulation and Early Warning\n"
+    header += "Sponsoring Department: Department of Science & Technology (ASSAC) & ASDMA, Govt of Assam\n"
     header += "Applicant / Innovator: Ron Hatibaruah\n"
-    header += "Proposed Solution: NikshayDrishti (নিশ্চয় দৃষ্টি) — Assam TB Sentinel\n"
-    header += "Live Working Prototype: https://nikshay-drishti.pages.dev/\n"
-    header += "GitHub Repository: https://github.com/RonHatibaruah/nikshay-drishti-assam\n"
+    header += "Solution: JalDrishti (Assam Flood & Space Digital Twin Sentinel)\n"
+    header += "Live Prototype: https://jaldrishti-assam.pages.dev/\n"
+    header += "GitHub Repository: https://github.com/RonHatibaruah/jaldrishti-assam\n"
     header += "=" * 80 + "\n\n"
-    header += "INSTRUCTIONS FOR APPLICANT:\n"
-    header += "Each section below corresponds exactly to an official online form field on the\n"
-    header += "Assam Startup NESFIC application portal. Copy and paste the text block under each field header.\n\n"
     
-    body = ""
-    # parts[0] is intro text before Field 1
-    intro_clean = clean_text_for_textarea(parts[0])
-    body += "--- GENERAL METADATA ---\n" + intro_clean + "\n\n"
+    field_texts = []
     
     # Loop over fields
-    i = 1
-    while i < len(parts):
-        field_num = parts[i]
-        field_title = parts[i+1].strip()
-        field_content = parts[i+2]
+    for i in range(1, len(sections), 2):
+        field_num = sections[i]
+        field_body = sections[i+1]
         
-        # Extract word count notice if present
-        wc_match = re.search(r'\*(.*?Word Count.*?)\*', field_content)
-        wc_note = wc_match.group(1) if wc_match else ""
+        # Get field title from first line of body
+        first_line = field_body.strip().split('\n')[0]
+        field_title = f"FIELD {field_num}: {first_line}"
         
-        cleaned_content = clean_text_for_textarea(field_content)
-        # Remove the word count line from textarea content
-        cleaned_content = re.sub(r'\(Word Count:.*?\)', '', cleaned_content).strip()
+        # Word limit info
+        limit_match = re.search(r'Limit:\s*(\d+)\s*words', field_body)
+        limit_str = f" [Limit: {limit_match.group(1)} words]" if limit_match else ""
         
-        words = len(cleaned_content.split())
+        cleaned_body = clean_text_for_textarea(field_body)
+        word_count = len(re.findall(r'\b\w+\b', cleaned_body))
         
-        body += "=" * 80 + "\n"
-        body += f"FIELD {field_num}: {field_title.upper()}\n"
-        if wc_note:
-            body += f"Portal Requirement Note: {wc_note}\n"
-        body += f"Actual Plain Text Word Count: {words} words\n"
-        body += "=" * 80 + "\n"
-        body += "[BEGIN COPY-PASTE FOR THIS TEXTAREA]\n\n"
-        body += cleaned_content + "\n\n"
-        body += "[END COPY-PASTE FOR THIS TEXTAREA]\n\n\n"
+        block = f"{'='*80}\n"
+        block += f"COPY-PASTE BLOCK: FIELD {field_num}{limit_str}\n"
+        block += f"Actual Word Count: {word_count} words\n"
+        block += f"{'='*80}\n\n"
+        block += cleaned_body + "\n\n"
         
-        i += 3
+        field_texts.append(block)
         
-    full_output = header + body
+    full_output = header + "".join(field_texts)
+    
     with open(out_file, 'w', encoding='utf-8') as f:
         f.write(full_output)
         
@@ -120,19 +111,19 @@ def generate_proposal_text():
 
 def generate_pow_text():
     src_file = os.path.join(base_dir, 'proof_of_work_dossier.md')
-    out_file = os.path.join(base_dir, 'NESFIC_D30_Proof_of_Work_Ron_Hatibaruah.txt')
+    out_file = os.path.join(base_dir, 'NESFIC_D18_Proof_of_Work_Ron_Hatibaruah.txt')
     
     with open(src_file, 'r', encoding='utf-8') as f:
         raw = f.read()
         
     header = "=" * 80 + "\n"
     header += "NESFIC 2026 - STREAM 1 - PROOF OF WORK & TECHNICAL EVIDENCE DOSSIER\n"
-    header += "Problem Statement ID: NESFIC-D-30: TB Risk Stratification & Programme Decision Support\n"
-    header += "Sponsoring Department: National Health Mission & State TB Cell, Govt of Assam\n"
+    header += "Problem Statement ID: NESFIC-D-18: Digital Twin for Flood Management, Simulation and Early Warning\n"
+    header += "Sponsoring Department: Department of Science & Technology (ASSAC) & ASDMA, Govt of Assam\n"
     header += "Applicant / Innovator: Ron Hatibaruah\n"
-    header += "Solution: NikshayDrishti (Assam TB Sentinel)\n"
-    header += "Live Prototype: https://nikshay-drishti.pages.dev/\n"
-    header += "GitHub Repository: https://github.com/RonHatibaruah/nikshay-drishti-assam\n"
+    header += "Solution: JalDrishti (Assam Flood Sentinel)\n"
+    header += "Live Prototype: https://jaldrishti-assam.pages.dev/\n"
+    header += "GitHub Repository: https://github.com/RonHatibaruah/jaldrishti-assam\n"
     header += "=" * 80 + "\n\n"
     
     cleaned = clean_text_for_textarea(raw)

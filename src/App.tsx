@@ -1,77 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
-import { TBRiskWorklist } from './components/TBRiskWorklist';
-import { VulnerabilityMap } from './components/VulnerabilityMap';
-import { ReferralTracker } from './components/ReferralTracker';
-import { FacilitySupervision } from './components/FacilitySupervision';
-import { AuditAndDeduplication } from './components/AuditAndDeduplication';
 import { ExecutiveCommand } from './components/ExecutiveCommand';
-import { TutorialModal } from './components/TutorialModal';
-import { AdminLogin, AdminUser } from './components/AdminLogin';
+import { DigitalTwinMap } from './components/DigitalTwinMap';
+import { ScenarioSimulation } from './components/ScenarioSimulation';
+import { EmbankmentSentinel } from './components/EmbankmentSentinel';
+import { EarlyWarningConsole } from './components/EarlyWarningConsole';
 import { AdminConsole } from './components/AdminConsole';
-import { 
-  Activity, 
-  MapPin, 
-  GitCommit, 
-  Building2, 
-  FileSearch, 
-  ShieldAlert, 
-  HelpCircle,
-  FileText,
-  BookOpen,
-  Copy,
-  Download,
-  Lock,
-  ShieldCheck,
-  UserCheck
-} from 'lucide-react';
+import { AdminLogin, AdminUser } from './components/AdminLogin';
+import { TutorialModal } from './components/TutorialModal';
+import { ShieldCheck, Info } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('executive');
-  const [selectedRole, setSelectedRole] = useState<string>('STO');
+  const [selectedRole, setSelectedRole] = useState<string>('SEOC');
   const [isTutorialOpen, setIsTutorialOpen] = useState<boolean>(false);
   const [isAdminLoginOpen, setIsAdminLoginOpen] = useState<boolean>(false);
   const [adminUser, setAdminUser] = useState<AdminUser | null>(null);
 
   // Restore previous admin session if exists
   useEffect(() => {
-    const saved = localStorage.getItem('nikshay_admin_session');
+    const saved = localStorage.getItem('jaldrishti_admin_session');
     if (saved) {
       try {
         setAdminUser(JSON.parse(saved));
       } catch (e) {
-        localStorage.removeItem('nikshay_admin_session');
+        localStorage.removeItem('jaldrishti_admin_session');
       }
     }
   }, []);
 
   const handleLoginSuccess = (user: AdminUser) => {
     setAdminUser(user);
-    localStorage.setItem('nikshay_admin_session', JSON.stringify(user));
+    localStorage.setItem('jaldrishti_admin_session', JSON.stringify(user));
     setActiveTab('admin');
   };
 
   const handleLogout = () => {
     setAdminUser(null);
-    localStorage.removeItem('nikshay_admin_session');
+    localStorage.removeItem('jaldrishti_admin_session');
     setActiveTab('executive');
   };
 
-  // When role changes, switch to relevant default tab
   const handleRoleChange = (role: string) => {
     setSelectedRole(role);
-    if (role === 'STO') {
+    if (role === 'SEOC') {
       setActiveTab('executive');
-    } else if (role === 'DTO') {
-      setActiveTab('facilities');
-    } else if (role === 'MO_STS') {
-      setActiveTab('worklist');
+    } else if (role === 'DEOC') {
+      setActiveTab('map');
+    } else if (role === 'WRD') {
+      setActiveTab('embankments');
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-100 text-slate-900 font-sans">
+    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 font-sans">
       {/* Top Navigation */}
       <Navbar
         activeTab={activeTab}
@@ -83,105 +66,78 @@ export const App: React.FC = () => {
         onOpenAdminLogin={() => setIsAdminLoginOpen(true)}
       />
 
-      {/* Role Indicator & Quick Actions Banner */}
+      {/* Role Indicator & Context Banner */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-4 flex flex-wrap justify-between items-center gap-2">
-        <div className="flex items-center gap-2 text-xs text-slate-500">
-          <span>Active View:</span>
-          <span className="font-bold text-slate-800 bg-white px-2.5 py-1 rounded-md border border-slate-200 shadow-sm flex items-center gap-1.5">
+        <div className="flex items-center gap-2 text-xs text-slate-400">
+          <span>Active Command Horizon:</span>
+          <span className="font-bold text-slate-200 bg-slate-900 px-2.5 py-1 rounded-md border border-slate-800 shadow-sm flex items-center gap-1.5">
             {activeTab === 'admin' ? (
               <>
-                <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
-                <span className="text-amber-800">
-                  NikshayDrishti Management Console (Super Admin & Governance)
+                <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
+                <span className="text-cyan-300">
+                  ASDC State Data Centre Governance & Spatial Analytics Enclave
                 </span>
               </>
-            ) : selectedRole === 'STO' ? (
-              'State TB Officer (Statewide Elimination Cockpit & Policy)' 
-            ) : selectedRole === 'DTO' ? (
-              'District TB Officer (Supervision SPI Tours & Predictive Logistics)' 
+            ) : selectedRole === 'SEOC' ? (
+              'ASDMA State Emergency Operations Centre (SEOC) • Statewide Command'
+            ) : selectedRole === 'DEOC' ? (
+              'District Disaster Management Authority (DDMA / DEOC) • Relief & Evacuation'
             ) : (
-              'Medical Officer / STS (Patient Triage & Differentiated Care)'
+              'Water Resources Department (WRD) • Embankment Inspection & Structural Sentinel'
             )}
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
-          {/* Admin Login Quick Pill if not logged in */}
-          {!adminUser && (
-            <button
-              onClick={() => setIsAdminLoginOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-1 bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 rounded-lg text-xs font-bold shadow-sm transition-all"
-            >
-              <Lock className="w-3.5 h-3.5 text-amber-700" />
-              <span>Demo Admin Login</span>
-            </button>
-          )}
-
-          {/* Tutorial / Guide Pill */}
-          <button
-            onClick={() => setIsTutorialOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1 bg-teal-50 hover:bg-teal-100 border border-teal-300 text-teal-900 rounded-lg text-xs font-bold shadow-sm transition-all"
-          >
-            <HelpCircle className="w-3.5 h-3.5 text-teal-700" />
-            <span>How to Use & Test</span>
-          </button>
+        <div className="flex items-center gap-2 text-xs">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-950/80 border border-emerald-800/80 text-emerald-300 font-mono text-[11px]">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            ISRO / CWC Live Link Active
+          </span>
         </div>
       </div>
 
-      {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 w-full">
-        {activeTab === 'executive' && <ExecutiveCommand />}
-        {activeTab === 'worklist' && <TBRiskWorklist />}
-        {activeTab === 'gis' && <VulnerabilityMap />}
-        {activeTab === 'referrals' && <ReferralTracker />}
-        {activeTab === 'facilities' && <FacilitySupervision />}
-        {activeTab === 'audit' && <AuditAndDeduplication />}
-        
-        {/* Admin Console View */}
+      {/* Main Dynamic View Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-6 flex-1">
+        {activeTab === 'executive' && (
+          <ExecutiveCommand
+            onNavigateToMap={() => setActiveTab('map')}
+            onNavigateToSimulation={() => setActiveTab('simulation')}
+            onNavigateToAlerts={() => setActiveTab('alerts')}
+          />
+        )}
+
+        {activeTab === 'map' && <DigitalTwinMap />}
+
+        {activeTab === 'simulation' && (
+          <ScenarioSimulation
+            onSendAlert={() => setActiveTab('alerts')}
+            onViewOnMap={() => setActiveTab('map')}
+          />
+        )}
+
+        {activeTab === 'embankments' && <EmbankmentSentinel />}
+
+        {activeTab === 'alerts' && <EarlyWarningConsole />}
+
         {activeTab === 'admin' && (
-          adminUser ? (
-            <AdminConsole 
-              currentUser={adminUser} 
-              onLogout={handleLogout}
-              onNavigateTab={(tab) => setActiveTab(tab)}
-            />
-          ) : (
-            <div className="bg-white rounded-2xl border border-slate-200 p-8 text-center max-w-lg mx-auto shadow-sm space-y-4 my-12">
-              <div className="w-14 h-14 rounded-2xl bg-amber-100 border border-amber-300 flex items-center justify-center mx-auto">
-                <Lock className="w-7 h-7 text-amber-700" />
-              </div>
-              <h2 className="text-xl font-bold text-slate-900">Admin Authentication Required</h2>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                The NikshayDrishti Management Console is restricted to authorized State TB Officers, District TB Officers, and System Administrators. Please sign in using the provided demo credentials to explore the admin capabilities.
-              </p>
-              <button
-                onClick={() => setIsAdminLoginOpen(true)}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs shadow-md transition-all"
-              >
-                <Lock className="w-4 h-4" />
-                <span>Open Admin Login (Demo Credentials)</span>
-              </button>
-            </div>
-          )
+          <AdminConsole adminUser={adminUser} onLogout={handleLogout} />
         )}
       </main>
 
-      {/* Admin Login Modal */}
+      {/* Footer */}
+      <Footer />
+
+      {/* Modals */}
+      <TutorialModal
+        isOpen={isTutorialOpen}
+        onClose={() => setIsTutorialOpen(false)}
+      />
+
       <AdminLogin
         isOpen={isAdminLoginOpen}
         onClose={() => setIsAdminLoginOpen(false)}
         onLoginSuccess={handleLoginSuccess}
       />
-
-      {/* Comprehensive Tutorial & Guide Modal */}
-      <TutorialModal
-        isOpen={isTutorialOpen}
-        onClose={() => setIsTutorialOpen(false)}
-        setActiveTab={setActiveTab}
-      />
-
-      {/* Footer */}
-      <Footer onOpenAdminLogin={() => setIsAdminLoginOpen(true)} />
     </div>
   );
 };
