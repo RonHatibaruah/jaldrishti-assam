@@ -1,7 +1,11 @@
 import React from 'react';
-import { Shield, ExternalLink, Mail, AlertTriangle, FileText, Download } from 'lucide-react';
+import { Shield, ExternalLink, Mail, AlertTriangle, FileText, Download, Lock } from 'lucide-react';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onOpenAdminLogin?: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onOpenAdminLogin }) => {
   return (
     <footer className="bg-slate-900 text-slate-400 text-xs border-t border-slate-800 mt-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -37,20 +41,32 @@ export const Footer: React.FC = () => {
               <strong className="text-slate-200">National Health Mission (NHM) & State TB Cell, Government of Assam</strong>.
             </p>
 
-            {/* Contact Email Box */}
-            <div className="p-3 bg-slate-800/80 rounded-lg border border-teal-700/50 flex flex-wrap items-center justify-between gap-2 max-w-xl">
-              <div className="flex items-center gap-2 text-slate-200">
-                <Mail className="w-4 h-4 text-teal-400 flex-shrink-0" />
-                <span className="text-xs">
-                  Visitor Inquiries & Technical Contact:
-                </span>
+            {/* Contact Email Box & Admin Link */}
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="p-3 bg-slate-800/80 rounded-lg border border-teal-700/50 flex flex-wrap items-center justify-between gap-2 max-w-xl flex-1">
+                <div className="flex items-center gap-2 text-slate-200">
+                  <Mail className="w-4 h-4 text-teal-400 flex-shrink-0" />
+                  <span className="text-xs">
+                    Visitor Inquiries & Technical Contact:
+                  </span>
+                </div>
+                <a
+                  href="mailto:ron.hatibaruah@gmail.com"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-teal-600 hover:bg-teal-500 text-white font-semibold text-xs rounded-md shadow transition-colors"
+                >
+                  <span>ron.hatibaruah@gmail.com</span>
+                </a>
               </div>
-              <a
-                href="mailto:ron.hatibaruah@gmail.com"
-                className="inline-flex items-center gap-1.5 px-3 py-1 bg-teal-600 hover:bg-teal-500 text-white font-semibold text-xs rounded-md shadow transition-colors"
-              >
-                <span>ron.hatibaruah@gmail.com</span>
-              </a>
+
+              {onOpenAdminLogin && (
+                <button
+                  onClick={onOpenAdminLogin}
+                  className="px-3 py-2.5 bg-slate-800 hover:bg-slate-700 border border-amber-500/40 text-amber-300 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm"
+                >
+                  <Lock className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Admin Console Login</span>
+                </button>
+              )}
             </div>
           </div>
 

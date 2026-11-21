@@ -1,5 +1,19 @@
 import React from 'react';
-import { Activity, Shield, AlertTriangle, Database, MapPin, Stethoscope, CheckCircle2, BookOpen, HelpCircle } from 'lucide-react';
+import { 
+  Activity, 
+  Shield, 
+  AlertTriangle, 
+  Database, 
+  MapPin, 
+  Stethoscope, 
+  CheckCircle2, 
+  BookOpen, 
+  HelpCircle,
+  Lock,
+  ShieldCheck,
+  UserCheck
+} from 'lucide-react';
+import { AdminUser } from './AdminLogin';
 
 interface NavbarProps {
   activeTab: string;
@@ -7,6 +21,8 @@ interface NavbarProps {
   selectedRole: string;
   setSelectedRole: (role: string) => void;
   onOpenTutorial: () => void;
+  adminUser: AdminUser | null;
+  onOpenAdminLogin: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -14,7 +30,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   setActiveTab,
   selectedRole,
   setSelectedRole,
-  onOpenTutorial
+  onOpenTutorial,
+  adminUser,
+  onOpenAdminLogin
 }) => {
   return (
     <header className="bg-slate-900 text-white sticky top-0 z-40 shadow-md border-b border-teal-800">
@@ -65,7 +83,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        {/* Action Controls: Tutorial Button & Role Selector */}
+        {/* Action Controls: Tutorial Button, Admin Button & Role Selector */}
         <div className="flex flex-wrap items-center gap-2.5">
           {/* Prominent Tutorial Link */}
           <button
@@ -74,8 +92,30 @@ export const Navbar: React.FC<NavbarProps> = ({
             title="What the application is and how to use it"
           >
             <BookOpen className="w-3.5 h-3.5" />
-            <span>Tutorial & User Guide</span>
+            <span>Tutorial & Guide</span>
           </button>
+
+          {/* Admin Login / Console Access Button */}
+          {adminUser ? (
+            <button
+              onClick={() => setActiveTab('admin')}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white shadow-md border border-amber-400/50 transition-all"
+              title="Open Admin Management Cockpit"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-200" />
+              <span>Admin: {adminUser.role}</span>
+            </button>
+          ) : (
+            <button
+              onClick={onOpenAdminLogin}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-teal-300 border border-teal-500/40 shadow-sm transition-all"
+              title="Sign in with Demo Credentials to manage application"
+            >
+              <Lock className="w-3.5 h-3.5 text-amber-400" />
+              <span>Admin Login</span>
+              <span className="text-[10px] bg-teal-900/80 text-teal-200 px-1 rounded font-mono hidden sm:inline">Demo</span>
+            </button>
+          )}
 
           {/* Role Selector */}
           <div className="flex items-center gap-1 bg-slate-800/90 p-1 rounded-lg border border-slate-700">
@@ -130,6 +170,30 @@ export const Navbar: React.FC<NavbarProps> = ({
               {tab.label}
             </button>
           ))}
+
+          {/* Dedicated Admin Console Tab */}
+          <button
+            onClick={() => {
+              if (adminUser) {
+                setActiveTab('admin');
+              } else {
+                onOpenAdminLogin();
+              }
+            }}
+            className={`whitespace-nowrap px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium flex items-center gap-1.5 transition-all ${
+              activeTab === 'admin'
+                ? 'bg-amber-600 text-white shadow border border-amber-400/60'
+                : 'text-amber-300 hover:text-white hover:bg-slate-700/50'
+            }`}
+          >
+            <Lock className="w-3.5 h-3.5" />
+            <span>Admin Console</span>
+            {!adminUser && (
+              <span className="text-[10px] bg-slate-900/80 text-amber-300 border border-amber-500/30 px-1 rounded font-mono">
+                Auth
+              </span>
+            )}
+          </button>
         </div>
       </div>
     </header>

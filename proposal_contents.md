@@ -5,8 +5,9 @@
 **Applicant / Innovator:** Ron Hatibaruah  
 **Application Platform:** Assam Startup Portal (NESFIC 2026)  
 **Proposed Solution Name:** NikshayDrishti (নিশ্চয় দৃষ্টি) — Assam TB Sentinel  
-**Live Working Prototype:** `https://nikshay-drishti.pages.dev/`  
+**Live Working Prototype:** `https://nikshay-drishti.pages.dev/` (Demo Admin: `admin@nhm.assam.gov.in` / `dispur2026`)  
 **GitHub Repository:** `https://github.com/RonHatibaruah/nikshay-drishti-assam`  
+**Geographic Coverage (SEO & GEO):** Assam State (`IN-AS`, 26.1445° N, 91.7362° E, Dispur/Guwahati)  
 
 ---
 
@@ -63,6 +64,13 @@ Tracks real-time Truenat/CBNAAT utilization and models cartridge burn-rates to f
 
 5. **Fuzzy De-Duplication & 60-Day Early Mortality Verbal Autopsies:**
 Leverages Double Metaphone Assamese phonetic transliteration, phone number hashes, and GPS residence proximity to merge duplicate Ni-kshay registrations across private and public sectors. Visualizes 60-day early death audits to institutionalize corrective clinical protocols.
+
+6. **Administrative Management Console & Clinical Governance:**
+Provides State and District TB Officers with an authorized administrative cockpit:
+• *Patient Roster & Triage Manager:* Ingests new suspect profiles with instant CDSS risk scoring; supports authorized Clinical Triage Overrides with mandatory clinical justification and immutable SHA-256 audit logging.
+• *Diagnostic Buffer Logistics Dispatch:* Monitors inventory across 35 district stores, enabling one-click emergency reallocation from the Guwahati Central Buffer (4,800 CBNAAT / 2,400 Truenat reserve) to deficit facilities.
+• *CDSS Rule & AI Governance Engine:* Live configuration of risk cutoffs (>75 Critical, >50 High), clinical biomarker weight tuning (BMI, cavitation, HIV, diabetes), and model architecture toggles (XGBoost vs. deterministic clinical flowcharts).
+• *Audit & Regulatory Export:* Verifies DPDPA 2023 and ABDM compliance; exports tamper-proof CSV/JSON audit trails. Built with secure multi-persona demo access (`admin@nhm.assam.gov.in` / `dispur2026`).
 
 ---
 

@@ -235,6 +235,12 @@ export const TutorialModal: React.FC<TutorialModalProps> = ({
                     title: '5. Audit & Algorithmic De-Duplication',
                     desc: 'Test the Double Metaphone Assamese fuzzy record matcher to merge duplicate Nikshay IDs, and review 60-day early mortality verbal autopsies.',
                     icon: FileText
+                  },
+                  {
+                    tab: 'admin',
+                    title: '6. Admin Console & Management System',
+                    desc: 'Dedicated governance cockpit: add patients, execute manual clinical triage overrides, dispatch emergency cartridge buffer stock, and adjust CDSS AI weights (Demo: admin@nhm.assam.gov.in / dispur2026).',
+                    icon: Shield
                   }
                 ].map(feat => {
                   const Icon = feat.icon;

@@ -5,8 +5,9 @@
 **Problem Statement ID:** **NESFIC-D-30**  
 **Challenge Owners:** National Health Mission (NHM) & State TB Cell, Department of Health & Family Welfare, Government of Assam  
 **Lead Innovator & Applicant:** Ron Hatibaruah  
-**Live Working Prototype:** `https://nikshay-drishti.pages.dev/`  
+**Live Working Prototype:** `https://nikshay-drishti.pages.dev/` (Demo Admin: `admin@nhm.assam.gov.in` / `dispur2026`)  
 **GitHub Repository:** `https://github.com/RonHatibaruah/nikshay-drishti-assam`  
+**Geographic Coverage (SEO & GEO):** Assam State (`IN-AS`, 26.1445° N, 91.7362° E, Dispur/Guwahati)  
 **Document Type:** Empirical Proof of Work (PoW), Architecture Validation, Data Schemas & Performance Benchmarks  
 
 ---
@@ -26,6 +27,7 @@ The prototype proves that an AI-powered clinical decision-support and programmat
 6. **Facility Supportive Supervision (SPI) & Cartridge Forecaster:** Monitors Truenat/CBNAAT capacity utilization and predicts cartridge stock-out horizons 14 days in advance to trigger automated Nikshay Aushadhi re-supplies.
 7. **Algorithmic Fuzzy De-Duplication Engine:** Employs Double Metaphone Assamese phonetic transliteration, mobile hash concordance, and GPS proximity to reconcile duplicate Ni-kshay entries across private and public facilities.
 8. **60-Day Early Mortality Verbal Autopsy Analytics:** Analyzes systemic root causes of early mortality (malnutrition vs diagnostic lag vs undetected drug resistance) to institute targeted clinical corrective protocols.
+9. **Administrative Management Console & Clinical Governance Portal:** Dedicated governance cockpit supporting secure multi-role demo authentication (`admin@nhm.assam.gov.in` / `dispur2026`), case entry with live CDSS risk scoring, authorized Clinical Triage Overrides with clinical reason logging, emergency diagnostic buffer stock dispatching from Guwahati Central Buffer to deficit districts, algorithmic SPI tour generator, and DPDPA 2023 audit log export.
 
 ---
 
