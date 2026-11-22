@@ -66,7 +66,7 @@ def clean_inline_markdown(text):
     t = escape(t)
     
     # Bold italic
-    t = re.sub(r'\*\*\*([^*]+)\*\*\*', r'<b><i>\1</i></b>', t)
+    t = re.sub(r'\*\*\*(.*?)\*\*\*', r'<b><i>\1</i></b>', t)
     t = re.sub(r'___([^_]+)___', r'<b><i>\1</i></b>', t)
     
     # Bold
@@ -393,13 +393,13 @@ def build_proof_of_work_pdf(output_path):
         story.append(safe_paragraph(sec_title, h2_style))
 
         if '1. Executive Summary' in sec_title:
-            img = os.path.join(img_dir, 'diagram_1_before_after_workflow.jpg')
+            img = os.path.join(img_dir, 'diagram_9_live_prototype_ui_cockpit.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
                 story.append(Image(img, width=490, height=275.6))
                 story.append(Spacer(1, 5))
         elif '2. Space SAR Remote Sensing' in sec_title:
-            img = os.path.join(img_dir, 'diagram_3_cadastral_anomaly_catalog.jpg')
+            img = os.path.join(img_dir, 'diagram_8_sar_water_extraction_pipeline.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
                 story.append(Image(img, width=490, height=275.6))
@@ -416,8 +416,20 @@ def build_proof_of_work_pdf(output_path):
                 story.append(Spacer(1, 4))
                 story.append(Image(img, width=490, height=275.6))
                 story.append(Spacer(1, 5))
+        elif '5. Mandatory Three-Tier Data Provenance' in sec_title:
+            img = os.path.join(img_dir, 'diagram_3_cadastral_anomaly_catalog.jpg')
+            if os.path.exists(img):
+                story.append(Spacer(1, 4))
+                story.append(Image(img, width=490, height=275.6))
+                story.append(Spacer(1, 5))
         elif '6. CAP-Compliant Multi-Channel' in sec_title:
             img = os.path.join(img_dir, 'diagram_6_spatial_conflict_resolution.jpg')
+            if os.path.exists(img):
+                story.append(Spacer(1, 4))
+                story.append(Image(img, width=490, height=275.6))
+                story.append(Spacer(1, 5))
+        elif '8. Security, Data Governance' in sec_title:
+            img = os.path.join(img_dir, 'diagram_2_cadastral_reconciliation_flow.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
                 story.append(Image(img, width=490, height=275.6))

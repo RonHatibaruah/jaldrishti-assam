@@ -3,7 +3,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-from matplotlib.patches import FancyBboxPatch, Rectangle, Circle, Polygon
+from matplotlib.patches import FancyBboxPatch, Rectangle, Circle, Polygon, Wedge
 import numpy as np
 
 os.environ['MPLCONFIGDIR'] = '/tmp/matplotlib-cache'
@@ -11,7 +11,7 @@ base_dir = os.path.dirname(os.path.abspath(__file__))
 out_dir = os.path.join(base_dir, 'assets', 'proposal_images')
 os.makedirs(out_dir, exist_ok=True)
 
-# Clean White Blueprint Palette
+# Publication Blueprint Palette
 BG_LIGHT = '#ffffff'
 GRID_LIGHT = '#f1f5f9'
 NAVY_HEADER = '#0f172a'
@@ -58,7 +58,9 @@ def save_dual(fig, basename):
     plt.close()
     print(f"Rendered {basename}.png & .jpg (16:9 Widescreen)")
 
+# -----------------------------------------------------------------------------
 # DIAGRAM 1: Paradigm Shift: Reactive Flood Relief to Space 4D Digital Twin
+# -----------------------------------------------------------------------------
 def create_widescreen_diagram_1():
     fig, ax = plt.subplots(figsize=(16, 9), dpi=200)
     ax.set_facecolor(BG_LIGHT)
@@ -128,7 +130,9 @@ def create_widescreen_diagram_1():
 
     save_dual(fig, "diagram_1_before_after_workflow")
 
-# DIAGRAM 2: End-to-End Enterprise System Architecture
+# -----------------------------------------------------------------------------
+# DIAGRAM 2: End-to-End Enterprise System Architecture & Telemetry Pipeline
+# -----------------------------------------------------------------------------
 def create_widescreen_diagram_2():
     fig, ax = plt.subplots(figsize=(16, 9), dpi=200)
     ax.set_facecolor(BG_LIGHT)
@@ -141,8 +145,8 @@ def create_widescreen_diagram_2():
                "SYSTEM ARCHITECTURE BLUEPRINT")
 
     tiers = [
-        ("1. SPACE OBSERVATION & GROUND TELEMETRY", 0.77, '#0284c7', [
-            ("ISRO Bhuvan & Copernicus Sentinel-1/2 C-SAR (VV+VH Dual-Pol)", 0.04),
+        ("1. SPACE OBSERVATION & GROUND TELEMETRY INGESTION", 0.77, '#0284c7', [
+            ("ISRO Bhuvan & Copernicus Sentinel-1/2 C-SAR (VV+VH Dual-Pol Radar)", 0.04),
             ("Central Water Commission (CWC) 35 River Gauges Telemetry", 0.28),
             ("IMD Automatic Weather Stations (AWS) & 3km WRF Radar Grids", 0.52),
             ("Survey of India 10m CartoDEM & Digitized WRD 4,400km Dykes", 0.76)
@@ -159,22 +163,20 @@ def create_widescreen_diagram_2():
             ("Dynamic Embankment Breach Hazard Index (BHI) Calculator", 0.52),
             ("Three-Tier Provenance Segregation [OBSERVED / FORECAST / SIMULATED]", 0.76)
         ]),
-        ("4. PRESENTATION COCKPITS & DISSEMINATION GATEWAYS", 0.08, '#d97706', [
+        ("4. PRESENTATION COCKPITS & MULTI-CHANNEL DISSEMINATION", 0.08, '#d97706', [
             ("SEOC State Command View (ASDMA Statewide Disaster Cockpit)", 0.04),
             ("DEOC District DDMA Cockpit (Evacuation & Shelter Routing)", 0.28),
-            ("What-If Hydrodynamic Scenario Builder (Rain & Dam Release)", 0.52),
+            ("What-If Hydrodynamic Scenario Sandbox (Rain & Dam Release)", 0.52),
             ("NDMA Sachet CAP Gateway (Bilingual Assamese & English Alerts)", 0.76)
         ])
     ]
 
     for title, y_base, col, items in tiers:
-        # Tier header strip
         hdr = FancyBboxPatch((0.02, y_base + 0.155), 0.96, 0.035, boxstyle="round,pad=0.005,rounding_size=0.006",
                              facecolor=col, edgecolor=col, linewidth=1, zorder=2)
         ax.add_patch(hdr)
         ax.text(0.035, y_base + 0.172, title, fontsize=8.5, fontweight='bold', color='#ffffff', zorder=3)
 
-        # Tier container
         cont = FancyBboxPatch((0.02, y_base), 0.96, 0.15, boxstyle="round,pad=0.01,rounding_size=0.01",
                               facecolor='#f8fafc', edgecolor='#cbd5e1', linewidth=1.2, zorder=1)
         ax.add_patch(cont)
@@ -187,7 +189,9 @@ def create_widescreen_diagram_2():
 
     save_dual(fig, "diagram_2_cadastral_reconciliation_flow")
 
+# -----------------------------------------------------------------------------
 # DIAGRAM 3: Mandatory Three-Tier Data Provenance & Uncertainty Architecture
+# -----------------------------------------------------------------------------
 def create_widescreen_diagram_3():
     fig, ax = plt.subplots(figsize=(16, 9), dpi=200)
     ax.set_facecolor(BG_LIGHT)
@@ -225,7 +229,6 @@ def create_widescreen_diagram_3():
                              facecolor=bg_col, edgecolor=border_col, linewidth=2, zorder=2)
         ax.add_patch(box)
 
-        # Title badge
         t_bg = FancyBboxPatch((x + 0.015, 0.74), 0.25, 0.055, boxstyle="round,pad=0.005,rounding_size=0.008",
                               facecolor=border_col, edgecolor=border_col, linewidth=1, zorder=3)
         ax.add_patch(t_bg)
@@ -241,7 +244,9 @@ def create_widescreen_diagram_3():
 
     save_dual(fig, "diagram_3_cadastral_anomaly_catalog")
 
-# DIAGRAM 4: Embankment Health Sentinel & BHI Pipeline
+# -----------------------------------------------------------------------------
+# DIAGRAM 4: Embankment Breach Hazard Index (BHI) 3D Geotechnical Cross-Section
+# -----------------------------------------------------------------------------
 def create_widescreen_diagram_4():
     fig, ax = plt.subplots(figsize=(16, 9), dpi=200)
     ax.set_facecolor(BG_LIGHT)
@@ -249,9 +254,9 @@ def create_widescreen_diagram_4():
     ax.axis('off')
     add_blueprint_grid(ax)
 
-    add_header(ax, "EMBANKMENT HEALTH SENTINEL: BREACH HAZARD INDEX (BHI) MULTI-FACTOR ENGINE",
-               "Continuous Structural & Hydraulic Monitoring Across 4,400 km of Assam River Dykes",
-               "EMBANKMENT SENTINEL BLUEPRINT")
+    add_header(ax, "EMBANKMENT STRUCTURAL HEALTH SENTINEL: GEOTECHNICAL BHI & FAILURE MECHANICS",
+               "Continuous Phreatic Seepage & Piping Failure Monitoring Across 4,400 km of Assam Earthen Dykes",
+               "GEOTECHNICAL EMBANKMENT SENTINEL")
 
     # Formula Box
     f_box = FancyBboxPatch((0.02, 0.72), 0.96, 0.14, boxstyle="round,pad=0.01,rounding_size=0.01",
@@ -261,43 +266,70 @@ def create_widescreen_diagram_4():
     ax.text(0.5, 0.75, "BHI = 0.35(ΔH / Freeboard) + 0.25(SAR Saturation) + 0.15(Vintage Factor) + 0.15(Shear Stress) + 0.10(Historical Breaches)",
             ha='center', fontsize=9, fontfamily='monospace', fontweight='bold', color='#ffffff', zorder=3)
 
-    factors = [
-        ("1. HYDRAULIC HEAD RATIO (35%)", "Measures water head height relative to design embankment crest freeboard.", '#dc2626'),
-        ("2. RADAR SOIL SATURATION (25%)", "Multi-temporal Sentinel-1 C-SAR backscatter decline indicating levee core water saturation.", '#d97706'),
-        ("3. STRUCTURAL VINTAGE (15%)", "Evaluates embankment age, compaction degradation, and construction materials.", '#0284c7'),
-        ("4. HYDRODYNAMIC SHEAR (15%)", "Channel sinuosity and flow velocity vector attacking outer dyke bends.", '#7c3aed'),
-        ("5. HISTORICAL BREACH RECORD (10%)", "Recurrence frequency of previous piping failures and sand boil occurrences.", '#059669')
+    # Left: 3D Geotechnical Cross-Section Illustration
+    cs_box = FancyBboxPatch((0.02, 0.06), 0.54, 0.63, boxstyle="round,pad=0.015,rounding_size=0.015",
+                            facecolor='#f8fafc', edgecolor='#cbd5e1', linewidth=1.5, zorder=2)
+    ax.add_patch(cs_box)
+    ax.text(0.29, 0.65, "GEOTECHNICAL DYKE CROSS-SECTION & FAILURE VECTORS", ha='center', fontsize=9.5, fontweight='bold', color=NAVY_TEXT, zorder=3)
+
+    # Embankment Trapeze Geometry
+    dyke_poly = Polygon([
+        [0.06, 0.15], # Countryside toe
+        [0.22, 0.50], # Countryside crest
+        [0.34, 0.50], # River-side crest
+        [0.48, 0.15]  # River-side toe
+    ], closed=True, facecolor='#d6d3d1', edgecolor='#78716c', linewidth=2, zorder=3)
+    ax.add_patch(dyke_poly)
+
+    # River water body
+    water_poly = Polygon([
+        [0.34, 0.44], # Water level on embankment
+        [0.52, 0.44],
+        [0.52, 0.15],
+        [0.48, 0.15]
+    ], closed=True, facecolor='#38bdf8', edgecolor='#0284c7', alpha=0.6, zorder=4)
+    ax.add_patch(water_poly)
+    ax.text(0.44, 0.30, "River Side (Brahmaputra)", fontsize=8, fontweight='bold', color='#0369a1', zorder=5)
+    ax.text(0.44, 0.46, "Water Stage: +1.62m ΔH", fontsize=7.5, fontfamily='monospace', fontweight='bold', color='#0c4a6e', zorder=5)
+
+    # Phreatic Seepage Line (Dotted red inside embankment)
+    seepage_x = np.linspace(0.34, 0.12, 50)
+    seepage_y = 0.44 - 0.28 * np.sqrt((seepage_x - 0.12)/(0.34 - 0.12))
+    ax.plot(seepage_x, seepage_y, 'r--', linewidth=2, zorder=5)
+    ax.text(0.18, 0.32, "Phreatic Seepage Line", fontsize=7.5, color='#dc2626', fontweight='bold', zorder=6)
+
+    # Piping sand boil at countryside toe
+    boil = Wedge((0.08, 0.15), 0.03, 0, 180, facecolor='#f59e0b', edgecolor='#b45309', zorder=5)
+    ax.add_patch(boil)
+    ax.text(0.08, 0.10, "Piping & Sand Boil Locus", fontsize=7.2, color='#b45309', fontweight='bold', zorder=6, ha='center')
+
+    # Crest Overtopping indicator
+    ax.annotate("Overtopping Risk\n(Freeboard < 0.2m)", xy=(0.34, 0.50), xytext=(0.28, 0.58),
+                arrowprops=dict(arrowstyle="->", color='#dc2626', lw=1.5), fontsize=7.5, fontweight='bold', color='#dc2626', zorder=6)
+
+    # Right: Automated Action Tiers
+    tiers_box = FancyBboxPatch((0.58, 0.06), 0.40, 0.63, boxstyle="round,pad=0.015,rounding_size=0.015",
+                               facecolor='#faf5ff', edgecolor='#d8b4fe', linewidth=1.5, zorder=2)
+    ax.add_patch(tiers_box)
+    ax.text(0.78, 0.65, "BHI ACTIONABLE STATE MACHINE", ha='center', fontsize=9.5, fontweight='bold', color='#6b21a8', zorder=3)
+
+    action_tiers = [
+        ("CRITICAL BREACH RISK (BHI >= 80)", "Automated SMS to WRD Executive Engineer • Pre-position SDRF inflatable boats • Trigger CAP warning.", '#ef4444', 0.48),
+        ("HIGH VULNERABILITY (60 <= BHI < 80)", "Mandatory 24h foot patrol directive • Sandbag geo-bag reinforcement dispatch.", '#f59e0b', 0.32),
+        ("MODERATE / WATCH (40 <= BHI < 60)", "Continuous telemetry tracking • Scheduled drone orthomosaic survey.", '#3b82f6', 0.16)
     ]
-
-    for idx, (head, desc, col) in enumerate(factors):
-        x = 0.02 + idx * 0.195
-        card = FancyBboxPatch((x, 0.38), 0.18, 0.31, boxstyle="round,pad=0.01,rounding_size=0.01",
-                              facecolor='#ffffff', edgecolor=col, linewidth=1.5, zorder=2)
-        ax.add_patch(card)
-        ax.text(x + 0.015, 0.64, head, fontsize=7.2, fontweight='bold', color=col, zorder=3, wrap=True)
-        ax.text(x + 0.015, 0.42, desc, fontsize=6.8, color=MUTED_TEXT, zorder=3, wrap=True)
-
-    # State machine workflow below
-    sm_box = FancyBboxPatch((0.02, 0.06), 0.96, 0.28, boxstyle="round,pad=0.01,rounding_size=0.01",
-                            facecolor='#f8fafc', edgecolor='#cbd5e1', linewidth=1.2, zorder=2)
-    ax.add_patch(sm_box)
-    ax.text(0.04, 0.30, "AUTOMATED DECISION & INTERVENTION STATE MACHINE", fontsize=9, fontweight='bold', color=NAVY_TEXT, zorder=3)
-
-    tiers_action = [
-        ("CRITICAL BREACH RISK (BHI >= 80)", "Automated SMS to WRD Executive Engineer • Pre-position SDRF inflatable boats • Trigger CAP warning.", '#ef4444', 0.04),
-        ("HIGH VULNERABILITY (60 <= BHI < 80)", "Mandatory 24h foot patrol directive • Sandbag geo-bag reinforcement dispatch.", '#f59e0b', 0.36),
-        ("MODERATE / WATCH (BHI < 60)", "Continuous telemetry tracking • Scheduled drone orthomosaic survey.", '#10b981', 0.68)
-    ]
-    for head, desc, col, x in tiers_action:
-        c = FancyBboxPatch((x, 0.09), 0.28, 0.18, boxstyle="round,pad=0.008,rounding_size=0.008",
+    for head, desc, col, y in action_tiers:
+        c = FancyBboxPatch((0.60, y), 0.36, 0.13, boxstyle="round,pad=0.008,rounding_size=0.008",
                            facecolor='#ffffff', edgecolor=col, linewidth=1.2, zorder=3)
         ax.add_patch(c)
-        ax.text(x + 0.015, 0.22, head, fontsize=7.5, fontweight='bold', color=col, zorder=4)
-        ax.text(x + 0.015, 0.12, desc, fontsize=6.8, color=MUTED_TEXT, zorder=4, wrap=True)
+        ax.text(0.615, y + 0.09, head, fontsize=7.5, fontweight='bold', color=col, zorder=4)
+        ax.text(0.615, y + 0.02, desc, fontsize=6.8, color=MUTED_TEXT, zorder=4, wrap=True)
 
     save_dual(fig, "diagram_4_blockchain_land_registry")
 
-# DIAGRAM 5: 2D Hydrodynamic Physics & PINN Surrogate Benchmarks
+# -----------------------------------------------------------------------------
+# DIAGRAM 5: 2D Saint-Venant Hydrodynamics & PINN Surrogate Acceleration
+# -----------------------------------------------------------------------------
 def create_widescreen_diagram_5():
     fig, ax = plt.subplots(figsize=(16, 9), dpi=200)
     ax.set_facecolor(BG_LIGHT)
@@ -352,7 +384,9 @@ def create_widescreen_diagram_5():
 
     save_dual(fig, "diagram_5_lat_mandal_mobile_app")
 
+# -----------------------------------------------------------------------------
 # DIAGRAM 6: CAP Multi-Channel Bilingual Early Warning Architecture
+# -----------------------------------------------------------------------------
 def create_widescreen_diagram_6():
     fig, ax = plt.subplots(figsize=(16, 9), dpi=200)
     ax.set_facecolor(BG_LIGHT)
@@ -376,9 +410,9 @@ def create_widescreen_diagram_6():
             ("Certainty: Observed / Likely; Urgency: Immediate / Expected.", 0.18)
         ]),
         ("3. DUAL-LANGUAGE LOCALIZATION", 0.51, '#059669', [
-            ("Assamese (অসমীয়া) headline & evacuation guidance synthesis.", 0.58),
+            ("Assamese headline & evacuation guidance synthesis.", 0.58),
             ("English standard national disaster alert specification.", 0.38),
-            ("Bodo / Bengali auxiliary dialect routing for char communities.", 0.18)
+            ("Auxiliary dialect routing for riverine char communities.", 0.18)
         ]),
         ("4. MULTI-CHANNEL DISPATCH", 0.75, '#dc2626', [
             ("NDMA Sachet National CAP Gateway API Connector.", 0.58),
@@ -405,7 +439,9 @@ def create_widescreen_diagram_6():
 
     save_dual(fig, "diagram_6_spatial_conflict_resolution")
 
+# -----------------------------------------------------------------------------
 # DIAGRAM 7: Implementation Roadmap & Budget Breakdown (₹40.00 Lakh)
+# -----------------------------------------------------------------------------
 def create_widescreen_diagram_7():
     fig, ax = plt.subplots(figsize=(16, 9), dpi=200)
     ax.set_facecolor(BG_LIGHT)
@@ -417,7 +453,6 @@ def create_widescreen_diagram_7():
                "NESFIC 2026 Grant Ceiling: ₹40.00 Lakh • Dual-Basin Pilot (Barpeta & Majuli) to Statewide Rollout",
                "ROADMAP & BUDGET ALLOCATION")
 
-    # Top: 4 Quarters
     quarters = [
         ("Q1 (M1–M2): DATA PIPELINES & BASELINE", 0.02, '#0284c7', [
             "Ingest ASSAC GIS layers & 10m CartoDEM",
@@ -454,7 +489,6 @@ def create_widescreen_diagram_7():
         for i, b in enumerate(bullets):
             ax.text(x + 0.015, 0.70 - i * 0.08, f"• {b}", fontsize=7.0, color=NAVY_TEXT, zorder=3, wrap=True)
 
-    # Bottom: Budget Breakdown (₹40 Lakh)
     b_box = FancyBboxPatch((0.02, 0.06), 0.96, 0.33, boxstyle="round,pad=0.01,rounding_size=0.01",
                            facecolor='#0f172a', edgecolor='#334155', linewidth=1.5, zorder=2)
     ax.add_patch(b_box)
@@ -477,8 +511,115 @@ def create_widescreen_diagram_7():
 
     save_dual(fig, "diagram_7_enterprise_system_architecture")
 
+# -----------------------------------------------------------------------------
+# DIAGRAM 8: All-Weather SAR Radar Water Extraction Pipeline (Sentinel-1)
+# -----------------------------------------------------------------------------
+def create_widescreen_diagram_8():
+    fig, ax = plt.subplots(figsize=(16, 9), dpi=200)
+    ax.set_facecolor(BG_LIGHT)
+    fig.patch.set_facecolor(BG_LIGHT)
+    ax.axis('off')
+    add_blueprint_grid(ax)
+
+    add_header(ax, "ALL-WEATHER SYNTHETIC APERTURE RADAR (SAR) WATER EXTRACTION PIPELINE",
+               "Copernicus Sentinel-1 C-SAR (VV+VH) Cloud-Penetrating Processing Pipeline • 91.8% Accuracy",
+               "SPACE REMOTE SENSING PIPELINE")
+
+    steps = [
+        ("STAGE 1: ORBITAL PASS & ACQUISITION", 0.03, '#0284c7', [
+            ("Sentinel-1 C-band Synthetic Aperture Radar (5.405 GHz).", 0.58),
+            ("Penetrates dense 100% monsoon cloud cover and heavy rainfall.", 0.38),
+            ("Acquires Ground Range Detected (GRD) 10m spatial resolution.", 0.18)
+        ]),
+        ("STAGE 2: RADIOMETRIC CALIBRATION", 0.27, '#7c3aed', [
+            ("Converts digital pixel DN to normalized backscatter coefficient sigma_0 (dB).", 0.58),
+            ("Removes thermal noise and applies orbital precise ephemeris vectors.", 0.38),
+            ("Applies 7x7 adaptive Lee Sigma speckle suppression filter.", 0.18)
+        ]),
+        ("STAGE 3: OTSU DYNAMIC BINARIZATION", 0.51, '#d97706', [
+            ("Water acts as specular reflector (sigma_0 < -16.5 dB in VH).", 0.58),
+            ("Automated Otsu dynamic histogram threshold minimizes intra-class variance.", 0.38),
+            ("Integrates CartoDEM slope mask (>5 deg) to eliminate mountain shadow false-positives.", 0.18)
+        ]),
+        ("STAGE 4: VECTORIZATION & ASDC SYNC", 0.75, '#059669', [
+            ("Converts binarized raster to PostGIS 3.4 spatial polygon geometries.", 0.58),
+            ("Cross-referenced with dry-season permanent water base mask.", 0.38),
+            ("Tags as [OBSERVED] layer with 96% confidence bounds in <45 mins.", 0.18)
+        ])
+    ]
+
+    for title, x, col, cards in steps:
+        hdr = FancyBboxPatch((x, 0.77), 0.22, 0.045, boxstyle="round,pad=0.005,rounding_size=0.008",
+                             facecolor=col, edgecolor=col, linewidth=1, zorder=2)
+        ax.add_patch(hdr)
+        ax.text(x + 0.11, 0.792, title, ha='center', va='center', fontsize=7.5, fontweight='bold', color='#ffffff', zorder=3)
+
+        box = FancyBboxPatch((x, 0.08), 0.22, 0.68, boxstyle="round,pad=0.01,rounding_size=0.01",
+                             facecolor='#f8fafc', edgecolor='#cbd5e1', linewidth=1.2, zorder=1)
+        ax.add_patch(box)
+
+        for text, y in cards:
+            c = FancyBboxPatch((x + 0.01, y), 0.20, 0.17, boxstyle="round,pad=0.008,rounding_size=0.008",
+                               facecolor='#ffffff', edgecolor='#cbd5e1', linewidth=1, zorder=2)
+            ax.add_patch(c)
+            ax.text(x + 0.02, y + 0.09, text, fontsize=7.2, color=NAVY_TEXT, zorder=3, wrap=True)
+
+    save_dual(fig, "diagram_8_sar_water_extraction_pipeline")
+
+# -----------------------------------------------------------------------------
+# DIAGRAM 9: Live Prototype Multi-Perspective UI Cockpit (Quad View)
+# -----------------------------------------------------------------------------
+def create_widescreen_diagram_9():
+    fig, ax = plt.subplots(figsize=(16, 9), dpi=200)
+    ax.set_facecolor(BG_LIGHT)
+    fig.patch.set_facecolor(BG_LIGHT)
+    ax.axis('off')
+    add_blueprint_grid(ax)
+
+    add_header(ax, "LIVE WORKING PROTOTYPE: MULTI-PERSPECTIVE 4D DIGITAL TWIN COCKPIT",
+               "Deployed at jaldrishti-assam.pages.dev • Cloudflare Pages & Assam State Data Centre (ASDC)",
+               "LIVE PROTOTYPE EVIDENCE")
+
+    quads = [
+        ("1. STATE EMERGENCY OPERATIONS (SEOC) COCKPIT", 0.03, 0.46, '#0284c7', [
+            "Real-time CWC station telemetry (Pandu, Dibrugarh, Tezpur, Goalpara, Dhubri)",
+            "District flood summary cards: population at risk, submerged area, active relief camps",
+            "Mandatory Three-Tier Provenance Segregation indicator [OBSERVED / FORECAST / SIMULATED]"
+        ]),
+        ("2. 4D DIGITAL TWIN LEAFLET GIS MAP (SATELLITE & TOPO)", 0.51, 0.46, '#059669', [
+            "Free Basemap Switcher: ESRI Satellite, OpenTopoMap Topo, CartoDB Dark, Light Blueprint",
+            "Observed Sentinel-1 SAR inundation extents overlaid with 24h/48h forecast wavefronts",
+            "Embankment polylines color-coded by Breach Hazard Index (Red: Critical BHI > 80)"
+        ]),
+        ("3. 'WHAT-IF' HYDRODYNAMIC SCENARIO SANDBOX", 0.03, 0.06, '#7c3aed', [
+            "Dynamic sliders: Upstream rainfall (0-300mm), Dam release surge (0-2,500 cumecs)",
+            "Embankment breach selector triggering sub-minute 2D PINN hydrodynamic simulation",
+            "Outputs: Submerged road corridors (NH-27), affected villages, and wavefront arrival time"
+        ]),
+        ("4. CAP MULTI-CHANNEL BILINGUAL EARLY WARNING ENGINE", 0.51, 0.06, '#dc2626', [
+            "OASIS CAP v1.2 / NDMA Sachet compliant XML payload serialization",
+            "Automated dual-language alerts: Assamese (অসমীয়া) & English standard notifications",
+            "Multi-channel broadcast: Geotargeted Cell Broadcast, Bulk SMS, WhatsApp Gaonburha bot"
+        ])
+    ]
+
+    for title, x, y, col, bullets in quads:
+        hdr = FancyBboxPatch((x, y + 0.33), 0.46, 0.045, boxstyle="round,pad=0.005,rounding_size=0.008",
+                             facecolor=col, edgecolor=col, linewidth=1, zorder=2)
+        ax.add_patch(hdr)
+        ax.text(x + 0.23, y + 0.352, title, ha='center', va='center', fontsize=8, fontweight='bold', color='#ffffff', zorder=3)
+
+        box = FancyBboxPatch((x, y), 0.46, 0.32, boxstyle="round,pad=0.01,rounding_size=0.01",
+                             facecolor='#f8fafc', edgecolor='#cbd5e1', linewidth=1.2, zorder=1)
+        ax.add_patch(box)
+
+        for i, b in enumerate(bullets):
+            ax.text(x + 0.02, y + 0.25 - i * 0.08, f"• {b}", fontsize=7.2, color=NAVY_TEXT, zorder=3, wrap=True)
+
+    save_dual(fig, "diagram_9_live_prototype_ui_cockpit")
+
 if __name__ == '__main__':
-    print("Generating High-Impact 16:9 Widescreen Infographics for NESFIC-D-18...")
+    print("Generating Complete Suite of 9 High-Impact Widescreen Infographics for NESFIC-D-18...")
     create_widescreen_diagram_1()
     create_widescreen_diagram_2()
     create_widescreen_diagram_3()
@@ -486,4 +627,6 @@ if __name__ == '__main__':
     create_widescreen_diagram_5()
     create_widescreen_diagram_6()
     create_widescreen_diagram_7()
-    print("All 7 16:9 infographics generated successfully!")
+    create_widescreen_diagram_8()
+    create_widescreen_diagram_9()
+    print("All 9 widescreen diagrams generated successfully!")
