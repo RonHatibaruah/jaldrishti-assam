@@ -105,12 +105,12 @@ To demonstrate effectiveness across both complex riverine delta floodplains and 
 • **Sub-60 Second Simulation Runtime:** Near-instantaneous computation of 48-hour inundation wavefronts for emergency scenario planning.  
 • **100% Provenance Compliance:** Complete visual and algorithmic segregation of Observed, Forecast, and Simulated data across all interfaces.
 
-### Milestone-Based Grant Budget Utilization (Total: ₹40.00 Lakh)
-1. Software Stack Development Team Cost (Core Platform, Hydrodynamic PINN & AI Modelers): ₹20.00 Lakh (50.0%)  
-2. 4D GIS Web Platform, Vector Tile Engine & ASDMA COP Dashboard: ₹7.00 Lakh (17.5%)  
-3. Dual-Basin Field Deployment, Ground-Truthing & Officer Capacity Building (Barpeta & Majuli): ₹6.00 Lakh (15.0%)  
-4. Space SAR Ingestion (STAC API), IoT Telemetry & CAP Alert Gateway: ₹4.00 Lakh (10.0%)  
-5. Security Audit (STQC VAPT), ASDC Data Compliance & Technical Contingency: ₹3.00 Lakh (7.5%)  
+### Milestone-Based Grant Budget Utilization (Total: Rs. 40.00 Lakh)
+1. Software Stack Development Team Cost (Core Platform, Hydrodynamic PINN & AI Modelers): Rs. 20.00 Lakh (50.0%)  
+2. 4D GIS Web Platform, Vector Tile Engine & ASDMA COP Dashboard: Rs. 7.00 Lakh (17.5%)  
+3. Dual-Basin Field Deployment, Ground-Truthing & Officer Capacity Building (Barpeta & Majuli): Rs. 6.00 Lakh (15.0%)  
+4. Space SAR Ingestion (STAC API), IoT Telemetry & CAP Alert Gateway: Rs. 4.00 Lakh (10.0%)  
+5. Security Audit (STQC VAPT), ASDC Data Compliance & Technical Contingency: Rs. 3.00 Lakh (7.5%)  
 
 ---
 

@@ -50,6 +50,10 @@ def clean_text_for_textarea(text):
     # Clean latex math
     t = re.sub(r'\$([^$]+)\$', r'\1', t)
     
+    # Standardize currency and math
+    t = t.replace('₹', 'Rs. ')
+    t = t.replace('≥', '>=').replace('≤', '<=')
+    
     # Standardize dashes
     t = t.replace('—', ' - ').replace('–', '-')
     

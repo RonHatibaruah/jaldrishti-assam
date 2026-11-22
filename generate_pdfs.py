@@ -66,18 +66,29 @@ def clean_inline_markdown(text):
     t = re.sub(r'\(\s*—\s*', '(', t)
     t = re.sub(r'\(\s*\)', '', t)
     
-    # 2. Standardize common HTML entities
-    t = t.replace('&mdash;', '—')
-    t = t.replace('&ndash;', '–')
+    # 2. Currency and non-WinAnsi character normalization
+    t = t.replace('₹', 'Rs. ')
+    t = t.replace('≥', '>=').replace('≤', '<=').replace('±', '+/-')
+    t = t.replace('●', '•')
+    t = t.replace('—', ' - ').replace('–', '-')
+    t = t.replace('’', "'").replace('‘', "'")
+    t = t.replace('”', '"').replace('“', '"')
+    
+    # 3. Standardize common HTML entities
+    t = t.replace('&mdash;', ' - ')
+    t = t.replace('&ndash;', '-')
     t = t.replace('&amp;', '&')
     t = t.replace('&lt;', '<')
     t = t.replace('&gt;', '>')
     
-    # 3. Clean LaTeX math notations
+    # 4. Clean LaTeX math notations
     t = re.sub(r'\$([^$]+)\$', r'\1', t)
     t = t.replace(r'\le', '<=').replace(r'\ge', '>=').replace(r'\pm', '+/-')
     t = t.replace(r'\text{ s}', ' s').replace(r'\text{ m}', ' m').replace(r'\%', '%')
     t = t.replace(r'\Delta', 'Delta')
+    
+    # Strip any leading hashes that may have been preserved
+    t = re.sub(r'^#+\s*', '', t)
     
     # 4. Save backtick code spans
     code_matches = []
@@ -234,18 +245,21 @@ def parse_markdown_content(lines, available_width=490):
                 in_table = False
                 table_lines = []
 
-        if not raw:
+        if not raw or re.match(r'^#+\s*$', raw):
             continue
 
         if raw.startswith('# '):
             # Top-level title - skip raw markdown header since formal title is already in page banner
             continue
         elif raw.startswith('## '):
-            flowables.append(safe_paragraph(raw[3:], h2_style))
+            h_text = raw.lstrip('#').strip()
+            flowables.append(safe_paragraph(h_text, h2_style))
         elif raw.startswith('### '):
-            flowables.append(safe_paragraph(raw[4:], h3_style))
+            h_text = raw.lstrip('#').strip()
+            flowables.append(safe_paragraph(h_text, h3_style))
         elif raw.startswith('#### '):
-            flowables.append(safe_paragraph(raw[5:], h3_style))
+            h_text = raw.lstrip('#').strip()
+            flowables.append(safe_paragraph(h_text, h3_style))
         elif raw.startswith('> '):
             quote_text = raw[2:]
             t_quote = Table([[safe_paragraph(quote_text, callout_style)]], colWidths=[available_width])
@@ -337,13 +351,13 @@ def build_proposal_pdf(output_path):
     with open(prop_md, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    sections = content.split('## ')
+    sections = re.split(r'\n(?=##\s+Field\s+\d+:)', content)
     if sections[0].strip():
         story.extend(parse_markdown_content(sections[0].strip().split('\n'), available_width=490))
 
     for sec in sections[1:]:
         lines = sec.strip().split('\n')
-        sec_title = lines[0].strip()
+        sec_title = lines[0].strip().lstrip('#').strip()
         story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor('#0f766e'), spaceBefore=8, spaceAfter=5))
         story.append(safe_paragraph(sec_title, h2_style))
 
@@ -397,7 +411,7 @@ def build_proposal_pdf(output_path):
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
                 story.append(Image(img, width=490, height=275.6))
-                story.append(safe_paragraph("<b>Figure 8: Phased Implementation Roadmap & Milestone Budget Breakdown (₹40.00 Lakh)</b> — Dual-Basin Pilot to Statewide Operationalization", caption_style))
+                story.append(safe_paragraph("<b>Figure 8: Phased Implementation Roadmap & Milestone Budget Breakdown (Rs. 40.00 Lakh)</b> — Dual-Basin Pilot to Statewide Operationalization", caption_style))
                 story.append(Spacer(1, 4))
         elif 'Field 5:' in sec_title:
             img = os.path.join(img_dir, 'diagram_12_socio_economic_impact_model.jpg')
@@ -468,13 +482,13 @@ def build_proof_of_work_pdf(output_path):
     with open(pow_md, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    sections = content.split('## ')
+    sections = re.split(r'\n(?=##\s+\d+\.\s+)', content)
     if sections[0].strip():
         story.extend(parse_markdown_content(sections[0].strip().split('\n'), available_width=490))
 
     for sec in sections[1:]:
         lines = sec.strip().split('\n')
-        sec_title = lines[0].strip()
+        sec_title = lines[0].strip().lstrip('#').strip()
         story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor('#0f766e'), spaceBefore=8, spaceAfter=5))
         story.append(safe_paragraph(sec_title, h2_style))
 
