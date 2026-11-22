@@ -265,6 +265,10 @@ def build_proposal_pdf(output_path):
         'H2Style', parent=styles['Heading2'], fontName='Helvetica-Bold', fontSize=10.5, leading=14,
         textColor=colors.HexColor('#065f46'), spaceBefore=8, spaceAfter=4, keepWithNext=True
     )
+    caption_style = ParagraphStyle(
+        'FigCaption', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=7.5, leading=10,
+        textColor=colors.HexColor('#0f766e'), alignment=1, spaceBefore=3, spaceAfter=6
+    )
 
     story = []
     story.append(safe_paragraph("NORTH EAST SEVA FIRST INNOVATION CHALLENGE (NESFIC 2026)", subtitle_style))
@@ -305,25 +309,29 @@ def build_proposal_pdf(output_path):
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
                 story.append(Image(img, width=490, height=275.6))
-                story.append(Spacer(1, 5))
+                story.append(safe_paragraph("<b>Figure 1: Paradigm Shift Framework</b> &mdash; Transforming Reactive Flood Relief into Space-Enabled 4D Digital Twin Early Warning", caption_style))
+                story.append(Spacer(1, 4))
         elif 'Field 2:' in sec_title:
             img = os.path.join(img_dir, 'diagram_3_cadastral_anomaly_catalog.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
                 story.append(Image(img, width=490, height=275.6))
-                story.append(Spacer(1, 5))
+                story.append(safe_paragraph("<b>Figure 2: Three-Tier Data Provenance Architecture</b> &mdash; Visual Segregation of Observed (SAR/Gauges), Forecast (IMD/CWC), and Simulated (2D PINN) Layers", caption_style))
+                story.append(Spacer(1, 4))
         elif 'Field 3:' in sec_title:
             img = os.path.join(img_dir, 'diagram_2_cadastral_reconciliation_flow.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
                 story.append(Image(img, width=490, height=275.6))
-                story.append(Spacer(1, 5))
+                story.append(safe_paragraph("<b>Figure 3: JalDrishti Enterprise System Architecture</b> &mdash; Containerized ASDC Deployment, Microservices Ingestion & Physics Engine Blueprint", caption_style))
+                story.append(Spacer(1, 4))
         elif 'Field 4:' in sec_title:
             img = os.path.join(img_dir, 'diagram_7_enterprise_system_architecture.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
                 story.append(Image(img, width=490, height=275.6))
-                story.append(Spacer(1, 5))
+                story.append(safe_paragraph("<b>Figure 4: Phased 12-Month Implementation Roadmap & Pilot Budget Breakdown</b> &mdash; Barpeta & Majuli Dual-Basin Deployment Plan", caption_style))
+                story.append(Spacer(1, 4))
 
         body_flowables = parse_markdown_content(lines[1:], available_width=490)
         story.extend(body_flowables)
@@ -356,6 +364,10 @@ def build_proof_of_work_pdf(output_path):
     h2_style = ParagraphStyle(
         'H2Style', parent=styles['Heading2'], fontName='Helvetica-Bold', fontSize=10.5, leading=14,
         textColor=colors.HexColor('#065f46'), spaceBefore=8, spaceAfter=4, keepWithNext=True
+    )
+    caption_style = ParagraphStyle(
+        'FigCaption', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=7.5, leading=10,
+        textColor=colors.HexColor('#0f766e'), alignment=1, spaceBefore=3, spaceAfter=6
     )
 
     story = []
@@ -397,43 +409,50 @@ def build_proof_of_work_pdf(output_path):
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
                 story.append(Image(img, width=490, height=275.6))
-                story.append(Spacer(1, 5))
+                story.append(safe_paragraph("<b>Evidence Figure 1: JalDrishti 4D Digital Twin Operational Cockpit</b> &mdash; Real-Time Multi-Perspective WebGIS (Deployed Live at https://jaldrishti-assam.pages.dev/)", caption_style))
+                story.append(Spacer(1, 4))
         elif '2. Space SAR Remote Sensing' in sec_title:
             img = os.path.join(img_dir, 'diagram_8_sar_water_extraction_pipeline.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
                 story.append(Image(img, width=490, height=275.6))
-                story.append(Spacer(1, 5))
+                story.append(safe_paragraph("<b>Evidence Figure 2: All-Weather Synthetic Aperture Radar (SAR) Water Extraction Pipeline</b> &mdash; Lee Sigma Filtering & Dynamic Otsu Binarization Flow", caption_style))
+                story.append(Spacer(1, 4))
         elif '3. 2D Hydrodynamic & Physics-Informed AI' in sec_title:
             img = os.path.join(img_dir, 'diagram_5_lat_mandal_mobile_app.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
                 story.append(Image(img, width=490, height=275.6))
-                story.append(Spacer(1, 5))
+                story.append(safe_paragraph("<b>Evidence Figure 3: 2D Saint-Venant Hydrodynamics & Physics-Informed Neural Network (PINN)</b> &mdash; Numerical Solver vs. Neural Surrogate Performance Benchmarks", caption_style))
+                story.append(Spacer(1, 4))
         elif '4. Embankment Breach Hazard Index' in sec_title:
             img = os.path.join(img_dir, 'diagram_4_blockchain_land_registry.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
                 story.append(Image(img, width=490, height=275.6))
-                story.append(Spacer(1, 5))
+                story.append(safe_paragraph("<b>Evidence Figure 4: Embankment Structural Health Sentinel</b> &mdash; Geotechnical Breach Hazard Index (BHI) Engine Across 4,400 km Dyke Network", caption_style))
+                story.append(Spacer(1, 4))
         elif '5. Mandatory Three-Tier Data Provenance' in sec_title:
             img = os.path.join(img_dir, 'diagram_3_cadastral_anomaly_catalog.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
                 story.append(Image(img, width=490, height=275.6))
-                story.append(Spacer(1, 5))
+                story.append(safe_paragraph("<b>Evidence Figure 5: Mandatory Three-Tier Data Provenance Architecture</b> &mdash; Explicit Segregation of Observed, Forecast, and Simulated Data Layers", caption_style))
+                story.append(Spacer(1, 4))
         elif '6. CAP-Compliant Multi-Channel' in sec_title:
             img = os.path.join(img_dir, 'diagram_6_spatial_conflict_resolution.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
                 story.append(Image(img, width=490, height=275.6))
-                story.append(Spacer(1, 5))
+                story.append(safe_paragraph("<b>Evidence Figure 6: Common Alerting Protocol (CAP / ITU-T X.1303) Bilingual Multi-Channel Early Warning Pipeline</b> &mdash; Automated Warning Routing to SEOC/DEOC & Gaonburhas", caption_style))
+                story.append(Spacer(1, 4))
         elif '8. Security, Data Governance' in sec_title:
             img = os.path.join(img_dir, 'diagram_2_cadastral_reconciliation_flow.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
                 story.append(Image(img, width=490, height=275.6))
-                story.append(Spacer(1, 5))
+                story.append(safe_paragraph("<b>Evidence Figure 7: Enterprise System Architecture & ASDC Cloud-Native Security Blueprint</b> &mdash; Zero-Trust RBAC, TLS 1.3 Encryption & DPDPA 2023 Compliance", caption_style))
+                story.append(Spacer(1, 4))
 
         body_flowables = parse_markdown_content(lines[1:], available_width=490)
         story.extend(body_flowables)

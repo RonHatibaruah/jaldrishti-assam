@@ -74,35 +74,16 @@ Integrated with the National Disaster Management Authority (NDMA) Sachet Common 
 
 ================================================================================
 COPY-PASTE BLOCK: FIELD 3 [Limit: 400 words]
-Actual Word Count: 347 words
+Actual Word Count: 270 words
 ================================================================================
 
 Technology architecture & feasibility
-(Word Count: 348 words / Limit: 400 words)
+(Word Count: 285 words / Limit: 400 words)
 
 System Architecture & Technical Flow
 JalDrishti is architected as an enterprise, cloud-native, open-standard platform engineered for containerized on-premise deployment within the Assam State Data Centre (ASDC), ensuring zero-trust governance, high data residency compliance, and seamless ASDMA/ASSAC integration.
 
-`
-[Space Earth Observation & Telemetry]
-Sentinel-1 SAR | RISAT | CartoDEM | CWC Gauges | IMD AWS | GPM | Open-Meteo
-                             │
-                             ▼
-[ASDC Ingestion, Preprocessing & Vectorization Layer]
-FastAPI Ingestion Gateway | GDAL/Rasterio | STAC API | PostGIS 3.4 Spatial DB
-                             │
-                             ▼
-[Core Hydrodynamic & AI Simulation Pipeline]
-2D Shallow Water Hydrodynamic Solver + Physics-Informed AI Surrogate (PyTorch)
-  ├─ Embankment Breach Hazard Index (BHI) Engine
-  ├─ 12h / 24h / 48h Predictive Inundation Wavefront Mapper
-  └─ Explicit Data Provenance Filter (Observed vs. Forecast vs. Simulated)
-                             │
-                             ▼
-[Presentation & Action Layer] ───► [CAP Dissemination Gateway]
-React 18 + TypeScript + MapLibre/Leaflet  NDMA Sachet / SMS / IVRS / WhatsApp
-(SEOC / DEOC / Circle Officer Cockpit)    (Assamese, Bodo, Bengali, English)
-`
+(Refer to Technical Framework Infographic: Diagram 2  -  JalDrishti 4D Digital Twin End-to-End System Architecture & ASDC Blueprint)
 
 1. Presentation & Action Layer: High-performance responsive GIS cockpit built with React 18, TypeScript, and Tailwind CSS. Employs MapLibre GL and Leaflet 1.9.4 with custom vector/raster tiles for sub-second rendering of statewide multi-layer spatial datasets. Features dedicated views for SEOC State Commanders, DEOC District Collectors, and WRD Embankment Engineers.
 2. Ingestion & Processing Gateway: Microservices utilizing GDAL, Rasterio, and STAC (SpatioTemporal Asset Catalog) API to ingest, clip, orthorectify, and reproject SAR radar imagery, CartoDEM digital elevation models, and IMD/CWC telemetry.

@@ -53,24 +53,7 @@ Water surfaces act as specular reflectors, yielding significantly lower backscat
 3. Automated Otsu Dynamic Binarization: Minimizing intra-class variance on the calibrated backscatter histogram to set the adaptive threshold T_{\text{water}} (typically -16.5 \pm 1.2\text{ dB} for VH).
 4. Permanent Water Mask & Slope Filter: Masking permanent water bodies (from dry-season base maps) and excluding slopes > 5^\circ using CartoDEM to eliminate radar mountain shadow artifacts.
 
-`
-[Raw Sentinel-1 GRD SAR Pass]
-              │
-              ▼
-[Radiometric Calibration & Thermal Noise Subtraction]
-              │
-              ▼
-[Adaptive 7x7 Lee Speckle Filter]
-              │
-              ▼
-[Otsu Dynamic Histogram Thresholding: sigma_0 < -16.5 dB]
-              │
-              ▼
-[CartoDEM Slope Exclusion (<5°) & Permanent River Mask Filter]
-              │
-              ▼
-[Vectorized Flood Polygon Layer with 95% Confidence Bounds]
-`
+(Refer to Technical Framework Infographic: Diagram 8  -  All-Weather Synthetic Aperture Radar (SAR) Water Extraction Pipeline)
 
 2.2 SAR Water Extraction Validation Benchmark (2024 Assam Flood Event)
 Benchmarked against 1,200 ground-truthed GPS validation points and CWC gauge readings across the Barpeta and Majuli riverine corridors during the June-July 2024 flood wave:
@@ -154,29 +137,9 @@ In the UI, every layer is visually badged with standardized high-contrast color 
 
 6. CAP-Compliant Multi-Channel Bilingual Early Warning Pipeline
 
-JalDrishti integrates with the Common Alerting Protocol (CAP / ITU-T X.1303) standardized by NDMA Sachet:
+JalDrishti integrates with the Common Alerting Protocol (CAP / ITU-T X.1303) standardized by NDMA Sachet, ensuring automated, multi-channel bilingual alert dissemination across SEOC, DEOCs, and grassroots Gaonburha networks:
 
-`
-[Hydrodynamic Simulation: Inundation Depth > 0.5m in Circle]
-                           │
-                           ▼
-[CAP XML Alert Payload Auto-Generated (OASIS CAP v1.2 Standard)]
-                           │
-             ┌─────────────┴─────────────┐
-             ▼                           ▼
-[Assamese Translation Engine]  [English Standard Notification]
-"সাবধান! আগন্তুক ১২ ঘণ্টাত বৰপেটা  "URGENT: Projected flood surge
-ৰাজহ চক্ৰত নদীৰ পানী বিপদসীমাৰ     depth > 0.5m in Barpeta Circle
-ওপৰেৰে যোৱাৰ সম্ভাৱনা আছে।"        within next 12 hours. Evacuate."
-             │                           │
-             └─────────────┬─────────────┘
-                           ▼
-          [Multi-Channel Dissemination Bus]
-      ├─ NDMA Sachet CAP API (State Gateway)
-      ├─ Geotargeted Bulk SMS & Automated IVRS Voice Call
-      ├─ WhatsApp Gaonburha Broadcast Channel
-      └─ ASDMA WebGIS Siren Overlay
-`
+(Refer to Technical Framework Infographic: Diagram 6  -  Common Alerting Protocol (CAP) Bilingual Multi-Channel Dissemination Pipeline)
 
 Alert Verification Benchmarks:
 - Alert Generation Latency: < 2.4 seconds from simulation breach trigger.
