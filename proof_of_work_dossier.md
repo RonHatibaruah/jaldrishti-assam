@@ -1,11 +1,11 @@
 # Proof of Work & Technical Evidence Dossier
-## JalDrishti (জলদৃষ্টি): Assam Flood & Space Digital Twin Sentinel
+## JalDrishti: Assam Flood & Space Digital Twin Sentinel
 ### Space-Enabled 4D Hydrodynamic Simulation, Risk Analytics & Early Warning Platform
 **Submission Category:** NESFIC 2026 (Stream 1 — Government Department Track: Science & Technology)  
 **Problem Statement ID:** **NESFIC-D-18**  
 **Challenge Title:** *Digital Twin for Flood Management, Simulation and Early Warning Using Space Technology*  
 **Challenge Owners:** Department of Science & Technology ● Government of Assam – ASSAC (Assam State Space Applications Centre), in collaboration with Assam State Disaster Management Authority (ASDMA)  
-**Lead Innovator & Applicant:** Ron Hatibaruah  
+**Lead Innovator & Applicant:** Chandan Kumar Sonowal  
 **Live Working Prototype:** `https://jaldrishti-assam.pages.dev/` (Demo State Command: `admin@assac.assam.gov.in` / `dispur2026`)  
 **GitHub Repository:** `https://github.com/RonHatibaruah/jaldrishti-assam`  
 **Geographic Coverage (SEO & GEO):** Assam State (`IN-AS`, 26.1445° N, 91.7362° E, Dispur/Guwahati)  

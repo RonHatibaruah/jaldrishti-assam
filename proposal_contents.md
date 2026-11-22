@@ -2,9 +2,9 @@
 
 **Problem Statement:** NESFIC-D-18 (Stream 1 — Government Track: Department of Science & Technology) — *Digital Twin for Flood Management, Simulation and Early Warning Using Space Technology*  
 **Challenge Owners:** Department of Science & Technology ● Government of Assam – ASSAC (Assam State Space Applications Centre), in collaboration with Assam State Disaster Management Authority (ASDMA)  
-**Applicant / Innovator:** Ron Hatibaruah  
+**Applicant / Innovator:** Chandan Kumar Sonowal  
 **Application Platform:** Assam Startup Portal (NESFIC 2026)  
-**Proposed Solution Name:** JalDrishti (জলদৃষ্টি) — Assam Flood & Space Digital Twin Sentinel  
+**Proposed Solution Name:** JalDrishti — Assam Flood & Space Digital Twin Sentinel  
 **Live Working Prototype:** `https://jaldrishti-assam.pages.dev/` (Demo State Command: `admin@assac.assam.gov.in` / `dispur2026`)  
 **GitHub Repository:** `https://github.com/RonHatibaruah/jaldrishti-assam`  
 **Geographic Coverage (SEO & GEO):** Assam State (`IN-AS`, 26.1445° N, 91.7362° E, Dispur/Guwahati)  
@@ -119,7 +119,7 @@ To demonstrate effectiveness across both complex riverine delta floodplains and 
 
 *(Refer to Technical Framework Infographic: Diagram 12 — Socio-Economic Impact Matrix & Grassroots Disaster Resilience Framework)*
 
-### Lead Applicant & Technical Capability: Ron Hatibaruah
+### Lead Applicant & Technical Capability: Chandan Kumar Sonowal
 • **Domain Expertise:** GovTech software architect, geospatial systems engineer, and machine learning practitioner with specialized expertise in designing mission-critical decision support systems, GIS applications (PostGIS, GDAL, MapLibre), and public emergency infrastructure.  
 • **Contextual Mastery:** Deep operational familiarity with Assam’s river morphology, ASDMA’s disaster management workflows, NESAC FLEWS historical methodologies, Central Water Commission (CWC) telemetry networks, and the socio-geographic realities of riverine char and tea garden communities.  
 • **Execution Track Record:** Proven competence in architecting production-grade containerized web platforms, high-throughput geospatial data pipelines, and explainable AI systems. Collaborates closely with remote sensing hydrologists, GIS analysts, and disaster management domain specialists.

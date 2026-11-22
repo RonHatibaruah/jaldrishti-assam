@@ -9,8 +9,9 @@ export async function onRequestGet() {
     problemStatement: "NESFIC-D-18 (Stream 1 — Government Track: Department of Science & Technology)",
     challengeTitle: "Digital Twin for Flood Management, Simulation and Early Warning Using Space Technology",
     challengeOwners: "Department of Science & Technology ● Government of Assam – ASSAC & ASDMA",
-    innovator: "Ron Hatibaruah",
-    contactEmail: "ron.hatibaruah@gmail.com",
+    innovator: "Chandan Kumar Sonowal",
+    contactEmail: "chandankumar.sonowal@gmail.com",
+    organization: "Coretouch Technologies Pvt Ltd",
     edgeRuntime: "Cloudflare Pages Functions",
     statutoryProvenanceMandate: {
       rule: "ASSAC Mandatory Segregation of Observed, Forecast, and Simulated data",

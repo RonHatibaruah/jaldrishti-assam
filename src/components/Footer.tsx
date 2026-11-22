@@ -69,12 +69,19 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-blue-950/80 pt-4 flex flex-wrap justify-between items-center gap-3 text-[11px] text-slate-400">
-          <div>
-            © 2026 Government of Assam • North East Seva First Innovation Challenge (NESFIC 2026)
+        <div className="border-t border-blue-950/80 pt-4 flex flex-wrap justify-between items-center gap-3 text-[11px] text-slate-300">
+          <div className="space-y-1">
+            <div className="font-semibold text-white tracking-wide">
+              Copyright © 2026 Coretouch Technologies Pvt Ltd. All rights reserved.
+            </div>
+            <div className="text-[10px] text-slate-400">
+              Government of Assam • North East Seva First Innovation Challenge (NESFIC 2026) • Problem NESFIC-D-18
+            </div>
           </div>
           <div className="flex items-center gap-4">
-            <span className="font-mono text-[10px] text-slate-400">Deployed at Assam State Data Centre (ASDC)</span>
+            <span className="font-medium text-slate-300">Lead Applicant: <b className="text-white">Chandan Kumar Sonowal</b></span>
+            <span className="text-slate-600">•</span>
+            <span className="font-mono text-[10px] text-slate-400">Deployed at ASDC Dispur</span>
             <span className="text-slate-600">•</span>
             <span className="text-cyan-300 font-medium">DPDPA 2023 Compliant</span>
           </div>

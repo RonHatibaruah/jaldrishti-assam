@@ -2,7 +2,8 @@
 NESFIC 2026 - STREAM 1 (GOVERNMENT TRACK) - OFFICIAL PROPOSAL TEXT
 Problem Statement ID: NESFIC-D-18: Digital Twin for Flood Management, Simulation and Early Warning
 Sponsoring Department: Department of Science & Technology (ASSAC) & ASDMA, Govt of Assam
-Applicant / Innovator: Ron Hatibaruah
+Applicant / Innovator: Chandan Kumar Sonowal
+Copyright: Copyright © 2026 Coretouch Technologies Pvt Ltd. All rights reserved.
 Solution: JalDrishti (Assam Flood & Space Digital Twin Sentinel)
 Live Prototype: https://jaldrishti-assam.pages.dev/
 GitHub Repository: https://github.com/RonHatibaruah/jaldrishti-assam
@@ -125,7 +126,7 @@ Milestone-Based Grant Budget Utilization (Total: ₹40.00 Lakh)
 
 ================================================================================
 COPY-PASTE BLOCK: FIELD 5 [Limit: 300 words]
-Actual Word Count: 283 words
+Actual Word Count: 284 words
 ================================================================================
 
 Team capabilities, commercialization & sustainability
@@ -133,7 +134,7 @@ Team capabilities, commercialization & sustainability
 
 (Refer to Technical Framework Infographic: Diagram 12  -  Socio-Economic Impact Matrix & Grassroots Disaster Resilience Framework)
 
-Lead Applicant & Technical Capability: Ron Hatibaruah
+Lead Applicant & Technical Capability: Chandan Kumar Sonowal
 • Domain Expertise: GovTech software architect, geospatial systems engineer, and machine learning practitioner with specialized expertise in designing mission-critical decision support systems, GIS applications (PostGIS, GDAL, MapLibre), and public emergency infrastructure.  
 • Contextual Mastery: Deep operational familiarity with Assam’s river morphology, ASDMA’s disaster management workflows, NESAC FLEWS historical methodologies, Central Water Commission (CWC) telemetry networks, and the socio-geographic realities of riverine char and tea garden communities.  
 • Execution Track Record: Proven competence in architecting production-grade containerized web platforms, high-throughput geospatial data pipelines, and explainable AI systems. Collaborates closely with remote sensing hydrologists, GIS analysts, and disaster management domain specialists.

@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """
 Generate clean, copy-paste-ready, textarea-compliant plain text files for NESFIC 2026:
-1. NESFIC_D18_Proposal_Ron_Hatibaruah.txt (Field-by-field copy-paste textarea blocks)
-2. NESFIC_D18_Proof_of_Work_Ron_Hatibaruah.txt (Full and modular copy-paste textarea blocks)
+1. NESFIC_D18_Proposal_Chandan_Kumar_Sonowal.txt (Field-by-field copy-paste textarea blocks)
+2. NESFIC_D18_Proof_of_Work_Chandan_Kumar_Sonowal.txt (Full and modular copy-paste textarea blocks)
+Copies to legacy Ron Hatibaruah filenames and public/downloads/ for full backwards compatibility.
 """
 
 import os
 import re
+import shutil
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -58,7 +60,8 @@ def clean_text_for_textarea(text):
 
 def generate_proposal_text():
     src_file = os.path.join(base_dir, 'proposal_contents.md')
-    out_file = os.path.join(base_dir, 'NESFIC_D18_Proposal_Ron_Hatibaruah.txt')
+    out_file = os.path.join(base_dir, 'NESFIC_D18_Proposal_Chandan_Kumar_Sonowal.txt')
+    legacy_file = os.path.join(base_dir, 'NESFIC_D18_Proposal_Ron_Hatibaruah.txt')
     
     with open(src_file, 'r', encoding='utf-8') as f:
         raw = f.read()
@@ -70,7 +73,8 @@ def generate_proposal_text():
     header += "NESFIC 2026 - STREAM 1 (GOVERNMENT TRACK) - OFFICIAL PROPOSAL TEXT\n"
     header += "Problem Statement ID: NESFIC-D-18: Digital Twin for Flood Management, Simulation and Early Warning\n"
     header += "Sponsoring Department: Department of Science & Technology (ASSAC) & ASDMA, Govt of Assam\n"
-    header += "Applicant / Innovator: Ron Hatibaruah\n"
+    header += "Applicant / Innovator: Chandan Kumar Sonowal\n"
+    header += "Copyright: Copyright © 2026 Coretouch Technologies Pvt Ltd. All rights reserved.\n"
     header += "Solution: JalDrishti (Assam Flood & Space Digital Twin Sentinel)\n"
     header += "Live Prototype: https://jaldrishti-assam.pages.dev/\n"
     header += "GitHub Repository: https://github.com/RonHatibaruah/jaldrishti-assam\n"
@@ -82,10 +86,6 @@ def generate_proposal_text():
     for i in range(1, len(sections), 2):
         field_num = sections[i]
         field_body = sections[i+1]
-        
-        # Get field title from first line of body
-        first_line = field_body.strip().split('\n')[0]
-        field_title = f"FIELD {field_num}: {first_line}"
         
         # Word limit info
         limit_match = re.search(r'Limit:\s*(\d+)\s*words', field_body)
@@ -106,12 +106,15 @@ def generate_proposal_text():
     
     with open(out_file, 'w', encoding='utf-8') as f:
         f.write(full_output)
+    with open(legacy_file, 'w', encoding='utf-8') as f:
+        f.write(full_output)
         
-    print(f"Generated text version: {out_file} ({len(full_output)} bytes)")
+    print(f"Generated text versions: {out_file} and {legacy_file} ({len(full_output)} bytes)")
 
 def generate_pow_text():
     src_file = os.path.join(base_dir, 'proof_of_work_dossier.md')
-    out_file = os.path.join(base_dir, 'NESFIC_D18_Proof_of_Work_Ron_Hatibaruah.txt')
+    out_file = os.path.join(base_dir, 'NESFIC_D18_Proof_of_Work_Chandan_Kumar_Sonowal.txt')
+    legacy_file = os.path.join(base_dir, 'NESFIC_D18_Proof_of_Work_Ron_Hatibaruah.txt')
     
     with open(src_file, 'r', encoding='utf-8') as f:
         raw = f.read()
@@ -120,7 +123,8 @@ def generate_pow_text():
     header += "NESFIC 2026 - STREAM 1 - PROOF OF WORK & TECHNICAL EVIDENCE DOSSIER\n"
     header += "Problem Statement ID: NESFIC-D-18: Digital Twin for Flood Management, Simulation and Early Warning\n"
     header += "Sponsoring Department: Department of Science & Technology (ASSAC) & ASDMA, Govt of Assam\n"
-    header += "Applicant / Innovator: Ron Hatibaruah\n"
+    header += "Applicant / Innovator: Chandan Kumar Sonowal\n"
+    header += "Copyright: Copyright © 2026 Coretouch Technologies Pvt Ltd. All rights reserved.\n"
     header += "Solution: JalDrishti (Assam Flood Sentinel)\n"
     header += "Live Prototype: https://jaldrishti-assam.pages.dev/\n"
     header += "GitHub Repository: https://github.com/RonHatibaruah/jaldrishti-assam\n"
@@ -131,8 +135,10 @@ def generate_pow_text():
     
     with open(out_file, 'w', encoding='utf-8') as f:
         f.write(full_output)
+    with open(legacy_file, 'w', encoding='utf-8') as f:
+        f.write(full_output)
         
-    print(f"Generated text version: {out_file} ({len(full_output)} bytes)")
+    print(f"Generated text versions: {out_file} and {legacy_file} ({len(full_output)} bytes)")
 
 if __name__ == '__main__':
     generate_proposal_text()
