@@ -86,24 +86,24 @@ JalDrishti is architected as an enterprise, cloud-native, open-standard platform
 ---
 
 ## Field 4: Pilot proposal, KPIs, implementation plan, and budget
-*(Word Count: 358 words / Limit: 400 words)*
+*(Word Count: 335 words / Limit: 400 words)*
 
 ### Pilot Context: Dual-Basin Demonstrator (Barpeta & Majuli Districts)
-To demonstrate effectiveness across both complex riverine delta floodplains and vulnerable braided island ecosystems, a 6-month dual-district pilot will be deployed in:
-1. **Barpeta District (Lower Assam):** High population density, chronic embankment breach history (Manas and Beki rivers), riverine char settlements, and frequent severe flash surge inundations.
-2. **Majuli District (Upper Assam):** The world’s largest inhabited river island, suffering extreme riverbank scouring, dynamic channel shifting, and complete isolation during monsoon peaks.
+Deploying a 6-month dual-district pilot across contrasting hydro-geomorphic zones:
+1. **Barpeta District (Lower Assam):** Chronic embankment breach vulnerability (Manas and Beki rivers), high-density riverine char settlements, and flash surge inundations.
+2. **Majuli District (Upper Assam):** Braided river island ecosystem suffering acute riverbank scouring, dynamic channel shifting, and seasonal isolation.
 
 ### Phased 12-Month Implementation Roadmap
-• **Months 1–2 (Data Pipelines & Spatial Calibration):** Ingest ASSAC GIS layers, 10m CartoDEM, digitized WRD embankment lines, and historical FLEWS flood extents. Configure automated Sentinel-1 SAR ingestion in ASDC.  
-• **Months 3–4 (Hydrodynamic Calibration & Pilot Launch):** Calibrate 2D shallow water models against historical 2022–2024 flood events in Barpeta and Majuli. Deploy JalDrishti cockpit in ASDMA SEOC and Barpeta/Majuli DEOCs; train 20 DDMA and WRD officers.  
-• **Months 5–8 (Monsoon Operational Validation & CAP Sirens):** Operate JalDrishti during the active monsoon season. Validate real-time SAR flood extents, run live "what-if" breach simulations, and operationalize automated CAP bilingual SMS alerts to 50 vulnerable revenue villages.  
-• **Months 9–12 (Evaluation, Model Tuning & Statewide Expansion):** Audit prediction accuracy, lead-time improvements, and emergency response speed. Present validation report to ASSAC and ASDMA; deploy containerized platform across all 35 districts of Assam.
+• **Months 1–2 (Data Pipelines & Ingestion):** Ingest ASSAC GIS layers, 10m CartoDEM, WRD embankment geometries, and CWC telemetry; configure automated Sentinel-1 SAR ingestion in ASDC.  
+• **Months 3–4 (Hydrodynamic Calibration & Pilot Launch):** Calibrate 2D shallow water models against 2022–2024 flood events; deploy cockpit in ASDMA SEOC and Barpeta/Majuli DEOCs; train 20 DDMA/WRD officers.  
+• **Months 5–8 (Monsoon Operational Validation):** Run real-time SAR flood mapping, live "what-if" breach simulations, and dispatch bilingual CAP alerts across 50 vulnerable revenue villages.  
+• **Months 9–12 (Evaluation & Statewide Expansion):** Audit accuracy and lead-time gains with ASSAC/ASDMA; roll out containerized platform across all 35 Assam districts.
 
 ### Measurable Key Performance Indicators (KPIs)
-• **≥ 88% Spatial Accuracy in Flood Inundation Prediction:** Validated against ground truth CWC water levels and post-event Sentinel-1 SAR imagery.  
-• **12 to 36 Hours Actionable Early Warning Lead Time:** Extending lead time for evacuation and asset protection compared to traditional 3-hour reactive bulletins.  
-• **Sub-60 Second Simulation Runtime:** Near-instantaneous computation of 48-hour inundation wavefronts for emergency scenario planning.  
-• **100% Provenance Compliance:** Complete visual and algorithmic segregation of Observed, Forecast, and Simulated data across all interfaces.
+• **≥ 88% Spatial Accuracy:** Validated against CWC gauge stages and post-event Sentinel-1 SAR water extents.  
+• **12 to 36 Hours Lead Time:** Providing actionable early warning compared to traditional 3-hour reactive bulletins.  
+• **Sub-60 Second Simulation Runtime:** Near-instantaneous computation of 48-hour inundation wavefronts.  
+• **100% Provenance Compliance:** Total visual and algorithmic segregation of Observed, Forecast, and Simulated data.
 
 ### Milestone-Based Grant Budget Utilization (Total: Rs. 40.00 Lakh)
 1. Software Stack Development Team Cost (Core Platform, Hydrodynamic PINN & AI Modelers): Rs. 20.00 Lakh (50.0%)  
