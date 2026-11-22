@@ -351,7 +351,7 @@ def build_proposal_pdf(output_path):
     with open(prop_md, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    sections = re.split(r'\n(?=##\s+Field\s+\d+:)', content)
+    sections = re.split(r'\n(?=##\s+\d+\.\s+)', content)
     if sections[0].strip():
         story.extend(parse_markdown_content(sections[0].strip().split('\n'), available_width=490))
 
@@ -361,64 +361,106 @@ def build_proposal_pdf(output_path):
         story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor('#0f766e'), spaceBefore=8, spaceAfter=5))
         story.append(safe_paragraph(sec_title, h2_style))
 
-        if 'Field 1:' in sec_title:
+        if '1. Problem understanding' in sec_title:
             img1 = os.path.join(img_dir, 'diagram_1_before_after_workflow.jpg')
             if os.path.exists(img1):
                 story.append(Spacer(1, 4))
                 story.append(Image(img1, width=490, height=275.6))
                 story.append(safe_paragraph("<b>Figure 1: Paradigm Shift Framework</b> — Transforming Reactive Flood Relief into Space-Enabled 4D Digital Twin Early Warning", caption_style))
                 story.append(Spacer(1, 4))
-            img2 = os.path.join(img_dir, 'diagram_19_operational_persona_hierarchy.jpg')
-            if os.path.exists(img2):
-                story.append(Spacer(1, 4))
-                story.append(Image(img2, width=490, height=275.6))
-                story.append(safe_paragraph("<b>Figure 2: 4-Tier Operational Persona Hierarchy</b> — State EOC Commander, District DEOC, WRD Engineers & Village Gaonburhas", caption_style))
-                story.append(Spacer(1, 4))
-        elif 'Field 2:' in sec_title:
+        elif '2. Proposed solution' in sec_title:
             img0 = os.path.join(img_dir, 'diagram_20_orbit_to_village_pipeline.jpg')
             if os.path.exists(img0):
                 story.append(Spacer(1, 4))
                 story.append(Image(img0, width=490, height=275.6))
-                story.append(safe_paragraph("<b>Figure 3: 'From Orbit to Village Alert' 4-Step Pipeline</b> — Space SAR (45m) to 2D PINN AI (39s) to CAP Siren (<2.4s)", caption_style))
+                story.append(safe_paragraph("<b>Figure 2: 'From Orbit to Village Alert' 4-Step Pipeline</b> — Space SAR (45m) to 2D PINN AI (39s) to CAP Siren (<2.4s)", caption_style))
                 story.append(Spacer(1, 4))
             img1 = os.path.join(img_dir, 'diagram_10_what_if_simulation_sandbox.jpg')
             if os.path.exists(img1):
                 story.append(Spacer(1, 4))
                 story.append(Image(img1, width=490, height=275.6))
-                story.append(safe_paragraph("<b>Figure 4: 4D Digital Twin 'What-If' Simulation Sandbox</b> — Interactive Dam Release & 2D Hydrodynamic Wavefront Modeling (Barpeta & Majuli)", caption_style))
+                story.append(safe_paragraph("<b>Figure 3: 4D Digital Twin 'What-If' Simulation Sandbox</b> — Interactive Dam Release & 2D Hydrodynamic Wavefront Modeling (Barpeta & Majuli)", caption_style))
                 story.append(Spacer(1, 4))
-            img2 = os.path.join(img_dir, 'diagram_3_cadastral_anomaly_catalog.jpg')
+        elif '3. Describe User Journey' in sec_title:
+            img1 = os.path.join(img_dir, 'diagram_21_multi_device_cockpit_collage.jpg')
+            if os.path.exists(img1):
+                story.append(Spacer(1, 4))
+                story.append(Image(img1, width=490, height=275.6))
+                story.append(safe_paragraph("<b>Figure 4: Multi-Device Operational Cockpit Verification</b> — Desktop WebGIS, Tablet Sandbox & Mobile Alert (Deployed Live at https://jaldrishti-assam.pages.dev/)", caption_style))
+                story.append(Spacer(1, 4))
+            img2 = os.path.join(img_dir, 'diagram_19_operational_persona_hierarchy.jpg')
             if os.path.exists(img2):
                 story.append(Spacer(1, 4))
                 story.append(Image(img2, width=490, height=275.6))
-                story.append(safe_paragraph("<b>Figure 5: Three-Tier Data Provenance Architecture</b> — Visual Segregation of Observed (SAR/Gauges), Forecast (IMD/CWC), and Simulated (2D PINN) Layers", caption_style))
+                story.append(safe_paragraph("<b>Figure 5: 4-Tier Operational Persona Hierarchy</b> — State EOC Commander, District DEOC, WRD Engineers & Village Gaonburhas", caption_style))
                 story.append(Spacer(1, 4))
-        elif 'Field 3:' in sec_title:
+        elif '4. Technology & solution architecture' in sec_title:
             img1 = os.path.join(img_dir, 'diagram_2_cadastral_reconciliation_flow.jpg')
             if os.path.exists(img1):
                 story.append(Spacer(1, 4))
                 story.append(Image(img1, width=490, height=275.6))
                 story.append(safe_paragraph("<b>Figure 6: JalDrishti Enterprise System Architecture</b> — Containerized ASDC Deployment, Microservices Ingestion & Physics Engine Blueprint", caption_style))
                 story.append(Spacer(1, 4))
-            img2 = os.path.join(img_dir, 'diagram_11_asdc_infrastructure_security.jpg')
+            img2 = os.path.join(img_dir, 'diagram_3_cadastral_anomaly_catalog.jpg')
             if os.path.exists(img2):
                 story.append(Spacer(1, 4))
                 story.append(Image(img2, width=490, height=275.6))
-                story.append(safe_paragraph("<b>Figure 7: Assam State Data Centre (ASDC) Zero-Trust Deployment Topology</b> — Sovereign Cloud Infrastructure & DPDPA 2023 Security Enclave", caption_style))
+                story.append(safe_paragraph("<b>Figure 7: Three-Tier Data Provenance Architecture</b> — Visual Segregation of Observed (SAR/Gauges), Forecast (IMD/CWC), and Simulated (2D PINN) Layers", caption_style))
                 story.append(Spacer(1, 4))
-        elif 'Field 4:' in sec_title:
+        elif '5. Development methodology' in sec_title:
+            img = os.path.join(img_dir, 'diagram_8_sar_water_extraction_pipeline.jpg')
+            if os.path.exists(img):
+                story.append(Spacer(1, 4))
+                story.append(Image(img, width=490, height=275.6))
+                story.append(safe_paragraph("<b>Figure 8: Space SAR Water Extraction Pipeline</b> — All-Weather Lee Sigma Filtering & Dynamic Otsu Binarization Flow", caption_style))
+                story.append(Spacer(1, 4))
+        elif '6. Development timeline' in sec_title:
             img = os.path.join(img_dir, 'diagram_7_enterprise_system_architecture.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
                 story.append(Image(img, width=490, height=275.6))
-                story.append(safe_paragraph("<b>Figure 8: Phased Implementation Roadmap & Milestone Budget Breakdown (Rs. 40.00 Lakh)</b> — Dual-Basin Pilot to Statewide Operationalization", caption_style))
+                story.append(safe_paragraph("<b>Figure 9: Phased 12-Month Implementation Roadmap & Milestone Schedule</b> — Dual-Basin Pilot to Statewide Operationalization", caption_style))
                 story.append(Spacer(1, 4))
-        elif 'Field 5:' in sec_title:
-            img = os.path.join(img_dir, 'diagram_12_socio_economic_impact_model.jpg')
+        elif '8. Team, manpower' in sec_title:
+            img = os.path.join(img_dir, 'diagram_14_geotechnical_embankment_mechanics.jpg')
             if os.path.exists(img):
                 story.append(Spacer(1, 4))
                 story.append(Image(img, width=490, height=275.6))
-                story.append(safe_paragraph("<b>Figure 9: Socio-Economic Impact Matrix & Grassroots Resilience</b> — Quantified Loss Reduction Across 3.15M Ha Protected Area", caption_style))
+                story.append(safe_paragraph("<b>Figure 10: Predictive Embankment Breach Sentinel & Geotechnical Mechanics</b> — Automated Breach Hazard Index (BHI)", caption_style))
+                story.append(Spacer(1, 4))
+        elif '9. Testing, validation' in sec_title:
+            img = os.path.join(img_dir, 'diagram_16_system_latency_edge_benchmarks.jpg')
+            if os.path.exists(img):
+                story.append(Spacer(1, 4))
+                story.append(Image(img, width=490, height=275.6))
+                story.append(safe_paragraph("<b>Figure 11: System Latency & Edge Performance Benchmarks</b> — Sub-60s PINN Hydrodynamics & Sub-Second WebGIS Rendering", caption_style))
+                story.append(Spacer(1, 4))
+        elif '10. Security, privacy' in sec_title:
+            img = os.path.join(img_dir, 'diagram_11_asdc_infrastructure_security.jpg')
+            if os.path.exists(img):
+                story.append(Spacer(1, 4))
+                story.append(Image(img, width=490, height=275.6))
+                story.append(safe_paragraph("<b>Figure 12: Assam State Data Centre (ASDC) Zero-Trust Deployment Topology</b> — Sovereign Cloud Infrastructure & DPDPA 2023 Security Enclave", caption_style))
+                story.append(Spacer(1, 4))
+        elif '11. Innovation & differentiation' in sec_title:
+            img = os.path.join(img_dir, 'diagram_15_gaonburha_bilingual_alert_cockpit.jpg')
+            if os.path.exists(img):
+                story.append(Spacer(1, 4))
+                story.append(Image(img, width=490, height=275.6))
+                story.append(safe_paragraph("<b>Figure 13: CAP-Compliant Bilingual Alerting Gateway & Gaonburha Cockpit</b> — Localized Siren & SMS Dispatch", caption_style))
+                story.append(Spacer(1, 4))
+        elif '12. Resources, risks' in sec_title:
+            img1 = os.path.join(img_dir, 'diagram_12_socio_economic_impact_model.jpg')
+            if os.path.exists(img1):
+                story.append(Spacer(1, 4))
+                story.append(Image(img1, width=490, height=275.6))
+                story.append(safe_paragraph("<b>Figure 14: Socio-Economic Impact Matrix & Grant Budget Breakdown (Rs. 40.00 Lakh)</b> — Quantified Loss Reduction Across 3.15M Ha", caption_style))
+                story.append(Spacer(1, 4))
+            img2 = os.path.join(img_dir, 'diagram_17_field_pilot_acceptance_gate.jpg')
+            if os.path.exists(img2):
+                story.append(Spacer(1, 4))
+                story.append(Image(img2, width=490, height=275.6))
+                story.append(safe_paragraph("<b>Figure 15: Dual-Basin Field Pilot Verification & Acceptance Matrix</b> — Rigorous Milestone Gating for Statewide Rollout", caption_style))
                 story.append(Spacer(1, 4))
 
         body_flowables = parse_markdown_content(lines[1:], available_width=490)
