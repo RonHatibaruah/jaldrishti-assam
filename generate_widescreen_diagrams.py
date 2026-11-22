@@ -495,11 +495,11 @@ def create_widescreen_diagram_7():
     ax.text(0.04, 0.34, "GRANT BUDGET UTILIZATION BREAKDOWN (TOTAL: ₹40.00 LAKH)", fontsize=9.5, fontweight='bold', color='#38bdf8', zorder=3)
 
     budget_items = [
-        ("Space SAR Pipeline & Hydrodynamic PINN Engine", "₹14.00 L", "35.0%", '#0284c7', 0.04),
-        ("4D GIS Web Platform & ASDMA Dashboard", "₹9.00 L", "22.5%", '#7c3aed', 0.23),
-        ("Field Pilot Deployment in Barpeta & Majuli", "₹7.00 L", "17.5%", '#059669', 0.42),
-        ("CWC/IMD Ingestion & CAP Dissemination Bus", "₹6.00 L", "15.0%", '#d97706', 0.61),
-        ("STQC Security VAPT & Contingency Reserve", "₹4.00 L", "10.0%", '#dc2626', 0.80)
+        ("Software Stack Dev Team Cost (PINN & AI Modelers)", "₹20.00 L", "50.0%", '#059669', 0.04),
+        ("4D GIS Web Platform & ASDMA Dashboard", "₹7.00 L", "17.5%", '#0284c7', 0.23),
+        ("Dual-Basin Field Pilot (Barpeta & Majuli)", "₹6.00 L", "15.0%", '#7c3aed', 0.42),
+        ("Space SAR Ingestion & CAP Dissemination", "₹4.00 L", "10.0%", '#d97706', 0.61),
+        ("STQC Security VAPT & Contingency Reserve", "₹3.00 L", "7.5%", '#dc2626', 0.80)
     ]
     for name, amt, pct, col, x in budget_items:
         c = FancyBboxPatch((x, 0.10), 0.17, 0.21, boxstyle="round,pad=0.008,rounding_size=0.008",

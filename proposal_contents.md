@@ -106,11 +106,11 @@ To demonstrate effectiveness across both complex riverine delta floodplains and 
 • **100% Provenance Compliance:** Complete visual and algorithmic segregation of Observed, Forecast, and Simulated data across all interfaces.
 
 ### Milestone-Based Grant Budget Utilization (Total: ₹40.00 Lakh)
-1. Space SAR Ingestion, STAC API Pipeline & Hydrodynamic ML Engine: ₹14.00 Lakh (35%)  
-2. 4D GIS Web Platform, Leaflet/MapLibre Engine & ASDMA COP Dashboard: ₹9.00 Lakh (22.5%)  
-3. Sensor Ingestion (CWC/IMD), CAP Gateway & Multilingual Alert Services: ₹6.00 Lakh (15%)  
-4. Two-District Field Deployment, Ground-Truthing & Officer Capacity Building: ₹7.00 Lakh (17.5%)  
-5. Security Audit (STQC VAPT), Data Compliance & Contingency Reserve: ₹4.00 Lakh (10%)  
+1. Software Stack Development Team Cost (Core Platform, Hydrodynamic PINN & AI Modelers): ₹20.00 Lakh (50.0%)  
+2. 4D GIS Web Platform, Vector Tile Engine & ASDMA COP Dashboard: ₹7.00 Lakh (17.5%)  
+3. Dual-Basin Field Deployment, Ground-Truthing & Officer Capacity Building (Barpeta & Majuli): ₹6.00 Lakh (15.0%)  
+4. Space SAR Ingestion (STAC API), IoT Telemetry & CAP Alert Gateway: ₹4.00 Lakh (10.0%)  
+5. Security Audit (STQC VAPT), ASDC Data Compliance & Technical Contingency: ₹3.00 Lakh (7.5%)  
 
 ---
 
