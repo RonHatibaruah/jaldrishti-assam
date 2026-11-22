@@ -115,7 +115,9 @@ To demonstrate effectiveness across both complex riverine delta floodplains and 
 ---
 
 ## Field 5: Team capabilities, commercialization & sustainability
-*(Word Count: 272 words / Limit: 300 words)*
+*(Word Count: 282 words / Limit: 300 words)*
+
+*(Refer to Technical Framework Infographic: Diagram 12 — Socio-Economic Impact Matrix & Grassroots Disaster Resilience Framework)*
 
 ### Lead Applicant & Technical Capability: Ron Hatibaruah
 • **Domain Expertise:** GovTech software architect, geospatial systems engineer, and machine learning practitioner with specialized expertise in designing mission-critical decision support systems, GIS applications (PostGIS, GDAL, MapLibre), and public emergency infrastructure.  
