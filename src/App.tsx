@@ -54,7 +54,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 font-sans">
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800 font-sans">
       {/* Top Navigation */}
       <Navbar
         activeTab={activeTab}
@@ -68,13 +68,13 @@ export const App: React.FC = () => {
 
       {/* Role Indicator & Context Banner */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-4 flex flex-wrap justify-between items-center gap-2">
-        <div className="flex items-center gap-2 text-xs text-slate-400">
+        <div className="flex items-center gap-2 text-xs text-slate-500">
           <span>Active Command Horizon:</span>
-          <span className="font-bold text-slate-200 bg-slate-900 px-2.5 py-1 rounded-md border border-slate-800 shadow-sm flex items-center gap-1.5">
+          <span className="font-bold text-blue-950 bg-white px-2.5 py-1 rounded-md border border-slate-200 shadow-sm flex items-center gap-1.5">
             {activeTab === 'admin' ? (
               <>
-                <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
-                <span className="text-cyan-300">
+                <ShieldCheck className="w-3.5 h-3.5 text-blue-700" />
+                <span className="text-blue-900">
                   ASDC State Data Centre Governance & Spatial Analytics Enclave
                 </span>
               </>
@@ -89,8 +89,8 @@ export const App: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-2 text-xs">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-950/80 border border-emerald-800/80 text-emerald-300 font-mono text-[11px]">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-50 border border-emerald-300 text-emerald-800 font-mono text-[11px] shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             ISRO / CWC Live Link Active
           </span>
         </div>
